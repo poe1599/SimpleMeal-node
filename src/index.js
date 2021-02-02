@@ -98,15 +98,22 @@ app.use((req, res, next) => {
   next();
 });
 
+
 // 首頁
 app.get("/", (req, res) => {
   res.render("index", { shortText: "現在暫時是首頁" });
 });
 
+// 測試模組
+app.use("/test", require(__dirname + "/routes/test"));
+
+app.get("/getdata", async (req, res) => {
+  const [result] = await db.query("SELECT * FROM `test`");
+  res.json(result);
+});
 
 // 通訊錄模組
 // app.use("/address-book", require(__dirname + "/routes/address-book"));
-
 
 // 這個要放最後, 不然會先被讀到
 app.use((req, res) => {
@@ -114,8 +121,8 @@ app.use((req, res) => {
   res.status(404).send("有問題喔 找不到頁面");
 });
 
-// 拿到.env設定的的PORT, 如果沒有那就預設3000
-const port = process.env.PORT || 3000;
+// 拿到.env設定的的PORT, 如果沒有那就預設4000
+const port = process.env.PORT || 4000;
 app.listen(port, () => {
   console.log(`port: ${port}`, new Date());
 });
