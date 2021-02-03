@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2021-02-03 12:11:46
+-- 產生時間： 2021-02-03 14:31:29
 -- 伺服器版本： 10.4.16-MariaDB
 -- PHP 版本： 7.3.24
 
@@ -563,6 +563,21 @@ CREATE TABLE `surprisekitchen_order` (
 -- --------------------------------------------------------
 
 --
+-- 資料表結構 `surprise_comment`
+--
+
+CREATE TABLE `surprise_comment` (
+  `sid` int(11) NOT NULL,
+  `member_number` int(11) NOT NULL,
+  `nickname` varchar(255) NOT NULL,
+  `used_date` date NOT NULL,
+  `comment` varchar(255) DEFAULT NULL,
+  `builded_date` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- 資料表結構 `surprise_times`
 --
 
@@ -741,6 +756,12 @@ ALTER TABLE `simplemealcoupon`
 -- 資料表索引 `surprisekitchen_order`
 --
 ALTER TABLE `surprisekitchen_order`
+  ADD PRIMARY KEY (`sid`);
+
+--
+-- 資料表索引 `surprise_comment`
+--
+ALTER TABLE `surprise_comment`
   ADD PRIMARY KEY (`sid`);
 
 --
