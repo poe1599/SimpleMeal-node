@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2021-02-03 14:31:29
+-- 產生時間： 2021-02-05 08:25:39
 -- 伺服器版本： 10.4.16-MariaDB
 -- PHP 版本： 7.3.24
 
@@ -42,6 +42,14 @@ CREATE TABLE `cart_mealdelivery` (
   `next_time` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- 傾印資料表的資料 `cart_mealdelivery`
+--
+
+INSERT INTO `cart_mealdelivery` (`sid`, `member_sid`, `meal_sid`, `meal_name`, `description`, `quantity`, `member_name`, `mobile`, `address`, `delivery_date`, `delivery_time`, `next_time`) VALUES
+(1, 1, 1, '紅薯蛋糕', '這個鮮活的小數字在切碎的小寶石上鋪上堅固耐用的現成的地瓜餅，上面舖有自製的藍紋奶酪醬，並飾以鬆脆的烤山核桃。', 1, '王曉明', '0945456321', '台北市大安區復興南路一段390號2樓', '2021-02-02', '10:50:17', 0),
+(2, 1, 4, '中國檸檬雞和嫩皮', '黏膩，甜美和酥脆的完美水平，這是一款永不失敗的複古經典。您需要在炸雞上塗上蜂蜜檸檬醬，再搭配米飯和Tenderstem西蘭花。', 3, '王曉明', '0945456321', '台北市大安區復興南路一段390號2樓', NULL, NULL, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -54,10 +62,20 @@ CREATE TABLE `cart_simplemealcoupon` (
   `combination_sid` int(11) NOT NULL,
   `combination_name` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
+  `quantity` int(11) NOT NULL DEFAULT 1,
   `total_coupon_num` int(11) NOT NULL,
   `total_price` int(11) NOT NULL,
   `check_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- 傾印資料表的資料 `cart_simplemealcoupon`
+--
+
+INSERT INTO `cart_simplemealcoupon` (`order_sid`, `member_sid`, `combination_sid`, `combination_name`, `description`, `quantity`, `total_coupon_num`, `total_price`, `check_date`) VALUES
+(509572507, 1, 1, '吃飽飽沒煩惱組合', '(包含20張餐卷, 加贈5張免費餐券)', 1, 25, 7000, '2021-02-02 13:01:58'),
+(509572508, 1, 2, '食在很滿足組合', '(包含10張餐卷, 加贈2張免費餐券)', 1, 12, 1700, '2021-02-03 13:06:11'),
+(509572509, 1, 3, '經濟實惠組', '(包含5張餐卷, 加贈1張免費餐券)', 1, 6, 850, '2021-02-04 13:07:18');
 
 -- --------------------------------------------------------
 
@@ -92,6 +110,13 @@ CREATE TABLE `comment_get_good` (
   `comment_id` int(10) NOT NULL COMMENT '評論id',
   `id` int(100) NOT NULL COMMENT '點讚的會員帳號'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- 傾印資料表的資料 `comment_get_good`
+--
+
+INSERT INTO `comment_get_good` (`good_id`, `comment_id`, `id`) VALUES
+(1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -163,6 +188,20 @@ CREATE TABLE `exchange_good` (
   `good_pic` varchar(255) NOT NULL COMMENT '優惠顯示圖片'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- 傾印資料表的資料 `exchange_good`
+--
+
+INSERT INTO `exchange_good` (`good_ID`, `good_type`, `good_name`, `good_subs`, `need_point`, `good_pic`) VALUES
+(1, 1, '星巴克買一送一', '憑QR CODE可以獲得同口味大小星巴克飲料買一送一', 100, ''),
+(2, 1, '7-11超商折價券50元', '我就是一段唬爛打我啊哈哈笨蛋', 100, ''),
+(3, 1, '全家咖啡買一送一', '憑QR CODE可以獲得同口味咖啡買一送一', 50, ''),
+(4, 1, '7-11超商折價券100元', '我就是一段唬爛打我啊哈哈笨蛋', 200, ''),
+(5, 2, '站內50元折價', '你好我是一個介紹優惠的唬爛，你好我是一個介紹優惠的唬爛，你好我是一個介紹優惠的唬爛', 100, ''),
+(6, 2, '站內100元折價', ' 儘管如此，別人往往卻不這麼想。蕭伯納告訴我們，勞動是惟一導向知識的道路。這段話對世界的改變有著深遠的影響。話雖如此，我們卻也不能夠這麼篤定。', 100, ''),
+(7, 2, '站內150元折價', '如果仔細思考站內優惠，會發現其中蘊含的深遠意義。\r\n對於站內優惠，我們不能不去想，卻也不能走火入魔。', 150, ''),
+(8, 2, '站內200元折價', '我就是一段唬爛打我啊哈哈笨蛋', 200, '');
+
 -- --------------------------------------------------------
 
 --
@@ -172,10 +211,9 @@ CREATE TABLE `exchange_good` (
 CREATE TABLE `history_mealdelivery` (
   `sid` int(11) NOT NULL,
   `member_sid` int(11) NOT NULL,
-  `meal_sid` int(11) NOT NULL,
+  `meal_sid` varchar(255) NOT NULL,
   `meal_name` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `quantity` int(11) DEFAULT NULL,
+  `quantity` varchar(255) NOT NULL,
   `member_name` varchar(255) DEFAULT NULL,
   `mobile` varchar(255) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
@@ -183,6 +221,13 @@ CREATE TABLE `history_mealdelivery` (
   `delivery_time` time DEFAULT NULL,
   `check_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- 傾印資料表的資料 `history_mealdelivery`
+--
+
+INSERT INTO `history_mealdelivery` (`sid`, `member_sid`, `meal_sid`, `meal_name`, `quantity`, `member_name`, `mobile`, `address`, `delivery_date`, `delivery_time`, `check_date`) VALUES
+(509572507, 1, '1,4', '紅薯蛋糕,中國檸檬雞和嫩皮', '1,1', '王曉明', '0945456321', '台北市大安區復興南路一段390號2樓', '2021-02-02', '10:50:17', '2021-01-31 13:42:59');
 
 -- --------------------------------------------------------
 
@@ -325,18 +370,26 @@ INSERT INTO `meal` (`sid`, `product_name`, `product_id`, `price`, `on_sale`, `ve
 
 CREATE TABLE `membercenter` (
   `id` int(100) NOT NULL,
-  `member_number` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
-  `avater` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
-  `level` varchar(30) CHARACTER SET utf8mb4 NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
-  `name` varchar(10) CHARACTER SET utf8mb4 NOT NULL,
-  `nickname` varchar(10) CHARACTER SET utf8mb4 NOT NULL,
-  `mobile` varchar(10) CHARACTER SET utf8mb4 NOT NULL,
+  `member_number` varchar(255) DEFAULT NULL,
+  `avater` varchar(255) DEFAULT NULL,
+  `level` varchar(30) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `name` varchar(10) NOT NULL,
+  `nickname` varchar(10) NOT NULL,
+  `mobile` varchar(10) NOT NULL,
   `birthday` date NOT NULL,
-  `credit＿card` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
-  `addr` varchar(255) CHARACTER SET utf8mb4 NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `credit＿card` varchar(255) NOT NULL,
+  `addr` varchar(255) NOT NULL,
+  `love` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- 傾印資料表的資料 `membercenter`
+--
+
+INSERT INTO `membercenter` (`id`, `member_number`, `avater`, `level`, `email`, `password`, `name`, `nickname`, `mobile`, `birthday`, `credit＿card`, `addr`, `love`) VALUES
+(1, '20210001', 'avatar01.jpg', 'vip會員', 'GoodGoodEat@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '王曉明', '小明', '0945456321', '1990-10-10', '1234-1234-1234-1234', '台北市大安區復興南路一段390號2樓', '1,2,3');
 
 -- --------------------------------------------------------
 
@@ -400,8 +453,15 @@ CREATE TABLE `partner` (
   `vender_id` int(10) NOT NULL COMMENT '廠商ID',
   `vender_name` varchar(25) NOT NULL COMMENT '廠商名稱',
   `vender_pic` int(11) DEFAULT NULL COMMENT '廠商照片',
-  `vender_add` int(11) DEFAULT NULL COMMENT '廠商地址'
+  `vender_add` text DEFAULT NULL COMMENT '廠商地址'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- 傾印資料表的資料 `partner`
+--
+
+INSERT INTO `partner` (`vender_id`, `vender_name`, `vender_pic`, `vender_add`) VALUES
+(1, '青椒農場', NULL, '台北市大安區阿福路一段333號');
 
 -- --------------------------------------------------------
 
@@ -454,14 +514,21 @@ INSERT INTO `recipe` (`sid`, `recipe_name`, `recipe_pic_01`, `recipe01`, `recipe
 
 CREATE TABLE `recipe_comment` (
   `comment_id` int(10) NOT NULL COMMENT '評論id',
-  `recipe` int(11) NOT NULL COMMENT '食譜id',
-  `Account` int(11) NOT NULL COMMENT '會員id',
+  `recipe` int(10) NOT NULL COMMENT '食譜id',
+  `Account` int(255) NOT NULL COMMENT '會員id',
   `create_time` datetime NOT NULL COMMENT '建立時間',
   `comment` text NOT NULL COMMENT '評論內容',
   `reply_id` int(11) NOT NULL COMMENT '回覆的評論id',
   `del` int(1) NOT NULL DEFAULT 0 COMMENT '刪除',
   `ifread` int(1) NOT NULL DEFAULT 0 COMMENT '已讀'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- 傾印資料表的資料 `recipe_comment`
+--
+
+INSERT INTO `recipe_comment` (`comment_id`, `recipe`, `Account`, `create_time`, `comment`, `reply_id`, `del`, `ifread`) VALUES
+(1, 1, 1, '2021-02-11 14:04:26', '在中鍋中以中高溫加熱細雨橄欖油。加入蒸粗麥粉，大蒜，一半的西紅柿和剩餘的意大利調味料。煮一會兒，攪拌至香1-2分鐘。•添加濃湯，¾杯水（1.5杯，可4份）和一大撮鹽。放慢火鍋，然後蓋上鍋蓋，並將熱量降低至較低水平。煮至蒸粗麥粉蒸6-8分鐘。•關閉熱量。如有必要，從鍋中排出多餘的液體。', 23, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -474,6 +541,13 @@ CREATE TABLE `recipe_get_good` (
   `recipe_id` int(10) NOT NULL COMMENT '食譜id',
   `id` int(255) NOT NULL COMMENT '點讚的會員帳號'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- 傾印資料表的資料 `recipe_get_good`
+--
+
+INSERT INTO `recipe_get_good` (`good_id`, `recipe_id`, `id`) VALUES
+(1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -488,10 +562,16 @@ CREATE TABLE `share_recipe` (
   `recipe_creator` int(10) NOT NULL COMMENT '創造者id',
   `cook_time` int(3) NOT NULL COMMENT '烹飪時間',
   `style` varchar(25) NOT NULL COMMENT '風格',
-  `ingredients` int(10) NOT NULL COMMENT '食材',
   `Introduction` text NOT NULL COMMENT '簡介',
   `pic` text NOT NULL COMMENT '成品照'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- 傾印資料表的資料 `share_recipe`
+--
+
+INSERT INTO `share_recipe` (`recipe_id`, `recipe_createtime`, `recipe_name`, `recipe_creator`, `cook_time`, `style`, `Introduction`, `pic`) VALUES
+(1, '2021-02-11 13:56:16', '青椒葛利義大利麵', 1, 60, '美式風格', '沒有什麼組合比香腸和辣椒更令人滿意了。畢竟，在胃液中甜美的焦糖味和肉中的超鹹味，還有什麼比這更令人放鬆呢？', '');
 
 -- --------------------------------------------------------
 
@@ -504,6 +584,13 @@ CREATE TABLE `share_recipe_ingredients` (
   `recipe_id` int(10) NOT NULL COMMENT '食譜id',
   `Ingredients_id` int(10) NOT NULL COMMENT '食材id'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- 傾印資料表的資料 `share_recipe_ingredients`
+--
+
+INSERT INTO `share_recipe_ingredients` (`sid`, `recipe_id`, `Ingredients_id`) VALUES
+(1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -523,6 +610,13 @@ CREATE TABLE `share_recipe_step` (
   `step8` text NOT NULL COMMENT '步驟8'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- 傾印資料表的資料 `share_recipe_step`
+--
+
+INSERT INTO `share_recipe_step` (`recipe_id`, `step1`, `step2`, `step3`, `step4`, `step5`, `step6`, `step7`, `step8`) VALUES
+(1, '將機架調整到最高位置，然後將烤箱預熱至450度。洗滌並乾燥所有農產品。\r\n              將西葫蘆切成兩半；用勺子seeds出種子並丟棄。用細雨橄欖油將每半擦\r\n              乾淨；用一半的意大利調味料（稍後再使用），鹽和胡椒粉調味。將切面朝\r\n              下放在烤板上。•在頂部架子上烤15至20分鐘，直至變成褐色並變軟。', '西葫蘆烤時，將大蒜去皮切碎或切碎。將西紅柿切成細末。', '在中鍋中以中高溫加熱細雨橄欖油。加入蒸粗麥粉，大蒜，一半的西紅柿和剩餘的意大利調味料。煮一會兒，攪拌至香1-2分鐘。•添加濃湯，¾杯水（1.5杯，可4份）和一大撮鹽。放慢火鍋，然後蓋上鍋蓋，並將熱量降低至較低水平。煮至蒸粗麥粉蒸6-8分鐘。•關閉熱量。如有必要，從鍋中排出多餘的液體。', '在中鍋中以中高溫加熱細雨橄欖油。加入蒸粗麥粉，大蒜，一半的西紅柿和剩餘的意大利調味料。煮一會兒，攪拌至香1-2分鐘。•添加濃湯，¾杯水（1.5杯，可4份）和一大撮鹽。放慢火鍋，然後蓋上鍋蓋，並將熱量降低至較低水平。煮至蒸粗麥粉蒸6-8分鐘。•關閉熱量。如有必要，從鍋中排出多餘的液體。', '在中鍋中以中高溫加熱細雨橄欖油。加入蒸粗麥粉，大蒜，一半的西紅柿和剩餘的意大利調味料。煮一會兒，攪拌至香1-2分鐘。•添加濃湯，¾杯水（1.5杯，可4份）和一大撮鹽。放慢火鍋，然後蓋上鍋蓋，並將熱量降低至較低水平。煮至蒸粗麥粉蒸6-8分鐘。•關閉熱量。如有必要，從鍋中排出多餘的液體。', '', '', '');
+
 -- --------------------------------------------------------
 
 --
@@ -536,6 +630,15 @@ CREATE TABLE `simplemealcoupon` (
   `coupon_num` int(11) NOT NULL,
   `price` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- 傾印資料表的資料 `simplemealcoupon`
+--
+
+INSERT INTO `simplemealcoupon` (`combination_sid`, `combination_name`, `description`, `coupon_num`, `price`) VALUES
+(1, '吃飽飽沒煩惱組合', '(包含20張餐卷, 加贈5張免費餐券)', 25, 7000),
+(2, '食在很滿足組合', '(包含10張餐卷, 加贈2張免費餐券)', 12, 1700),
+(3, '經濟實惠組', '(包含5張餐卷, 加贈1張免費餐券)', 6, 850);
 
 -- --------------------------------------------------------
 
@@ -560,6 +663,15 @@ CREATE TABLE `surprisekitchen_order` (
   `check_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- 傾印資料表的資料 `surprisekitchen_order`
+--
+
+INSERT INTO `surprisekitchen_order` (`sid`, `member_number`, `order_sid`, `reservation_date`, `reservation_time`, `num_adult`, `num_child`, `adult_price`, `child_price`, `num_meal`, `remark`, `reservation_price`, `payment_method`, `check_date`) VALUES
+(1, 20210001, 509572501, '2021-02-19', '10:00', 1, 1, 500, 100, 2, NULL, 600, NULL, '2021-02-05 14:40:00'),
+(2, 20210001, 509572502, '2021-02-26', '14:00', 2, 1, 500, 100, 3, '不吃牛肉', 1100, NULL, '2021-02-05 14:43:37'),
+(3, 20210001, 509572503, '2021-02-27', '18:00', 1, 2, 500, 100, 3, '素', 700, NULL, '2021-02-05 14:44:37');
+
 -- --------------------------------------------------------
 
 --
@@ -574,6 +686,14 @@ CREATE TABLE `surprise_comment` (
   `comment` varchar(255) DEFAULT NULL,
   `builded_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- 傾印資料表的資料 `surprise_comment`
+--
+
+INSERT INTO `surprise_comment` (`sid`, `member_number`, `nickname`, `used_date`, `comment`, `builded_date`) VALUES
+(1, 20210001, '小明', '2021-02-19', '場地很乾淨, 食材很新鮮', '2021-02-20'),
+(2, 20210002, '小王', '2021-02-26', '很好玩', '2021-02-27');
 
 -- --------------------------------------------------------
 
@@ -791,13 +911,13 @@ ALTER TABLE `trigger_describe`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `cart_mealdelivery`
 --
 ALTER TABLE `cart_mealdelivery`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `cart_simplemealcoupon`
 --
 ALTER TABLE `cart_simplemealcoupon`
-  MODIFY `order_sid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2021020402;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `categories_1`
@@ -809,19 +929,19 @@ ALTER TABLE `categories_1`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `comment_get_good`
 --
 ALTER TABLE `comment_get_good`
-  MODIFY `good_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '流水號';
+  MODIFY `good_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '流水號', AUTO_INCREMENT=2;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `exchange_good`
 --
 ALTER TABLE `exchange_good`
-  MODIFY `good_ID` int(6) NOT NULL AUTO_INCREMENT COMMENT '優惠編號', AUTO_INCREMENT=3;
+  MODIFY `good_ID` int(6) NOT NULL AUTO_INCREMENT COMMENT '優惠編號', AUTO_INCREMENT=9;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `history_mealdelivery`
 --
 ALTER TABLE `history_mealdelivery`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2147483648;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `ingredients`
@@ -836,6 +956,12 @@ ALTER TABLE `meal`
   MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
+-- 使用資料表自動遞增(AUTO_INCREMENT) `membercenter`
+--
+ALTER TABLE `membercenter`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- 使用資料表自動遞增(AUTO_INCREMENT) `milestone_manager`
 --
 ALTER TABLE `milestone_manager`
@@ -845,7 +971,7 @@ ALTER TABLE `milestone_manager`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `partner`
 --
 ALTER TABLE `partner`
-  MODIFY `vender_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '廠商ID';
+  MODIFY `vender_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '廠商ID', AUTO_INCREMENT=2;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `recipe`
@@ -857,37 +983,37 @@ ALTER TABLE `recipe`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `recipe_comment`
 --
 ALTER TABLE `recipe_comment`
-  MODIFY `comment_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '評論id';
+  MODIFY `comment_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '評論id', AUTO_INCREMENT=2;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `recipe_get_good`
 --
 ALTER TABLE `recipe_get_good`
-  MODIFY `good_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '流水號';
+  MODIFY `good_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '流水號', AUTO_INCREMENT=2;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `share_recipe`
 --
 ALTER TABLE `share_recipe`
-  MODIFY `recipe_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '食譜id';
+  MODIFY `recipe_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '食譜id', AUTO_INCREMENT=2;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `share_recipe_ingredients`
 --
 ALTER TABLE `share_recipe_ingredients`
-  MODIFY `sid` int(10) NOT NULL AUTO_INCREMENT COMMENT '流水號';
+  MODIFY `sid` int(10) NOT NULL AUTO_INCREMENT COMMENT '流水號', AUTO_INCREMENT=2;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `share_recipe_step`
 --
 ALTER TABLE `share_recipe_step`
-  MODIFY `recipe_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '食譜流水號';
+  MODIFY `recipe_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '食譜流水號', AUTO_INCREMENT=2;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `simplemealcoupon`
 --
 ALTER TABLE `simplemealcoupon`
-  MODIFY `combination_sid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `combination_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `test`
