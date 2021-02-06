@@ -106,6 +106,9 @@ app.get("/", (req, res) => {
 // 測試模組
 app.use("/test", require(__dirname + "/routes/test"));
 
+// 購物車餐券模組
+app.use("/simplemealcoupon", require(__dirname + "/routes/simpleMealCoupon"));
+
 app.get("/getdata", async (req, res) => {
   const [result] = await db.query("SELECT * FROM `test`");
   res.json(result);
