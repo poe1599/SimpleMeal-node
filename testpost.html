@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form id="form01" onsubmit="postsidtodatabase(); return false">
+        <label for="sid">meal sid</label>
+        <input type="text" name='sid'>
+        <button type="submit">送出</button>
+        <!-- onclick="postsidtodatabase()" -->
+    </form>
+    <script>
+        function postsidtodatabase() {
+            const fd = new FormData(document.querySelector('#form01'));
+
+            fetch('http://localhost:4000/test/postmealsid', {
+                method: 'post',
+                body: fd
+            })
+                .then(r => r.json())
+                .then(obj => {
+                    console.log(obj);
+                })
+
+        }
+    </script>
+</body>
+
+</html>

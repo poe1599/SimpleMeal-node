@@ -26,9 +26,8 @@ const moment = require("moment-timezone");
 // multer處理上傳檔案
 const multer = require("multer");
 
-// const upload = multer({ dest:'tmp_uploads/'});
 // 自訂上傳js
-// const upload = require(__dirname + "/modules/upload-imgs");
+const upload = require(__dirname + "/modules/upload-imgs");
 
 // 導入資料庫連線的js檔
 const db = require(__dirname + "/modules/db_connect2");
@@ -101,7 +100,7 @@ app.use((req, res, next) => {
 
 // 首頁
 app.get("/", (req, res) => {
-  res.render("index", { shortText: "現在暫時是首頁" });
+  res.render("index", { shortText: "這裡是後端伺服器, 你來錯地方了" });
 });
 
 // 測試模組
