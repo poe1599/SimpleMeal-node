@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2021-02-08 04:13:19
+-- 產生時間： 2021-02-08 11:27:37
 -- 伺服器版本： 10.4.16-MariaDB
 -- PHP 版本： 7.3.24
 
@@ -664,6 +664,9 @@ CREATE TABLE `surprisekitchen_order` (
   `num_meal` int(11) NOT NULL,
   `remark` varchar(255) DEFAULT NULL,
   `reservation_price` int(11) NOT NULL,
+  `reservation_name` varchar(255) DEFAULT NULL,
+  `reservation_tel` varchar(255) DEFAULT NULL,
+  `reservation_email` varchar(255) DEFAULT NULL,
   `payment_method` varchar(255) DEFAULT NULL,
   `check_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -672,10 +675,10 @@ CREATE TABLE `surprisekitchen_order` (
 -- 傾印資料表的資料 `surprisekitchen_order`
 --
 
-INSERT INTO `surprisekitchen_order` (`sid`, `member_number`, `order_sid`, `reservation_date`, `reservation_time`, `num_adult`, `num_child`, `adult_price`, `child_price`, `num_meal`, `remark`, `reservation_price`, `payment_method`, `check_date`) VALUES
-(1, 20210001, 509572501, '2021-02-19', '10:00', 1, 1, 500, 100, 2, NULL, 600, NULL, '2021-02-05 14:40:00'),
-(2, 20210001, 509572502, '2021-02-26', '14:00', 2, 1, 500, 100, 3, '不吃牛肉', 1100, NULL, '2021-02-05 14:43:37'),
-(3, 20210001, 509572503, '2021-02-27', '18:00', 1, 2, 500, 100, 3, '素', 700, NULL, '2021-02-05 14:44:37');
+INSERT INTO `surprisekitchen_order` (`sid`, `member_number`, `order_sid`, `reservation_date`, `reservation_time`, `num_adult`, `num_child`, `adult_price`, `child_price`, `num_meal`, `remark`, `reservation_price`, `reservation_name`, `reservation_tel`, `reservation_email`, `payment_method`, `check_date`) VALUES
+(1, 20210001, 509572501, '2021-02-19', '10:00', 1, 1, 500, 100, 2, NULL, 600, NULL, NULL, NULL, NULL, '2021-02-05 14:40:00'),
+(2, 20210001, 509572502, '2021-02-26', '14:00', 2, 1, 500, 100, 3, '不吃牛肉', 1100, NULL, NULL, NULL, NULL, '2021-02-05 14:43:37'),
+(3, 20210001, 509572503, '2021-02-27', '18:00', 1, 2, 500, 100, 3, '素', 700, NULL, NULL, NULL, NULL, '2021-02-05 14:44:37');
 
 -- --------------------------------------------------------
 
