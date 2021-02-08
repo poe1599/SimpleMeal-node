@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： localhost
--- 產生時間： 2021 年 02 月 08 日 02:53
+-- 產生時間： 2021 年 02 月 08 日 03:07
 -- 伺服器版本： 10.4.17-MariaDB
 -- PHP 版本： 7.4.12
 
@@ -433,17 +433,19 @@ CREATE TABLE `milestone_user` (
   `event_time` datetime NOT NULL COMMENT '兌換的觸發時間',
   `memner_number` int(11) NOT NULL COMMENT '該會員的ID',
   `discount` int(11) DEFAULT NULL,
-  `discount_code` varchar(255) NOT NULL
+  `discount_code` varchar(255) NOT NULL,
+  `used_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- 傾印資料表的資料 `milestone_user`
 --
 
-INSERT INTO `milestone_user` (`exchange_sid`, `spend_point`, `event_time`, `memner_number`, `discount`, `discount_code`) VALUES
-(1, 100, '2020-12-25 01:40:09', 1, NULL, ''),
-(2, 100, '2020-12-25 01:57:48', 1, NULL, ''),
-(5, 100, '2020-12-25 02:18:34', 1, 50, '');
+INSERT INTO `milestone_user` (`exchange_sid`, `spend_point`, `event_time`, `memner_number`, `discount`, `discount_code`, `used_date`) VALUES
+(1, 100, '2020-12-25 01:40:09', 1, NULL, '', '0000-00-00 00:00:00'),
+(2, 100, '2020-12-25 01:57:48', 1, NULL, '', '0000-00-00 00:00:00'),
+(5, 100, '2020-12-25 02:18:34', 1, 50, '', '0000-00-00 00:00:00'),
+(5, 100, '2021-02-08 10:05:07', 1, 50, '', NULL);
 
 -- --------------------------------------------------------
 
