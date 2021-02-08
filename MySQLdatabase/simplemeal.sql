@@ -2,10 +2,10 @@
 -- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- 主機： 127.0.0.1
--- 產生時間： 2021-02-05 08:25:39
--- 伺服器版本： 10.4.16-MariaDB
--- PHP 版本： 7.3.24
+-- 主機： localhost
+-- 產生時間： 2021 年 02 月 08 日 02:53
+-- 伺服器版本： 10.4.17-MariaDB
+-- PHP 版本： 7.4.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -431,17 +431,19 @@ CREATE TABLE `milestone_user` (
   `exchange_sid` int(6) NOT NULL COMMENT '兌換商品編號',
   `spend_point` int(6) NOT NULL DEFAULT 0 COMMENT '花費的點數',
   `event_time` datetime NOT NULL COMMENT '兌換的觸發時間',
-  `memner_number` int(11) NOT NULL COMMENT '該會員的ID'
+  `memner_number` int(11) NOT NULL COMMENT '該會員的ID',
+  `discount` int(11) DEFAULT NULL,
+  `discount_code` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- 傾印資料表的資料 `milestone_user`
 --
 
-INSERT INTO `milestone_user` (`exchange_sid`, `spend_point`, `event_time`, `memner_number`) VALUES
-(1, 40, '2020-12-25 01:40:09', 1),
-(2, 45, '2020-12-25 01:57:48', 1),
-(1, 40, '2020-12-25 02:18:34', 1);
+INSERT INTO `milestone_user` (`exchange_sid`, `spend_point`, `event_time`, `memner_number`, `discount`, `discount_code`) VALUES
+(1, 100, '2020-12-25 01:40:09', 1, NULL, ''),
+(2, 100, '2020-12-25 01:57:48', 1, NULL, ''),
+(5, 100, '2020-12-25 02:18:34', 1, 50, '');
 
 -- --------------------------------------------------------
 
