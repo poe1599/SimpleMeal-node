@@ -29,11 +29,17 @@ router.get("/getorder", async (req, res) => {
     "SELECT * FROM `surprisekitchen_order` WHERE `member_number` = ? and `check_date` is null ",
     [member_number]
   );
+  // console.log(row);
+  if (row.length !== 1) {
+    res.json([{ sid: 0 }]);
+  } else {
+    // 處理日期格式
+    row[0].reservation_date = moment(row[0].reservation_date).format(
+      "YYYY-MM-DD"
+    );
 
-  // 處理日期格式
-  row[0].reservation_date = moment(row[0].reservation_date).format("YYYY-MM-DD");
-
-  res.json(row);
+    res.json(row);
+  }
 });
 
 // 用query string拿資料
