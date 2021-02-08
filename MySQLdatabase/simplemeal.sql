@@ -2,10 +2,10 @@
 -- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- 主機： localhost
--- 產生時間： 2021 年 02 月 08 日 03:07
--- 伺服器版本： 10.4.17-MariaDB
--- PHP 版本： 7.4.12
+-- 主機： 127.0.0.1
+-- 產生時間： 2021-02-08 04:13:19
+-- 伺服器版本： 10.4.16-MariaDB
+-- PHP 版本： 7.3.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -381,15 +381,16 @@ CREATE TABLE `membercenter` (
   `birthday` date NOT NULL,
   `credit＿card` varchar(255) NOT NULL,
   `addr` varchar(255) NOT NULL,
-  `love` varchar(255) DEFAULT NULL
+  `love` varchar(255) DEFAULT NULL,
+  `simplemeal_coupon` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- 傾印資料表的資料 `membercenter`
 --
 
-INSERT INTO `membercenter` (`id`, `member_number`, `avater`, `level`, `email`, `password`, `name`, `nickname`, `mobile`, `birthday`, `credit＿card`, `addr`, `love`) VALUES
-(1, '20210001', 'avatar01.jpg', 'vip會員', 'GoodGoodEat@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '王曉明', '小明', '0945456321', '1990-10-10', '1234-1234-1234-1234', '台北市大安區復興南路一段390號2樓', '1,2,3');
+INSERT INTO `membercenter` (`id`, `member_number`, `avater`, `level`, `email`, `password`, `name`, `nickname`, `mobile`, `birthday`, `credit＿card`, `addr`, `love`, `simplemeal_coupon`) VALUES
+(1, '20210001', 'avatar01.jpg', 'vip會員', 'GoodGoodEat@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '王曉明', '小明', '0945456321', '1990-10-10', '1234-1234-1234-1234', '台北市大安區復興南路一段390號2樓', '1,2,3', 100);
 
 -- --------------------------------------------------------
 
@@ -442,9 +443,9 @@ CREATE TABLE `milestone_user` (
 --
 
 INSERT INTO `milestone_user` (`exchange_sid`, `spend_point`, `event_time`, `memner_number`, `discount`, `discount_code`, `used_date`) VALUES
-(1, 100, '2020-12-25 01:40:09', 1, NULL, '', '0000-00-00 00:00:00'),
-(2, 100, '2020-12-25 01:57:48', 1, NULL, '', '0000-00-00 00:00:00'),
-(5, 100, '2020-12-25 02:18:34', 1, 50, '', '0000-00-00 00:00:00'),
+(1, 100, '2020-12-25 01:40:09', 1, NULL, '', NULL),
+(2, 100, '2020-12-25 01:57:48', 1, NULL, '', NULL),
+(5, 100, '2020-12-25 02:18:34', 1, 50, '', NULL),
 (5, 100, '2021-02-08 10:05:07', 1, 50, '', NULL);
 
 -- --------------------------------------------------------
