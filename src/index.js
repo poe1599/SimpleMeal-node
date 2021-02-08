@@ -97,7 +97,6 @@ app.use((req, res, next) => {
   next();
 });
 
-
 // 首頁
 app.get("/", (req, res) => {
   res.render("index", { shortText: "這裡是後端伺服器, 你來錯地方了" });
@@ -108,6 +107,9 @@ app.use("/test", require(__dirname + "/routes/test"));
 
 // 購物車餐券模組
 app.use("/simplemealcoupon", require(__dirname + "/routes/simpleMealCoupon"));
+
+// 預約廚房模組
+app.use("/reservekitchen", require(__dirname + "/routes/reserveKitchen"));
 
 app.get("/getdata", async (req, res) => {
   const [result] = await db.query("SELECT * FROM `test`");
