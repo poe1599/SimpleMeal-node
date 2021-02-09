@@ -42,6 +42,26 @@ router.get("/getorder", async (req, res) => {
   }
 });
 
+router.post("/ordercheck", upload.none(), async (req, res) => {
+  const member_number = "20210001";
+  const order_sid = (+new Date()).toString().slice(4);
+  const [
+    row,
+  ] = await db.query(
+    "UPDATE `surprisekitchen_order` SET `order_sid` = ?, `reservation_name` = ?, `reservation_tel` = ?, `reservation_email` = ?, `payment_method` = ?, `check_date` = NOW()  WHERE`member_number` = ? and`check_date` is null",
+    [
+      order_sid,
+      req.body.reservation_name,
+      req.body.reservation_tel,
+      req.body.reservation_email,
+      req.body.payment_method,
+      member_number,
+    ]
+  );
+  const result = { order_sid: order_sid };
+  res.json(result);
+});
+
 // 用query string拿資料
 // http://localhost:4000/test/getmealbyquery?sid=1
 // router.get("/getmealbyquery", async (req, res) => {

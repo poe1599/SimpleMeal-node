@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2021-02-08 11:27:37
+-- 產生時間： 2021-02-09 05:15:16
 -- 伺服器版本： 10.4.16-MariaDB
 -- PHP 版本： 7.3.24
 
@@ -65,6 +65,7 @@ CREATE TABLE `cart_simplemealcoupon` (
   `quantity` int(11) NOT NULL DEFAULT 1,
   `total_coupon_num` int(11) NOT NULL,
   `total_price` int(11) NOT NULL,
+  `payment_method` varchar(255) DEFAULT NULL,
   `check_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -72,10 +73,15 @@ CREATE TABLE `cart_simplemealcoupon` (
 -- 傾印資料表的資料 `cart_simplemealcoupon`
 --
 
-INSERT INTO `cart_simplemealcoupon` (`order_sid`, `member_sid`, `combination_sid`, `combination_name`, `description`, `quantity`, `total_coupon_num`, `total_price`, `check_date`) VALUES
-(509572507, 1, 1, '吃飽飽沒煩惱組合', '(包含20張餐卷, 加贈5張免費餐券)', 1, 25, 7000, '2021-02-02 13:01:58'),
-(509572508, 1, 2, '食在很滿足組合', '(包含10張餐卷, 加贈2張免費餐券)', 1, 12, 1700, '2021-02-03 13:06:11'),
-(509572509, 1, 3, '經濟實惠組', '(包含5張餐卷, 加贈1張免費餐券)', 1, 6, 850, '2021-02-04 13:07:18');
+INSERT INTO `cart_simplemealcoupon` (`order_sid`, `member_sid`, `combination_sid`, `combination_name`, `description`, `quantity`, `total_coupon_num`, `total_price`, `payment_method`, `check_date`) VALUES
+(509572507, 1, 1, '吃飽飽沒煩惱組合', '(包含20張餐卷, 加贈5張免費餐券)', 1, 25, 7000, '信用卡線上刷卡一次付清', '2021-02-02 13:01:58'),
+(509572508, 1, 2, '食在很滿足組合', '(包含10張餐卷, 加贈2張免費餐券)', 1, 12, 1700, '銀聯卡', '2021-02-03 13:06:11'),
+(509572509, 1, 3, '經濟實惠組', '(包含5張餐卷, 加贈1張免費餐券)', 1, 6, 850, '信用卡線上刷卡一次付清', '2021-02-04 13:07:18'),
+(768452336, 1, 2, '食在很滿足組合', '(包含10張餐卷, 加贈2張免費餐券)', 3, 36, 5100, 'LINE PAY', '2021-02-08 15:14:12'),
+(773683259, 1, 2, '食在很滿足組合', '(包含10張餐卷, 加贈2張免費餐券)', 3, 36, 5000, '信用卡線上刷卡一次付清', '2021-02-08 16:41:23'),
+(773788123, 1, 1, '吃飽飽沒煩惱組合', '(包含20張餐卷, 加贈5張免費餐券)', 4, 100, 14000, 'LINE PAY', '2021-02-08 16:43:08'),
+(783950920, 1, 3, '經濟實惠組', '(包含5張餐卷, 加贈1張免費餐券)', 1, 6, 750, '銀聯卡', '2021-02-08 19:32:30'),
+(836190369, 1, 1, '吃飽飽沒煩惱組合', '(包含20張餐卷, 加贈5張免費餐券)', 3, 75, 10400, 'LINE PAY', '2021-02-09 10:03:10');
 
 -- --------------------------------------------------------
 
@@ -557,6 +563,18 @@ INSERT INTO `recipe_get_good` (`good_id`, `recipe_id`, `id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- 資料表結構 `sessions`
+--
+
+CREATE TABLE `sessions` (
+  `session_id` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `expires` int(11) UNSIGNED NOT NULL,
+  `data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- 資料表結構 `share_recipe`
 --
 
@@ -676,8 +694,8 @@ CREATE TABLE `surprisekitchen_order` (
 --
 
 INSERT INTO `surprisekitchen_order` (`sid`, `member_number`, `order_sid`, `reservation_date`, `reservation_time`, `num_adult`, `num_child`, `adult_price`, `child_price`, `num_meal`, `remark`, `reservation_price`, `reservation_name`, `reservation_tel`, `reservation_email`, `payment_method`, `check_date`) VALUES
-(1, 20210001, 509572501, '2021-02-19', '10:00', 1, 1, 500, 100, 2, NULL, 600, NULL, NULL, NULL, NULL, '2021-02-05 14:40:00'),
-(2, 20210001, 509572502, '2021-02-26', '14:00', 2, 1, 500, 100, 3, '不吃牛肉', 1100, NULL, NULL, NULL, NULL, '2021-02-05 14:43:37'),
+(1, 20210001, 843838714, '2021-02-19', '10:00', 1, 2, 500, 100, 2, '不要香菜 不要蔥 不要豬肉', 600, 'DD', 'DDD', 'DDDDD', '銀聯卡', '2021-02-09 12:10:38'),
+(2, 20210001, 509572502, '2021-02-26', '14:00', 2, 1, 500, 100, 3, '不吃牛肉', 1100, NULL, NULL, NULL, NULL, '2021-02-05 11:31:32'),
 (3, 20210001, 509572503, '2021-02-27', '18:00', 1, 2, 500, 100, 3, '素', 700, NULL, NULL, NULL, NULL, '2021-02-05 14:44:37');
 
 -- --------------------------------------------------------
@@ -855,6 +873,12 @@ ALTER TABLE `recipe_comment`
 --
 ALTER TABLE `recipe_get_good`
   ADD PRIMARY KEY (`good_id`);
+
+--
+-- 資料表索引 `sessions`
+--
+ALTER TABLE `sessions`
+  ADD PRIMARY KEY (`session_id`);
 
 --
 -- 資料表索引 `share_recipe`

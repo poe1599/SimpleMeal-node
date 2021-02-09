@@ -27,7 +27,7 @@ router.post("/addcheck", upload.none(), async (req, res) => {
   const [
     row,
   ] = await db.query(
-    "INSERT INTO `cart_simplemealcoupon`(`order_sid`,`member_sid`, `combination_sid`, `combination_name`, `description`, `quantity`, `total_coupon_num`, `total_price`, `check_date`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())",
+    "INSERT INTO `cart_simplemealcoupon`(`order_sid`,`member_sid`, `combination_sid`, `combination_name`, `description`, `quantity`, `total_coupon_num`, `total_price`, payment_method ,`check_date`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())",
     [
       order_sid,
       member_sid,
@@ -37,6 +37,7 @@ router.post("/addcheck", upload.none(), async (req, res) => {
       req.body.quantity,
       req.body.total_coupon_num,
       req.body.total_price,
+      req.body.payment_method,
     ]
   );
   const result = { order_sid: order_sid };
