@@ -108,6 +108,9 @@ app.use("/test", require(__dirname + "/routes/test"));
 // 購物車餐券模組
 app.use("/simplemealcoupon", require(__dirname + "/routes/simpleMealCoupon"));
 
+// 餐點配送模組
+app.use("/mealdelivery", require(__dirname + "/routes/mealDelivery"));
+
 // 預約廚房模組
 app.use("/reservekitchen", require(__dirname + "/routes/reserveKitchen"));
 
