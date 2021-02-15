@@ -19,31 +19,6 @@ router.use((req, res, next) => {
   next();
 });
 
-// 單純拿全部
-// http://localhost:4000/simplemealcoupon/addcheck
-// router.post("/addcheck", upload.none(), async (req, res) => {
-//   const member_sid = "1";
-//   const order_sid = (+new Date()).toString().slice(4);
-//   const [
-//     row,
-//   ] = await db.query(
-//     "INSERT INTO `cart_simplemealcoupon`(`order_sid`,`member_sid`, `combination_sid`, `combination_name`, `description`, `quantity`, `total_coupon_num`, `total_price`, payment_method ,`check_date`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())",
-//     [
-//       order_sid,
-//       member_sid,
-//       req.body.combination_sid,
-//       req.body.combination_name,
-//       req.body.description,
-//       req.body.quantity,
-//       req.body.total_coupon_num,
-//       req.body.total_price,
-//       req.body.payment_method,
-//     ]
-//   );
-//   const result = { order_sid: order_sid };
-//   res.json(result);
-// });
-
 // 拿資料
 // http://localhost:4000/mealdelivery/getdeliverycart
 router.get("/getdeliverycart", async (req, res) => {
@@ -84,49 +59,35 @@ router.get("/setmealquantity", async (req, res) => {
   }
 });
 
-router.get("/setallthistime", async (req, res) => {
+// 改這次
+router.get("/tothistime", async (req, res) => {
   const member_sid = "1";
-  const [
-    result,
-  ] = await db.query(
-    "UPDATE `cart_mealdelivery` SET `next_time`= 0 WHERE `member_sid`= ? and `next_time`= 1",
-    [member_sid]
-  );
-  res.json({ success: true, msg: "set all this time" });
+  const sidArray = req.query.str.split(",");
+  sidArray.map(async(v, i) => {
+    const [result] = await db.query(
+      "UPDATE `cart_mealdelivery` SET `next_time`= 0 WHERE `member_sid`= ? and `sid`= ?",
+     [member_sid,v]
+    );
+  });
+  res.json({ success: true, msg: "set this time", sidArray: sidArray });
 });
 
-router.get("/setallnexttime", async (req, res) => {
+// 改下次
+router.get("/tonexttime", async (req, res) => {
   const member_sid = "1";
-  const [
-    result,
-  ] = await db.query(
-    "UPDATE `cart_mealdelivery` SET `next_time`= 1 WHERE `member_sid`= ? and `next_time`= 0",
-    [member_sid]
-  );
-  res.json({ success: true, msg: "set all next time" });
+  const sidArray = req.query.str.split(",");
+  sidArray.map(async(v, i) => {
+    const [result] = await db.query(
+      "UPDATE `cart_mealdelivery` SET `next_time`= 1 WHERE `member_sid`= ? and `sid`= ?",
+     [member_sid,v]
+    );
+  });
+  res.json({ success: true, msg: "set next time", sidArray: sidArray });
 });
 
-// // 用params拿資料
-// // http://localhost:4000/test/getmealbyparams/1
-// router.get("/getmealbyparams/:sid?", async (req, res) => {
-//   const [result] = await db.query("select * from `meal` where `sid` = ?", [
-//     req.params.sid,
-//   ]);
-//   res.json(result);
-// });
-
-// // 用post提供資料庫訊息
-// // http://localhost:4000/test/postmealsid (用POSTMAN測試 或 用Live server打開根目錄的testpost.html)
-// router.post("/postmealsid", upload.none(), async (req, res) => {
-//   const [result] = await db.query("select * from `meal` where `sid` = ?", [
-//     req.body.sid,
-//   ]);
-//   res.json(result);
-// });
-
-// router.use((req, res) => {
-//   res.type("text/plain");
-//   res.status(404).send("有問題喔 找不到頁面 你還是多看幾次吧");
-// });
+router.use((req, res) => {
+  res.type("text/plain");
+  res.status(404).send("有問題喔 找不到頁面 你還是多看幾次吧");
+});
 
 module.exports = router;
