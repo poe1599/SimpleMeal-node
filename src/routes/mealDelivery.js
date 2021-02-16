@@ -23,19 +23,42 @@ router.use((req, res, next) => {
 // http://localhost:4000/mealdelivery/getdeliverycart
 router.get("/getdeliverycart", async (req, res) => {
   const member_sid = "1";
+  // 這次
   const [
     thisTime,
   ] = await db.query(
     "select * from `cart_mealdelivery` where `member_sid` = ? and `next_time` = 0",
     [member_sid]
   );
+  // 下次
   const [
     nextTime,
   ] = await db.query(
     "select * from `cart_mealdelivery` where `member_sid` = ? and `next_time` = 1",
     [member_sid]
   );
-  res.json({ thisTime, nextTime });
+  // 餐券數
+  const [
+    myCoupon,
+  ] = await db.query(
+    "select `simplemeal_coupon` from `membercenter` where `id` = ?",
+    [member_sid]
+  );
+
+  // 計算這次消耗餐券
+  let cost = 0;
+  thisTime.forEach((el) => {
+    cost += el.quantity;
+  });
+
+  // 提供總計
+  const simpleMealCoupon = {
+    now: myCoupon[0].simplemeal_coupon,
+    cost: cost,
+    remain: myCoupon[0].simplemeal_coupon - cost,
+  };
+
+  res.json({ thisTime, nextTime, simpleMealCoupon });
 });
 
 // 改變數量
@@ -63,10 +86,12 @@ router.get("/setmealquantity", async (req, res) => {
 router.get("/tothistime", async (req, res) => {
   const member_sid = "1";
   const sidArray = req.query.str.split(",");
-  sidArray.map(async(v, i) => {
-    const [result] = await db.query(
+  sidArray.map(async (v, i) => {
+    const [
+      result,
+    ] = await db.query(
       "UPDATE `cart_mealdelivery` SET `next_time`= 0 WHERE `member_sid`= ? and `sid`= ?",
-     [member_sid,v]
+      [member_sid, v]
     );
   });
   res.json({ success: true, msg: "set this time", sidArray: sidArray });
@@ -76,13 +101,93 @@ router.get("/tothistime", async (req, res) => {
 router.get("/tonexttime", async (req, res) => {
   const member_sid = "1";
   const sidArray = req.query.str.split(",");
-  sidArray.map(async(v, i) => {
-    const [result] = await db.query(
+  sidArray.map(async (v, i) => {
+    const [
+      result,
+    ] = await db.query(
       "UPDATE `cart_mealdelivery` SET `next_time`= 1 WHERE `member_sid`= ? and `sid`= ?",
-     [member_sid,v]
+      [member_sid, v]
     );
   });
   res.json({ success: true, msg: "set next time", sidArray: sidArray });
+});
+
+// 送出訂單
+router.post("/ordercheck", upload.none(), async (req, res) => {
+  const member_sid = "1";
+  const order_sid = (+new Date()).toString().slice(4);
+
+  // 拿到有哪些這次要送的
+  const [
+    row,
+  ] = await db.query(
+    "select * from `cart_mealdelivery` where `member_sid`= ? and `next_time`= 0",
+    [member_sid]
+  );
+
+  // 刪掉配送購物車
+  // const [
+  //   deleteRow,
+  // ] = await db.query(
+  //   "delete from `cart_mealdelivery` where `member_sid`= ? and `next_time`= 0",
+  //   [member_sid]
+  // );
+
+  let meal_sid = "";
+  let meal_name = "";
+  let quantity = "";
+  let costCoupon = 0;
+  row.forEach((v, i) => {
+    if (meal_sid == "") {
+      meal_sid = v.meal_sid;
+    } else {
+      meal_sid += `,${v.meal_sid}`;
+    }
+
+    if (meal_name == "") {
+      meal_name = v.meal_name;
+    } else {
+      meal_name += `,${v.meal_name}`;
+    }
+
+    if (quantity == "") {
+      quantity = v.quantity;
+    } else {
+      quantity += `,${v.quantity}`;
+    }
+
+    costCoupon += v.quantity;
+  });
+
+  // 新的歷史紀錄
+  const [
+    newOrder,
+  ] = await db.query(
+    "INSERT INTO `history_mealdelivery`(`sid`, `member_sid`, `meal_sid`, `meal_name`, `quantity`, `member_name`, `mobile`, `address`, `delivery_date`, `delivery_time`, `check_date`) VALUES (? , ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())",
+    [
+      order_sid,
+      member_sid,
+      meal_sid,
+      meal_name,
+      quantity,
+      req.body.name,
+      req.body.mobile,
+      req.body.address,
+      req.body.date,
+      req.body.time,
+    ]
+  );
+
+  // 會員中心減去消耗的餐券
+  const [
+    newMemberCenter,
+  ] = await db.query(
+    "UPDATE `membercenter` SET `simplemeal_coupon`=`simplemeal_coupon` - ? where `id`= ?",
+    [costCoupon, member_sid]
+  );
+
+  const result = { order_sid: order_sid };
+  res.json(result);
 });
 
 router.use((req, res) => {
