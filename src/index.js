@@ -114,6 +114,12 @@ app.use("/mealdelivery", require(__dirname + "/routes/mealDelivery"));
 // 預約廚房模組
 app.use("/reservekitchen", require(__dirname + "/routes/reserveKitchen"));
 
+// 成就模組
+app.use("/milestone", require(__dirname + "/routes/milestone"));
+
+// 獎勵模組
+app.use("/reward", require(__dirname + "/routes/reward"));
+
 app.get("/getdata", async (req, res) => {
   const [result] = await db.query("SELECT * FROM `test`");
   res.json(result);
