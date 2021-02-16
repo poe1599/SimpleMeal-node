@@ -26,14 +26,15 @@ router.use((req, res, next) => {
 //   res.json(result);
 // });
 
-// // 用query string拿資料
-// // http://localhost:4000/test/getmealbyquery?sid=1
-// router.get("/getmealbyquery", async (req, res) => {
-//   const [result] = await db.query("select * from `meal` where `sid` = ?", [
-//     req.query.sid,
-//   ]);
-//   res.json(result);
-// });
+// 用query string拿資料
+// http://localhost:4000/test/getmealbyquery?sid=1
+router.get("/getMilestoneList", async (req, res) => {
+
+  const result = await db.query("select * from (select m.milestone_sid, m.stone_name, m.progress_goal, m.reward_point, m.subs, m.event_startime, m.event_endtime, m.unfinished_goal_pic, m.finished_goal_pic, sum(e.add_progress) AddProgress, t.Subs TriggerSubs from milestone_manager m join trigger_describe t left join event_record e on e.event_time > m.event_startime and (m.event_endtime> e.event_time or m.event_endtime is null) and e.member_number = ? and m.event_trigger = e.event_trigger and m.event_trigger = t.trigger_ID GROUP by m.Milestone_sid) temp", [
+    req.query.sid,
+  ]);
+  res.json(result[0]);
+});
 
 // // 用params拿資料
 // // http://localhost:4000/test/getmealbyparams/1
@@ -47,7 +48,7 @@ router.use((req, res, next) => {
 // 用post提供資料庫訊息
 // http://localhost:4000/test/postmealsid (用POSTMAN測試 或 用Live server打開根目錄的testpost.html)
 router.post("/postmealsid", upload.none(), async (req, res) => {
-  const [result] = await db.query("select * from `meal` where `sid` = ?", [
+  const result = await db.query("select * from `meal` where `sid` = ?", [
     req.body.sid,
   ]);
   res.json(result);
