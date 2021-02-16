@@ -19,7 +19,7 @@ router.use((req, res, next) => {
   next();
 });
 
-// 單純拿全部
+// 買餐券
 // http://localhost:4000/simplemealcoupon/addcheck
 router.post("/addcheck", upload.none(), async (req, res) => {
   const member_sid = "1";
@@ -40,6 +40,15 @@ router.post("/addcheck", upload.none(), async (req, res) => {
       req.body.payment_method,
     ]
   );
+
+ // 會員中心增加餐券
+ const [
+  newMemberCenter,
+] = await db.query(
+  "UPDATE `membercenter` SET `simplemeal_coupon`=`simplemeal_coupon` + ? where `id`= ?",
+  [req.body.total_coupon_num, member_sid]
+);
+
   const result = { order_sid: order_sid };
   res.json(result);
 });
