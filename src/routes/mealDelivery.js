@@ -23,19 +23,42 @@ router.use((req, res, next) => {
 // http://localhost:4000/mealdelivery/getdeliverycart
 router.get("/getdeliverycart", async (req, res) => {
   const member_sid = "1";
+  // 這次
   const [
     thisTime,
   ] = await db.query(
     "select * from `cart_mealdelivery` where `member_sid` = ? and `next_time` = 0",
     [member_sid]
   );
+  // 下次
   const [
     nextTime,
   ] = await db.query(
     "select * from `cart_mealdelivery` where `member_sid` = ? and `next_time` = 1",
     [member_sid]
   );
-  res.json({ thisTime, nextTime });
+  // 餐券數
+  const [
+    myCoupon,
+  ] = await db.query(
+    "select `simplemeal_coupon` from `membercenter` where `id` = ?",
+    [member_sid]
+  );
+
+  // 計算這次消耗餐券
+  let cost = 0;
+  thisTime.forEach(el => {
+    cost += el.quantity
+  });
+
+  // 提供總計
+  const simpleMealCoupon = {
+    now: myCoupon[0].simplemeal_coupon,
+    cost: cost,
+    remain:myCoupon[0].simplemeal_coupon-cost
+  };
+  
+  res.json({ thisTime, nextTime, simpleMealCoupon });
 });
 
 // 改變數量
@@ -63,10 +86,12 @@ router.get("/setmealquantity", async (req, res) => {
 router.get("/tothistime", async (req, res) => {
   const member_sid = "1";
   const sidArray = req.query.str.split(",");
-  sidArray.map(async(v, i) => {
-    const [result] = await db.query(
+  sidArray.map(async (v, i) => {
+    const [
+      result,
+    ] = await db.query(
       "UPDATE `cart_mealdelivery` SET `next_time`= 0 WHERE `member_sid`= ? and `sid`= ?",
-     [member_sid,v]
+      [member_sid, v]
     );
   });
   res.json({ success: true, msg: "set this time", sidArray: sidArray });
@@ -76,10 +101,12 @@ router.get("/tothistime", async (req, res) => {
 router.get("/tonexttime", async (req, res) => {
   const member_sid = "1";
   const sidArray = req.query.str.split(",");
-  sidArray.map(async(v, i) => {
-    const [result] = await db.query(
+  sidArray.map(async (v, i) => {
+    const [
+      result,
+    ] = await db.query(
       "UPDATE `cart_mealdelivery` SET `next_time`= 1 WHERE `member_sid`= ? and `sid`= ?",
-     [member_sid,v]
+      [member_sid, v]
     );
   });
   res.json({ success: true, msg: "set next time", sidArray: sidArray });
