@@ -19,10 +19,11 @@ router.use((req, res, next) => {
   next();
 });
 
-// 拿資料
+// 拿該會員的配送資料
 // http://localhost:4000/mealdelivery/getdeliverycart
 router.get("/getdeliverycart", async (req, res) => {
   const member_sid = "1";
+
   // 這次
   const [
     thisTime,
@@ -30,6 +31,7 @@ router.get("/getdeliverycart", async (req, res) => {
     "select * from `cart_mealdelivery` where `member_sid` = ? and `next_time` = 0",
     [member_sid]
   );
+
   // 下次
   const [
     nextTime,
@@ -37,7 +39,8 @@ router.get("/getdeliverycart", async (req, res) => {
     "select * from `cart_mealdelivery` where `member_sid` = ? and `next_time` = 1",
     [member_sid]
   );
-  // 餐券數
+
+  // 會員現有餐券數
   const [
     myCoupon,
   ] = await db.query(
@@ -82,7 +85,7 @@ router.get("/setmealquantity", async (req, res) => {
   }
 });
 
-// 改這次
+// 勾選的改這次
 router.get("/tothistime", async (req, res) => {
   const member_sid = "1";
   const sidArray = req.query.str.split(",");
@@ -97,7 +100,7 @@ router.get("/tothistime", async (req, res) => {
   res.json({ success: true, msg: "set this time", sidArray: sidArray });
 });
 
-// 改下次
+// 勾選的改下次
 router.get("/tonexttime", async (req, res) => {
   const member_sid = "1";
   const sidArray = req.query.str.split(",");
