@@ -20,7 +20,7 @@ router.use((req, res, next) => {
 });
 
 //單純拿全部
-// http://localhost:4000/test/getallmeal
+// http://localhost:4000/reservationTimes/getReservationTimes
 router.get("/getReservationTimes", async (req, res) => {
   const [result] = await db.query("SELECT * FROM `surprise_times`");
   res.json(result);
