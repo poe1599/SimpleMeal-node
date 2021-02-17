@@ -85,6 +85,18 @@ router.get("/setmealquantity", async (req, res) => {
   }
 });
 
+// 刪除勾選
+router.get("/deletecheckbox", async (req, res) => {
+  const sidArray = req.query.str.split(",");
+  sidArray.map(async (v, i) => {
+    if (v === "0") return;
+    const [
+      result,
+    ] = await db.query("delete from `cart_mealdelivery` where `sid`= ? ", [v]);
+  });
+  res.json({ success: true, msg: "delete", sidArray: sidArray });
+});
+
 // 勾選的改這次
 router.get("/tothistime", async (req, res) => {
   const member_sid = "1";
