@@ -105,6 +105,9 @@ app.get("/", (req, res) => {
 // 測試模組
 app.use("/test", require(__dirname + "/routes/test"));
 
+// 共享食譜
+app.use("/sharerecipe", require(__dirname + "/routes/sharerecipe"));
+
 // 購物車餐券模組
 app.use("/simplemealcoupon", require(__dirname + "/routes/simpleMealCoupon"));
 
