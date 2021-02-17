@@ -19,7 +19,7 @@ router.use((req, res, next) => {
   next();
 });
 
-// 單純拿全部
+// 拿訂單資料
 // http://localhost:4000/reservekitchen/getorder
 router.get("/getorder", async (req, res) => {
   const member_number = "20210001";
@@ -42,6 +42,7 @@ router.get("/getorder", async (req, res) => {
   }
 });
 
+// 訂單結帳
 router.post("/ordercheck", upload.none(), async (req, res) => {
   const member_number = "20210001";
   const order_sid = (+new Date()).toString().slice(4);
@@ -62,36 +63,9 @@ router.post("/ordercheck", upload.none(), async (req, res) => {
   res.json(result);
 });
 
-// 用query string拿資料
-// http://localhost:4000/test/getmealbyquery?sid=1
-// router.get("/getmealbyquery", async (req, res) => {
-//   const [result] = await db.query("select * from `meal` where `sid` = ?", [
-//     req.query.sid,
-//   ]);
-//   res.json(result);
-// });
-
-// // 用params拿資料
-// // http://localhost:4000/test/getmealbyparams/1
-// router.get("/getmealbyparams/:sid?", async (req, res) => {
-//   const [result] = await db.query("select * from `meal` where `sid` = ?", [
-//     req.params.sid,
-//   ]);
-//   res.json(result);
-// });
-
-// // 用post提供資料庫訊息
-// // http://localhost:4000/test/postmealsid (用POSTMAN測試 或 用Live server打開根目錄的testpost.html)
-// router.post("/postmealsid", upload.none(), async (req, res) => {
-//   const [result] = await db.query("select * from `meal` where `sid` = ?", [
-//     req.body.sid,
-//   ]);
-//   res.json(result);
-// });
-
-// router.use((req, res) => {
-//   res.type("text/plain");
-//   res.status(404).send("有問題喔 找不到頁面 你還是多看幾次吧");
-// });
+router.use((req, res) => {
+  res.type("text/plain");
+  res.status(404).send("有問題喔 找不到頁面 你還是多看幾次吧");
+});
 
 module.exports = router;
