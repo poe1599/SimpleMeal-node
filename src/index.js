@@ -122,6 +122,11 @@ app.use("/reward", require(__dirname + "/routes/reward"));
 
 //餐點模組
 app.use("/meal",require(__dirname + "/routes/meal"))
+//預約廚房場次模組
+app.use("/reservationTimes", require(__dirname + "/routes/reservationTimes"));
+
+//預約廚房模組
+app.use("/surprisekitchenOrder", require(__dirname + "/routes/surprisekitchenOrder"));
 
 app.get("/getdata", async (req, res) => {
   const [result] = await db.query("SELECT * FROM `test`");

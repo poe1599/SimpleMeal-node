@@ -2,10 +2,10 @@
 -- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- 主機： 127.0.0.1
--- 產生時間： 2021-02-16 14:25:32
+-- 主機： localhost
+-- 產生時間： 2021 年 02 月 17 日 05:07
 -- 伺服器版本： 10.4.17-MariaDB
--- PHP 版本： 7.4.13
+-- PHP 版本： 7.4.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -195,14 +195,14 @@ CREATE TABLE `exchange_good` (
 --
 
 INSERT INTO `exchange_good` (`good_ID`, `good_type`, `good_name`, `good_subs`, `need_point`, `good_pic`) VALUES
-(1, 1, '星巴克買一送一', '憑QR CODE可以獲得同口味大小星巴克飲料買一送一', 100, ''),
-(2, 1, '7-11超商折價券50元', '我就是一段唬爛打我啊哈哈笨蛋', 100, ''),
-(3, 1, '全家咖啡買一送一', '憑QR CODE可以獲得同口味咖啡買一送一', 50, ''),
-(4, 1, '7-11超商折價券100元', '我就是一段唬爛打我啊哈哈笨蛋', 200, ''),
-(5, 2, '站內50元折價', '你好我是一個介紹優惠的唬爛，你好我是一個介紹優惠的唬爛，你好我是一個介紹優惠的唬爛', 100, ''),
-(6, 2, '站內100元折價', ' 儘管如此，別人往往卻不這麼想。蕭伯納告訴我們，勞動是惟一導向知識的道路。這段話對世界的改變有著深遠的影響。話雖如此，我們卻也不能夠這麼篤定。', 100, ''),
-(7, 2, '站內150元折價', '如果仔細思考站內優惠，會發現其中蘊含的深遠意義。\r\n對於站內優惠，我們不能不去想，卻也不能走火入魔。', 150, ''),
-(8, 2, '站內200元折價', '我就是一段唬爛打我啊哈哈笨蛋', 200, '');
+(1, 1, '星巴克買一送一', '憑QR CODE可以獲得同口味大小星巴克飲料買一送一', 100, 'rw-example.png'),
+(2, 1, '7-11超商折價券50元', '我就是一段唬爛打我啊哈哈笨蛋', 100, 'rw-example.png'),
+(3, 1, '全家咖啡買一送一', '憑QR CODE可以獲得同口味咖啡買一送一', 50, 'rw-example.png'),
+(4, 1, '7-11超商折價券100元', '我就是一段唬爛打我啊哈哈笨蛋', 200, 'rw-example.png'),
+(5, 2, '站內50元折價', '你好我是一個介紹優惠的唬爛，你好我是一個介紹優惠的唬爛，你好我是一個介紹優惠的唬爛', 100, 'rw-005.png'),
+(6, 2, '站內100元折價', ' 儘管如此，別人往往卻不這麼想。蕭伯納告訴我們，勞動是惟一導向知識的道路。這段話對世界的改變有著深遠的影響。話雖如此，我們卻也不能夠這麼篤定。', 100, 'rw-006.png'),
+(7, 2, '站內150元折價', '如果仔細思考站內優惠，會發現其中蘊含的深遠意義。\r\n對於站內優惠，我們不能不去想，卻也不能走火入魔。', 150, 'rw-example.png'),
+(8, 2, '站內200元折價', '我就是一段唬爛打我啊哈哈笨蛋', 200, 'rw-example.png');
 
 -- --------------------------------------------------------
 
@@ -418,11 +418,14 @@ CREATE TABLE `milestone_manager` (
 --
 
 INSERT INTO `milestone_manager` (`milestone_sid`, `stone_name`, `event_startime`, `event_endtime`, `event_trigger`, `progress_goal`, `reward_point`, `subs`, `unfinished_goal_pic`, `finished_goal_pic`) VALUES
-(1, '累積消費一萬元', '2021-01-01 13:03:00', '2021-01-09 13:03:00', 1, 10000, 200, '累積消費一萬元可得200點', 'unfinished_spend.png', 'spent.png'),
-(2, '累積消費十萬元', '2020-12-23 12:25:00', '2020-12-24 12:09:12', 1, 100000, 1000, '累積消費十萬元可得1000點', 'unfinished_spend.png', 'spent.png'),
-(3, '累積消費五萬元', '2020-12-23 12:25:00', NULL, 1, 50000, 500, '累積消費5萬元可得500點', 'unfinished_spend.png', 'spent.png'),
-(4, '第一筆評論', '2020-01-24 12:32:00', '2020-01-24 12:32:00', 3, 1, 50, '第一次對餐點評分可得50點', 'unfinished_comment.png', 'comment.png'),
-(5, '我是評論家', '2021-01-25 09:11:00', NULL, 3, 10, 200, '累積發表十篇心得可得200點', 'unfinished_comment.png', 'comment.png');
+(1, '累積消費一萬元', '2021-01-01 00:00:00', NULL, 1, 10000, 200, '累積消費一萬元可得200點', 'ms-001-unfinish.png', 'ms-001-finish.png'),
+(2, '累積消費十萬元', '2021-01-01 00:00:00', NULL, 1, 100000, 1000, '累積消費十萬元可得1000點', 'ms-002-unfinish.png', 'ms-002-finish.png'),
+(3, '累積消費五萬元', '2021-01-01 00:00:00', NULL, 1, 50000, 5000, '累積消費5萬元可得5000點', 'ms-003-unfinish.png', 'ms-003-finish.png'),
+(4, '第一筆評論', '2021-01-01 00:00:00', NULL, 3, 1, 50, '第一次對餐點評分可得50點', 'ms-004-unfinish.png', 'ms-004-finish.png'),
+(5, '我是評論家', '2021-01-01 00:00:00', NULL, 3, 10, 200, '累積發表十篇心得可得200點', 'ms-005-unfinish.png', 'ms-005-finish.png'),
+(6, '累積消費滿五千元', '2021-01-01 00:00:00', NULL, 1, 5000, 100, '累積消費滿五千元，可獲得100點獎勵點數', 'ms-006-unfinish.png', 'ms-006-finish.png'),
+(7, '初學小廚師', '2021-01-01 00:00:00', NULL, 5, 1, 100, '第一次參加驚喜廚房', 'ms-007-unfinish.png', 'ms-007-finish.png'),
+(8, '熟能生巧', '2021-01-01 00:00:00', NULL, 5, 5, 200, '成功預約五次驚喜廚房', 'ms-008-unfinish.png', 'ms-008-finish.png');
 
 -- --------------------------------------------------------
 
@@ -771,10 +774,11 @@ CREATE TABLE `trigger_describe` (
 --
 
 INSERT INTO `trigger_describe` (`trigger_ID`, `subs`) VALUES
-(1, '訂餐金額'),
+(1, '累積消費金額'),
 (2, '訂餐次數'),
-(3, '評論次數'),
-(4, '登入次數');
+(3, '餐點評論次數'),
+(4, '抓到咧孟'),
+(5, '預約驚喜廚房次數');
 
 --
 -- 已傾印資料表的索引
@@ -993,7 +997,7 @@ ALTER TABLE `membercenter`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `milestone_manager`
 --
 ALTER TABLE `milestone_manager`
-  MODIFY `milestone_sid` int(6) NOT NULL AUTO_INCREMENT COMMENT '成就編號', AUTO_INCREMENT=6;
+  MODIFY `milestone_sid` int(6) NOT NULL AUTO_INCREMENT COMMENT '成就編號', AUTO_INCREMENT=9;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `partner`
@@ -1053,7 +1057,7 @@ ALTER TABLE `test`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `trigger_describe`
 --
 ALTER TABLE `trigger_describe`
-  MODIFY `trigger_ID` int(11) NOT NULL AUTO_INCREMENT COMMENT '觸發的條件編號', AUTO_INCREMENT=5;
+  MODIFY `trigger_ID` int(11) NOT NULL AUTO_INCREMENT COMMENT '觸發的條件編號', AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
