@@ -51,6 +51,7 @@ router.get("/getmealtodelivery", async (req, res) => {
       ]
     );
     res.json({ result, msg: "增加一筆新的" });
+    return;
   }
 
   // 如果有該餐點且數量少於10份
@@ -62,11 +63,13 @@ router.get("/getmealtodelivery", async (req, res) => {
       [member_sid, mealData[0].sid]
     );
     res.json({ result, cartDeliveryData, msg: `現在數量加1` });
+    return;
   }
 
   //  如果有該餐點且數量等於10份
   if (cartDeliveryData[0].quantity === 10) {
     res.json({ msg: "已經有這項商品, 且滿10筆" });
+    return;
   }
 });
 
