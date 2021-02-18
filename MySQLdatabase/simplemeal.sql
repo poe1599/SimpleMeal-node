@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2021-02-18 04:45:31
+-- 產生時間： 2021-02-18 05:52:22
 -- 伺服器版本： 10.4.16-MariaDB
 -- PHP 版本： 7.3.24
 
@@ -580,13 +580,13 @@ CREATE TABLE `sessions` (
 --
 
 CREATE TABLE `share_recipe` (
-  `recipe_id` int(10) NOT NULL COMMENT '食譜id',
-  `recipe_createtime` datetime NOT NULL COMMENT '建立時間',
-  `recipe_name` varchar(30) NOT NULL COMMENT '食譜名稱',
-  `recipe_creator` int(10) NOT NULL COMMENT '創造者id',
-  `cook_time` int(3) NOT NULL COMMENT '烹飪時間',
+  `id` int(10) NOT NULL COMMENT '食譜id',
+  `createtime` datetime NOT NULL COMMENT '建立時間',
+  `name` varchar(30) NOT NULL COMMENT '食譜名稱',
+  `creator` int(10) NOT NULL COMMENT '創造者id',
+  `cooktime` int(3) NOT NULL COMMENT '烹飪時間',
   `style` varchar(25) NOT NULL COMMENT '風格',
-  `Introduction` text NOT NULL COMMENT '簡介',
+  `introduction` text NOT NULL COMMENT '簡介',
   `pic` text NOT NULL COMMENT '成品照'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -594,7 +594,7 @@ CREATE TABLE `share_recipe` (
 -- 傾印資料表的資料 `share_recipe`
 --
 
-INSERT INTO `share_recipe` (`recipe_id`, `recipe_createtime`, `recipe_name`, `recipe_creator`, `cook_time`, `style`, `Introduction`, `pic`) VALUES
+INSERT INTO `share_recipe` (`id`, `createtime`, `name`, `creator`, `cooktime`, `style`, `introduction`, `pic`) VALUES
 (2, '2021-02-23 00:14:29', '櫻桃香脂豬肉', 1, 40, '美式風格', '兩側保持簡單，配以烤西蘭花和土豆，可讓泛煎豬里脊肉發光。和男孩，它偷了節目。', 'http://localhost:3015/img/sharerecipe/1.jpg'),
 (3, '2021-02-10 00:14:45', '照燒雞肉招標', 4, 60, '美式風格', '沒有什麼組合比香腸和辣椒更令人滿意了。畢竟，在胃液中甜美的焦糖味和肉中的超鹹味，還有什麼比這更令人放鬆呢？', 'http://localhost:3015/img/sharerecipe/2.jpg'),
 (4, '2021-02-22 00:15:36', '咸焦糖馬斯卡彭芝士蛋糕\r\n', 1, 80, '美式風格', '用傳統的牛肉換成豬肉，用鮮味包裝的海鮮醬給肉餅上釉', 'http://localhost:3015/img/sharerecipe/3.jpg'),
@@ -614,7 +614,12 @@ INSERT INTO `share_recipe` (`recipe_id`, `recipe_createtime`, `recipe_name`, `re
 (18, '2021-02-28 00:16:14', '遊戲日牛肉辣椒\r\n', 4, 50, '美式風格', '在其上堆積大量表面積。值得慶幸的是，此食譜中有很多澆頭，不僅有熱辣的碎牛肉，還有青椒，番茄莎莎醬和辛辣的酸奶油。', 'http://localhost:3015/img/sharerecipe/17.jpg'),
 (19, '2021-02-17 00:16:11', '櫻桃香脂豬肉\r\n', 1, 50, '美式風格', '這些強壯的碗上裝飾有一些美味的食物：濃郁的辣醬克麗瑪和熔化的蒙特利傑克。如果手頭有一些，為什麼不把一些玉米粉圓餅弄碎然後撒在上面緊縮', 'http://localhost:3015/img/sharerecipe/18.jpg'),
 (20, '2021-02-02 00:16:36', '雞肉烤肉碗\r\n', 1, 30, '美式風格', '沒有什麼組合比香腸和辣椒更令人滿意了。畢竟，在胃液中甜美的焦糖味和肉中的超鹹味，還有什麼比這更令人放鬆呢？', 'http://localhost:3015/img/sharerecipe/19.jpg'),
-(21, '2021-02-17 00:16:08', '豬肉照燒肉丸\r\n', 2, 40, '美式風格', '沒有什麼組合比香腸和辣椒更令人滿意了。畢竟，在胃液中甜美的焦糖味和肉中的超鹹味，還有什麼比這更令人放鬆呢？', 'http://localhost:3015/img/sharerecipe/20.jpg');
+(21, '2021-02-17 00:16:08', '豬肉照燒肉丸\r\n', 2, 40, '美式風格', '沒有什麼組合比香腸和辣椒更令人滿意了。畢竟，在胃液中甜美的焦糖味和肉中的超鹹味，還有什麼比這更令人放鬆呢？', 'http://localhost:3015/img/sharerecipe/20.jpg'),
+(22, '0000-00-00 00:00:00', '櫻桃香脂豬肉6666699999', 0, 40, '', '兩側保持簡單，配以烤西蘭花和土豆，可讓泛煎豬里脊肉發光。和男孩，它偷了節目。', ''),
+(23, '0000-00-00 00:00:00', '櫻桃香脂豬肉6666699999456', 0, 40, '', '兩側保持簡單，配以烤西蘭花和土豆，可讓泛煎豬里脊肉發光。和男孩，它偷了節目。', ''),
+(24, '0000-00-00 00:00:00', '4567', 0, 66, '', '45645645', ''),
+(25, '0000-00-00 00:00:00', '999', 0, 90, '', '7898', ''),
+(26, '0000-00-00 00:00:00', '888', 0, 88, '', '888', '');
 
 -- --------------------------------------------------------
 
@@ -905,7 +910,7 @@ ALTER TABLE `sessions`
 -- 資料表索引 `share_recipe`
 --
 ALTER TABLE `share_recipe`
-  ADD PRIMARY KEY (`recipe_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- 資料表索引 `share_recipe_ingredients`
@@ -1048,7 +1053,7 @@ ALTER TABLE `recipe_get_good`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `share_recipe`
 --
 ALTER TABLE `share_recipe`
-  MODIFY `recipe_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '食譜id', AUTO_INCREMENT=22;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '食譜id', AUTO_INCREMENT=27;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `share_recipe_ingredients`
