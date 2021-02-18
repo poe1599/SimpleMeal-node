@@ -22,31 +22,25 @@ router.use((req, res, next) => {
 // 預約資訊
 // http://localhost:4000/surprisekitchenOrder/addreservation
 router.post("/addreservation", upload.none(), async (req, res) => {
-  const member_sid = "1";
+  const member_number = "20210001";
   const order_sid = (+new Date()).toString().slice(4);
   const [
     row,
   ] = await db.query(
-    "INSERT INTO `surprisekitchen_order`(`sid`, `member_number`, `order_sid`, `reservation_date`, `reservation_time`, `num_adult`, `num_child`, `adult_price`, `child_price`, `num_meal`, `remark`, `reservation_price`, `reservation_name`, `reservation_tel`, `reservation_email`, `payment_method`, `check_date`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())",
+    "INSERT INTO `surprisekitchen_order`(`sid`, `member_number`, `order_sid`, `reservation_date`, `reservation_time`, `num_adult`, `num_child`, `adult_price`, `child_price`, `num_meal`, `remark`, `reservation_price`) VALUES (null, ?, ?, ?, ?, ?, ?, 500, 100, ?, ?, ? )",
     [
+      member_number,
       order_sid,
-      member_sid,
       req.body.reservation_date,
       req.body.reservation_time,
       req.body.num_adult,
       req.body.num_child,
-      req.body.adult_price,
-      req.body.child_price,
       req.body.num_meal,
       req.body.remark,
-      req.body.reservation_price,
-      req.body.reservation_name,
-      req.body.reservation_tel,
-      req.body.reservation_email,
-      req.body.payment_method,
+      req.body.num_adult * 500 + req.body.num_child * 100,
     ]
   );
-  res.json(result);
+  res.json({row,order_sid,msg:''});
 });
 
 // // 用query string拿資料
