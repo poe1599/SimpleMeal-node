@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2021-02-18 05:52:22
+-- 產生時間： 2021-02-18 06:06:39
 -- 伺服器版本： 10.4.16-MariaDB
 -- PHP 版本： 7.3.24
 
@@ -587,39 +587,47 @@ CREATE TABLE `share_recipe` (
   `cooktime` int(3) NOT NULL COMMENT '烹飪時間',
   `style` varchar(25) NOT NULL COMMENT '風格',
   `introduction` text NOT NULL COMMENT '簡介',
-  `pic` text NOT NULL COMMENT '成品照'
+  `pic` text NOT NULL COMMENT '成品照',
+  `step1` text DEFAULT NULL COMMENT '步驟1',
+  `step2` text DEFAULT NULL COMMENT '步驟2',
+  `step3` text DEFAULT NULL COMMENT '步驟3',
+  `step4` text DEFAULT NULL COMMENT '步驟4',
+  `step5` text DEFAULT NULL COMMENT '步驟5',
+  `step6` text DEFAULT NULL COMMENT '步驟6',
+  `step7` text CHARACTER SET utf8 DEFAULT NULL COMMENT '步驟7',
+  `step8` text DEFAULT NULL COMMENT '步驟8'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- 傾印資料表的資料 `share_recipe`
 --
 
-INSERT INTO `share_recipe` (`id`, `createtime`, `name`, `creator`, `cooktime`, `style`, `introduction`, `pic`) VALUES
-(2, '2021-02-23 00:14:29', '櫻桃香脂豬肉', 1, 40, '美式風格', '兩側保持簡單，配以烤西蘭花和土豆，可讓泛煎豬里脊肉發光。和男孩，它偷了節目。', 'http://localhost:3015/img/sharerecipe/1.jpg'),
-(3, '2021-02-10 00:14:45', '照燒雞肉招標', 4, 60, '美式風格', '沒有什麼組合比香腸和辣椒更令人滿意了。畢竟，在胃液中甜美的焦糖味和肉中的超鹹味，還有什麼比這更令人放鬆呢？', 'http://localhost:3015/img/sharerecipe/2.jpg'),
-(4, '2021-02-22 00:15:36', '咸焦糖馬斯卡彭芝士蛋糕\r\n', 1, 80, '美式風格', '用傳統的牛肉換成豬肉，用鮮味包裝的海鮮醬給肉餅上釉', 'http://localhost:3015/img/sharerecipe/3.jpg'),
-(5, '2021-02-24 00:16:01', '牛油蝦卷', 4, 25, '美式風格', '沒有什麼組合比香腸和辣椒更令人滿意了。畢竟，在胃液中甜美的焦糖味和肉中的超鹹味，還有什麼比這更令人放鬆呢？', 'http://localhost:3015/img/sharerecipe/4.jpg'),
-(6, '2021-02-13 00:16:04', '菠蘿波布拉諾牛肉玉米餅', 1, 40, '美式風格', '酥脆的塗層。在側面，有脆脆的蘆筍，烤麵包杏仁和奶油土豆泥。不管您為誰做飯，我們都有一個很好的感覺，他們會被迷住。', 'http://localhost:3015/img/sharerecipe/5.jpg'),
-(7, '2021-02-02 00:15:41', '芝麻牛肉玉米餅\r\n', 3, 40, '美式風格', '無花果果醬。在這裡，將甜食與香醋配對，製成濃郁而濃郁的泛醬，以淋上多汁的沙朗牛排', 'http://localhost:3015/img/sharerecipe/6.jpg'),
-(8, '2021-02-01 00:16:31', '泰式豬肉丸\r\n', 4, 25, '美式風格', '鍋裡烤的胡椒脆皮牛排上撒上細細斑點的黃油醬（提示勺子）。但這不僅是胡椒粉，也不是牛排：在這裡，新鮮開裂的三色胡椒粉為口中融化的牛里脊肉提供了辛辣', 'http://localhost:3015/img/sharerecipe/7.jpg'),
-(9, '2021-02-23 00:15:54', '雞蛋香腸麵包', 1, 40, '美式風格', '很濃郁，全能美味，這要歸功於我們上一次做菜時我們的快樂廚師絕對喜歡的果醬，可口，粘到湯​​匙厚的櫻桃香脂釉這個食譜', 'http://localhost:3015/img/sharerecipe/8.jpg'),
-(10, '2021-01-19 00:15:56', '蘋果荷蘭嬰兒煎餅\r\n', 1, 35, '美式風格', '一個好的辣椒包括調味好的牛肉，奶油豆和嫩蔬菜。', 'http://localhost:3015/img/sharerecipe/9.jpg'),
-(11, '2021-02-06 00:15:50', '衝浪的雞肉和飯碗\r\n', 3, 40, '美式風格', '沒有什麼組合比香腸和辣椒更令人滿意了。畢竟，在胃液中甜美的焦糖味和肉中的超鹹味，還有什麼比這更令人放鬆呢？', 'http://localhost:3015/img/sharerecipe/10.jpg'),
-(12, '2021-01-05 00:15:45', '脆皮切達干酪雞\r\n', 2, 35, '美式風格', '沒有什麼組合比香腸和辣椒更令人滿意了。畢竟，在胃液中甜美的焦糖味和肉中的超鹹味，還有什麼比這更令人放鬆呢？', 'http://localhost:3015/img/sharerecipe/11.jpg'),
-(13, '2021-02-06 00:16:27', '雞肉香腸，菠菜和鷹嘴豆湯\r\n', 1, 70, '美式風格', '沒有什麼組合比香腸和辣椒更令人滿意了。畢竟，在胃液中甜美的焦糖味和肉中的超鹹味，還有什麼比這更令人放鬆呢？', 'http://localhost:3015/img/sharerecipe/12.jpg'),
-(14, '2021-02-25 00:16:25', '山核桃殼雞\r\n', 2, 65, '美式風格', '一瓶很棒的辣椒就可以將所有的辣椒一起放入一個鍋中，並在不到一個小時的時間內融合在一起', 'http://localhost:3015/img/sharerecipe/13.jpg'),
-(15, '2021-02-15 00:16:22', '意大利恰巴塔芝士漢堡\r\n', 1, 90, '美式風格', '在上面撒上濃郁的黃瓜-胡蘿蔔色拉和斯拉拉查蛋黃醬。一切都夾在糊狀的土豆麵包之間，做成一個非常美味的漢堡', 'http://localhost:3015/img/sharerecipe/14.jpg'),
-(16, '2021-02-02 00:16:19', '帕瑪森麵食\r\n', 4, 40, '美式風格', '進入炸玉米粉圓餅，將其製成扁平的玉米餅，將其烘烤至酥脆', 'http://localhost:3015/img/sharerecipe/15.jpg'),
-(17, '2021-02-10 00:16:17', '芝麻蝦\r\n', 1, 60, '美式風格', '這辣椒是很棒的之一。一口咬一口，我們可以保證您會同意', 'http://localhost:3015/img/sharerecipe/16.jpg'),
-(18, '2021-02-28 00:16:14', '遊戲日牛肉辣椒\r\n', 4, 50, '美式風格', '在其上堆積大量表面積。值得慶幸的是，此食譜中有很多澆頭，不僅有熱辣的碎牛肉，還有青椒，番茄莎莎醬和辛辣的酸奶油。', 'http://localhost:3015/img/sharerecipe/17.jpg'),
-(19, '2021-02-17 00:16:11', '櫻桃香脂豬肉\r\n', 1, 50, '美式風格', '這些強壯的碗上裝飾有一些美味的食物：濃郁的辣醬克麗瑪和熔化的蒙特利傑克。如果手頭有一些，為什麼不把一些玉米粉圓餅弄碎然後撒在上面緊縮', 'http://localhost:3015/img/sharerecipe/18.jpg'),
-(20, '2021-02-02 00:16:36', '雞肉烤肉碗\r\n', 1, 30, '美式風格', '沒有什麼組合比香腸和辣椒更令人滿意了。畢竟，在胃液中甜美的焦糖味和肉中的超鹹味，還有什麼比這更令人放鬆呢？', 'http://localhost:3015/img/sharerecipe/19.jpg'),
-(21, '2021-02-17 00:16:08', '豬肉照燒肉丸\r\n', 2, 40, '美式風格', '沒有什麼組合比香腸和辣椒更令人滿意了。畢竟，在胃液中甜美的焦糖味和肉中的超鹹味，還有什麼比這更令人放鬆呢？', 'http://localhost:3015/img/sharerecipe/20.jpg'),
-(22, '0000-00-00 00:00:00', '櫻桃香脂豬肉6666699999', 0, 40, '', '兩側保持簡單，配以烤西蘭花和土豆，可讓泛煎豬里脊肉發光。和男孩，它偷了節目。', ''),
-(23, '0000-00-00 00:00:00', '櫻桃香脂豬肉6666699999456', 0, 40, '', '兩側保持簡單，配以烤西蘭花和土豆，可讓泛煎豬里脊肉發光。和男孩，它偷了節目。', ''),
-(24, '0000-00-00 00:00:00', '4567', 0, 66, '', '45645645', ''),
-(25, '0000-00-00 00:00:00', '999', 0, 90, '', '7898', ''),
-(26, '0000-00-00 00:00:00', '888', 0, 88, '', '888', '');
+INSERT INTO `share_recipe` (`id`, `createtime`, `name`, `creator`, `cooktime`, `style`, `introduction`, `pic`, `step1`, `step2`, `step3`, `step4`, `step5`, `step6`, `step7`, `step8`) VALUES
+(2, '2021-02-23 00:14:29', '櫻桃香脂豬肉', 1, 40, '美式風格', '兩側保持簡單，配以烤西蘭花和土豆，可讓泛煎豬里脊肉發光。和男孩，它偷了節目。', 'http://localhost:3015/img/sharerecipe/1.jpg', '將機架調整到最高位置，然後將烤箱預熱至450度。洗滌並乾燥所有農產品。\r\n', '西葫蘆烤時，將大蒜去皮切碎或切碎。將西紅柿切成細末。', '在中鍋中以中高溫加熱細雨橄欖油。加入蒸粗麥粉，大蒜，一半的西紅柿和剩餘的意大利調味料。煮一會兒，攪拌至香1-2分鐘。•添加濃湯，¾杯水（1.5杯，可4份）和一大撮鹽。放慢火鍋，然後蓋上鍋蓋，並將熱量降低至較低水平。煮至蒸粗麥粉蒸6-8分鐘。•關閉熱量。如有必要，從鍋中排出多餘的液體。', '在中鍋中以中高溫加熱細雨橄欖油。加入蒸粗麥粉，大蒜，一半的西紅柿和剩餘的意大利調味料。煮一會兒，攪拌至香1-2分鐘。•添加濃湯，¾杯水（1.5杯，可4份）和一大撮鹽。放慢火鍋，然後蓋上鍋蓋，並將熱量降低至較低水平。煮至蒸粗麥粉蒸6-8分鐘。•關閉熱量。如有必要，從鍋中排出多餘的液體。', '在中鍋中以中高溫加熱細雨橄欖油。加入蒸粗麥粉，大蒜，一半的西紅柿和剩餘的意大利調味料。煮一會兒，攪拌至香1-2分鐘。•添加濃湯，¾杯水（1.5杯，可4份）和一大撮鹽。放慢火鍋，然後蓋上鍋蓋，並將熱量降低至較低水平。煮至蒸粗麥粉蒸6-8分鐘。•關閉熱量。如有必要，從鍋中排出多餘的液體。', NULL, NULL, NULL),
+(3, '2021-02-10 00:14:45', '照燒雞肉招標', 4, 60, '美式風格', '沒有什麼組合比香腸和辣椒更令人滿意了。畢竟，在胃液中甜美的焦糖味和肉中的超鹹味，還有什麼比這更令人放鬆呢？', 'http://localhost:3015/img/sharerecipe/2.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(4, '2021-02-22 00:15:36', '咸焦糖馬斯卡彭芝士蛋糕\r\n', 1, 80, '美式風格', '用傳統的牛肉換成豬肉，用鮮味包裝的海鮮醬給肉餅上釉', 'http://localhost:3015/img/sharerecipe/3.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(5, '2021-02-24 00:16:01', '牛油蝦卷', 4, 25, '美式風格', '沒有什麼組合比香腸和辣椒更令人滿意了。畢竟，在胃液中甜美的焦糖味和肉中的超鹹味，還有什麼比這更令人放鬆呢？', 'http://localhost:3015/img/sharerecipe/4.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(6, '2021-02-13 00:16:04', '菠蘿波布拉諾牛肉玉米餅', 1, 40, '美式風格', '酥脆的塗層。在側面，有脆脆的蘆筍，烤麵包杏仁和奶油土豆泥。不管您為誰做飯，我們都有一個很好的感覺，他們會被迷住。', 'http://localhost:3015/img/sharerecipe/5.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(7, '2021-02-02 00:15:41', '芝麻牛肉玉米餅\r\n', 3, 40, '美式風格', '無花果果醬。在這裡，將甜食與香醋配對，製成濃郁而濃郁的泛醬，以淋上多汁的沙朗牛排', 'http://localhost:3015/img/sharerecipe/6.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(8, '2021-02-01 00:16:31', '泰式豬肉丸\r\n', 4, 25, '美式風格', '鍋裡烤的胡椒脆皮牛排上撒上細細斑點的黃油醬（提示勺子）。但這不僅是胡椒粉，也不是牛排：在這裡，新鮮開裂的三色胡椒粉為口中融化的牛里脊肉提供了辛辣', 'http://localhost:3015/img/sharerecipe/7.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(9, '2021-02-23 00:15:54', '雞蛋香腸麵包', 1, 40, '美式風格', '很濃郁，全能美味，這要歸功於我們上一次做菜時我們的快樂廚師絕對喜歡的果醬，可口，粘到湯​​匙厚的櫻桃香脂釉這個食譜', 'http://localhost:3015/img/sharerecipe/8.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(10, '2021-01-19 00:15:56', '蘋果荷蘭嬰兒煎餅\r\n', 1, 35, '美式風格', '一個好的辣椒包括調味好的牛肉，奶油豆和嫩蔬菜。', 'http://localhost:3015/img/sharerecipe/9.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(11, '2021-02-06 00:15:50', '衝浪的雞肉和飯碗\r\n', 3, 40, '美式風格', '沒有什麼組合比香腸和辣椒更令人滿意了。畢竟，在胃液中甜美的焦糖味和肉中的超鹹味，還有什麼比這更令人放鬆呢？', 'http://localhost:3015/img/sharerecipe/10.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(12, '2021-01-05 00:15:45', '脆皮切達干酪雞\r\n', 2, 35, '美式風格', '沒有什麼組合比香腸和辣椒更令人滿意了。畢竟，在胃液中甜美的焦糖味和肉中的超鹹味，還有什麼比這更令人放鬆呢？', 'http://localhost:3015/img/sharerecipe/11.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(13, '2021-02-06 00:16:27', '雞肉香腸，菠菜和鷹嘴豆湯\r\n', 1, 70, '美式風格', '沒有什麼組合比香腸和辣椒更令人滿意了。畢竟，在胃液中甜美的焦糖味和肉中的超鹹味，還有什麼比這更令人放鬆呢？', 'http://localhost:3015/img/sharerecipe/12.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(14, '2021-02-25 00:16:25', '山核桃殼雞\r\n', 2, 65, '美式風格', '一瓶很棒的辣椒就可以將所有的辣椒一起放入一個鍋中，並在不到一個小時的時間內融合在一起', 'http://localhost:3015/img/sharerecipe/13.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(15, '2021-02-15 00:16:22', '意大利恰巴塔芝士漢堡\r\n', 1, 90, '美式風格', '在上面撒上濃郁的黃瓜-胡蘿蔔色拉和斯拉拉查蛋黃醬。一切都夾在糊狀的土豆麵包之間，做成一個非常美味的漢堡', 'http://localhost:3015/img/sharerecipe/14.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(16, '2021-02-02 00:16:19', '帕瑪森麵食\r\n', 4, 40, '美式風格', '進入炸玉米粉圓餅，將其製成扁平的玉米餅，將其烘烤至酥脆', 'http://localhost:3015/img/sharerecipe/15.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(17, '2021-02-10 00:16:17', '芝麻蝦\r\n', 1, 60, '美式風格', '這辣椒是很棒的之一。一口咬一口，我們可以保證您會同意', 'http://localhost:3015/img/sharerecipe/16.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(18, '2021-02-28 00:16:14', '遊戲日牛肉辣椒\r\n', 4, 50, '美式風格', '在其上堆積大量表面積。值得慶幸的是，此食譜中有很多澆頭，不僅有熱辣的碎牛肉，還有青椒，番茄莎莎醬和辛辣的酸奶油。', 'http://localhost:3015/img/sharerecipe/17.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(19, '2021-02-17 00:16:11', '櫻桃香脂豬肉\r\n', 1, 50, '美式風格', '這些強壯的碗上裝飾有一些美味的食物：濃郁的辣醬克麗瑪和熔化的蒙特利傑克。如果手頭有一些，為什麼不把一些玉米粉圓餅弄碎然後撒在上面緊縮', 'http://localhost:3015/img/sharerecipe/18.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(20, '2021-02-02 00:16:36', '雞肉烤肉碗\r\n', 1, 30, '美式風格', '沒有什麼組合比香腸和辣椒更令人滿意了。畢竟，在胃液中甜美的焦糖味和肉中的超鹹味，還有什麼比這更令人放鬆呢？', 'http://localhost:3015/img/sharerecipe/19.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(21, '2021-02-17 00:16:08', '豬肉照燒肉丸\r\n', 2, 40, '美式風格', '沒有什麼組合比香腸和辣椒更令人滿意了。畢竟，在胃液中甜美的焦糖味和肉中的超鹹味，還有什麼比這更令人放鬆呢？', 'http://localhost:3015/img/sharerecipe/20.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(22, '0000-00-00 00:00:00', '櫻桃香脂豬肉6666699999', 0, 40, '', '兩側保持簡單，配以烤西蘭花和土豆，可讓泛煎豬里脊肉發光。和男孩，它偷了節目。', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(23, '0000-00-00 00:00:00', '櫻桃香脂豬肉6666699999456', 0, 40, '', '兩側保持簡單，配以烤西蘭花和土豆，可讓泛煎豬里脊肉發光。和男孩，它偷了節目。', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(24, '0000-00-00 00:00:00', '4567', 0, 66, '', '45645645', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(25, '0000-00-00 00:00:00', '999', 0, 90, '', '7898', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(26, '0000-00-00 00:00:00', '888', 0, 88, '', '888', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -639,31 +647,6 @@ CREATE TABLE `share_recipe_ingredients` (
 
 INSERT INTO `share_recipe_ingredients` (`sid`, `recipe_id`, `Ingredients_id`) VALUES
 (1, 1, 1);
-
--- --------------------------------------------------------
-
---
--- 資料表結構 `share_recipe_step`
---
-
-CREATE TABLE `share_recipe_step` (
-  `recipe_id` int(10) NOT NULL COMMENT '食譜流水號',
-  `step1` text NOT NULL COMMENT '步驟1',
-  `step2` text NOT NULL COMMENT '步驟2',
-  `step3` text NOT NULL COMMENT '步驟3',
-  `step4` text NOT NULL COMMENT '步驟4',
-  `step5` text NOT NULL COMMENT '步驟5',
-  `step6` text NOT NULL COMMENT '步驟6',
-  `step7` text NOT NULL COMMENT '步驟7',
-  `step8` text NOT NULL COMMENT '步驟8'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- 傾印資料表的資料 `share_recipe_step`
---
-
-INSERT INTO `share_recipe_step` (`recipe_id`, `step1`, `step2`, `step3`, `step4`, `step5`, `step6`, `step7`, `step8`) VALUES
-(1, '將機架調整到最高位置，然後將烤箱預熱至450度。洗滌並乾燥所有農產品。\r\n              將西葫蘆切成兩半；用勺子seeds出種子並丟棄。用細雨橄欖油將每半擦\r\n              乾淨；用一半的意大利調味料（稍後再使用），鹽和胡椒粉調味。將切面朝\r\n              下放在烤板上。•在頂部架子上烤15至20分鐘，直至變成褐色並變軟。', '西葫蘆烤時，將大蒜去皮切碎或切碎。將西紅柿切成細末。', '在中鍋中以中高溫加熱細雨橄欖油。加入蒸粗麥粉，大蒜，一半的西紅柿和剩餘的意大利調味料。煮一會兒，攪拌至香1-2分鐘。•添加濃湯，¾杯水（1.5杯，可4份）和一大撮鹽。放慢火鍋，然後蓋上鍋蓋，並將熱量降低至較低水平。煮至蒸粗麥粉蒸6-8分鐘。•關閉熱量。如有必要，從鍋中排出多餘的液體。', '在中鍋中以中高溫加熱細雨橄欖油。加入蒸粗麥粉，大蒜，一半的西紅柿和剩餘的意大利調味料。煮一會兒，攪拌至香1-2分鐘。•添加濃湯，¾杯水（1.5杯，可4份）和一大撮鹽。放慢火鍋，然後蓋上鍋蓋，並將熱量降低至較低水平。煮至蒸粗麥粉蒸6-8分鐘。•關閉熱量。如有必要，從鍋中排出多餘的液體。', '在中鍋中以中高溫加熱細雨橄欖油。加入蒸粗麥粉，大蒜，一半的西紅柿和剩餘的意大利調味料。煮一會兒，攪拌至香1-2分鐘。•添加濃湯，¾杯水（1.5杯，可4份）和一大撮鹽。放慢火鍋，然後蓋上鍋蓋，並將熱量降低至較低水平。煮至蒸粗麥粉蒸6-8分鐘。•關閉熱量。如有必要，從鍋中排出多餘的液體。', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -919,12 +902,6 @@ ALTER TABLE `share_recipe_ingredients`
   ADD PRIMARY KEY (`sid`);
 
 --
--- 資料表索引 `share_recipe_step`
---
-ALTER TABLE `share_recipe_step`
-  ADD PRIMARY KEY (`recipe_id`);
-
---
 -- 資料表索引 `simplemealcoupon`
 --
 ALTER TABLE `simplemealcoupon`
@@ -1060,12 +1037,6 @@ ALTER TABLE `share_recipe`
 --
 ALTER TABLE `share_recipe_ingredients`
   MODIFY `sid` int(10) NOT NULL AUTO_INCREMENT COMMENT '流水號', AUTO_INCREMENT=2;
-
---
--- 使用資料表自動遞增(AUTO_INCREMENT) `share_recipe_step`
---
-ALTER TABLE `share_recipe_step`
-  MODIFY `recipe_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '食譜流水號', AUTO_INCREMENT=2;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `simplemealcoupon`
