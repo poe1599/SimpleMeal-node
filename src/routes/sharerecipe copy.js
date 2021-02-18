@@ -34,8 +34,20 @@ router.get("/getallmeal", async (req, res) => {
   res.json(result);
 });
 
-router.post("/try-upload", upload.single("pic"), async (req, res) => {
-  console.log(req.body.body);
+
+
+
+// app.post("/try-upload", upload.single("avatar"), (req, res) => {
+//   res.json({
+//     file: req.file,
+//     // 其他欄位放這裡
+//     body: req.body,
+//   });
+// });
+
+// 新增食譜
+// http://localhost:4000/sharerecipe/add
+router.post("/add", upload.single("pic"), async (req, res) => {
   const [
     result,
   ] = await db.query(
@@ -49,45 +61,18 @@ router.post("/try-upload", upload.single("pic"), async (req, res) => {
       req.body.step3,
       req.body.step4,
       req.body.step5,
-      "http://localhost:4000/img/" + req.file.filename,
+      req.body.pictures,
+      
     ]
   );
-  res.json({
-    file: req.file,
-    // 其他欄位放這裡
-    body: req.body,
-  });
+  console.log("666", result);
+  // 回傳
+  res.json(result);
 });
 
-// 新增食譜
-// http://localhost:4000/sharerecipe/add
-// router.post("/add", upload.single("pic"), async (req, res) => {
-//   console.log('req666',req)
-//   const [
-//     result,
-//   ] = await db.query(
-//     "INSERT INTO `share_recipe`(`name`, `cooktime`, `introduction`, `step1`, `step2`, `step3`, `step4`, `step5`,`pic`) VALUES (?,?,?,?,?,?,?,?,?)",
-//     [
-//       req.body.name,
-//       req.body.cooktime,
-//       req.body.introduction,
-//       req.body.step1,
-//       req.body.step2,
-//       req.body.step3,
-//       req.body.step4,
-//       req.body.step5,
-//       req.file.filename,
-//     ]
-//   );
-//   console.log("666", result);
-//   // 回傳
-//   // res.json(result);
-//   res.json({
-//     file: req.file,
-//     // 其他欄位放這裡
-//     body: req.body,
-//   });
-// });
+
+
+
 
 // // 用query string拿資料
 // // http://localhost:4000/test/getmealbyquery?sid=1
@@ -115,6 +100,7 @@ router.post("/try-upload", upload.single("pic"), async (req, res) => {
 //   ]);
 //   res.json(result);
 // });
+
 
 router.use((req, res) => {
   res.type("text/plain");
