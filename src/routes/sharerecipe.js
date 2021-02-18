@@ -4,6 +4,7 @@ const moment = require("moment-timezone");
 const upload = require(__dirname + "/../modules/upload-imgs");
 const router = express.Router();
 const db = require(__dirname + "/../modules/db_connect2");
+// const User = require("../../domain/sharerecipe");
 
 // middle well
 // 如果req.session.admin沒有登入的資料, 就跳回首頁
@@ -19,12 +20,27 @@ router.use((req, res, next) => {
   next();
 });
 
-// 單純拿全部
+// 顯示全部食譜
 // http://localhost:4000/sharerecipe/getallmeal
 router.get("/getallmeal", async (req, res) => {
   const [result] = await db.query("SELECT * FROM `share_recipe`");
   res.json(result);
 });
+
+
+// 新增食譜
+// http://localhost:4000/sharerecipe/add
+router.post("/add", upload.none(), async (req, res) => {
+  const [result] = await db.query("INSERT INTO `share_recipe`(`name`, `cooktime`, `introduction`) VALUES (?,?,?)",
+     [req.body.name, req.body.cooktime, req.body.introduction]);
+  // console.log(result);
+  // 回傳
+  res.json(result);
+});
+
+
+
+
 
 // // 用query string拿資料
 // // http://localhost:4000/test/getmealbyquery?sid=1
@@ -46,16 +62,17 @@ router.get("/getallmeal", async (req, res) => {
 
 // // 用post提供資料庫訊息
 // // http://localhost:4000/test/postmealsid (用POSTMAN測試 或 用Live server打開根目錄的testpost.html)
-// router.post("/postmealsid", upload.none(), async (req, res) => {
+// router.post("/postrecipe", upload.none(), async (req, res) => {
 //   const [result] = await db.query("select * from `meal` where `sid` = ?", [
 //     req.body.sid,
 //   ]);
 //   res.json(result);
 // });
 
-// router.use((req, res) => {
-//   res.type("text/plain");
-//   res.status(404).send("有問題喔 找不到頁面 你還是多看幾次吧");
-// });
+
+router.use((req, res) => {
+  res.type("text/plain");
+  res.status(404).send("有問題喔 找不到頁面 你還是多看幾次吧");
+});
 
 module.exports = router;
