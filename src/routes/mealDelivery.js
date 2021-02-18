@@ -19,6 +19,57 @@ router.use((req, res, next) => {
   next();
 });
 
+// 增加配送商品進購物車
+router.get("/getmealtodelivery", async (req, res) => {
+  const member_sid = "1";
+
+  // 用sid去meal資料庫撈餐點資料
+  const [mealData] = await db.query("SELECT * FROM `meal` WHERE `sid`= ?", [
+    req.query.sid,
+  ]);
+
+  // 檢查購物車是否該會員已經有該餐點
+  const [
+    cartDeliveryData,
+  ] = await db.query(
+    "SELECT * FROM `cart_mealdelivery` WHERE `member_sid`=? and `meal_sid`= ?",
+    [member_sid, req.query.sid]
+  );
+
+  // 如果沒有, 則寫入一筆
+  if (cartDeliveryData.length === 0) {
+    const [
+      result,
+    ] = await db.query(
+      "INSERT INTO `cart_mealdelivery`(`sid`, `member_sid`, `meal_sid`, `product_id`, `meal_name`, `description`, `quantity`, `next_time`) VALUES (null, ?, ?, ?, ?, ?, 1, 0)",
+      [
+        member_sid,
+        mealData[0].sid,
+        mealData[0].product_id,
+        mealData[0].product_name,
+        mealData[0].introduction,
+      ]
+    );
+    res.json({ result, msg: "增加一筆新的" });
+  }
+
+  // 如果有該餐點且數量少於10份
+  if (cartDeliveryData[0].quantity < 10) {
+    const [
+      result,
+    ] = await db.query(
+      "UPDATE `cart_mealdelivery` SET `quantity`=`quantity`+1 WHERE `member_sid`= ? and `meal_sid`= ?",
+      [member_sid, mealData[0].sid]
+    );
+    res.json({ result, cartDeliveryData, msg: `現在數量加1` });
+  }
+
+  //  如果有該餐點且數量等於10份
+  if (cartDeliveryData[0].quantity === 10) {
+    res.json({ msg: "已經有這項商品, 且滿10筆" });
+  }
+});
+
 // 拿該會員的配送資料
 // http://localhost:4000/mealdelivery/getdeliverycart
 router.get("/getdeliverycart", async (req, res) => {
