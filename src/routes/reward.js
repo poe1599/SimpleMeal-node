@@ -13,45 +13,24 @@ router.use((req, res, next) => {
   //     if (!req.session.admin) {
   //     return res.redirect('/');
   // }
-
   res.locals.baseUrl = req.baseUrl;
   res.locals.url = req.url;
   next();
 });
 
-// 單純拿全部
-// http://localhost:4000/test/getallmeal
-router.get("/getallmeal", async (req, res) => {
-  const [result] = await db.query("SELECT * FROM `meal`");
-  res.json(result);
+
+// 用query string拿資料 取得點數
+// http://localhost:4000/reward/getGooDList?good_type=1
+//good_type 1合作廠商優惠 2購物金回饋
+router.get("/getGooDList", async (req, res) => {
+
+  //將完成的成就點數加總
+  const GooDList = await db.query("SELECT * FROM `exchange_good` where good_type = ? ", [
+    req.query.good_type,
+  ]);
+  res.json(GooDList[0]);
 });
 
-// 用query string拿資料
-// http://localhost:4000/test/getmealbyquery?sid=1
-router.get("/getmealbyquery", async (req, res) => {
-  const [result] = await db.query("select * from `meal` where `sid` = ?", [
-    req.query.sid,
-  ]);
-  res.json(result);
-});
-
-// 用params拿資料
-// http://localhost:4000/test/getmealbyparams/1
-router.get("/getmealbyparams/:sid?", async (req, res) => {
-  const [result] = await db.query("select * from `meal` where `sid` = ?", [
-    req.params.sid,
-  ]);
-  res.json(result);
-});
-
-// 用post提供資料庫訊息
-// http://localhost:4000/test/postmealsid (用POSTMAN測試 或 用Live server打開根目錄的testpost.html)
-router.post("/postmealsid", upload.none(), async (req, res) => {
-  const [result] = await db.query("select * from `meal` where `sid` = ?", [
-    req.body.sid,
-  ]);
-  res.json(result);
-});
 
 router.use((req, res) => {
   res.type("text/plain");

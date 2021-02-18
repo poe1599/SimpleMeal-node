@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2021-02-18 17:04:29
--- 伺服器版本： 10.4.16-MariaDB
--- PHP 版本： 7.3.24
+-- 產生時間： 2021-02-18 16:21:51
+-- 伺服器版本： 10.4.17-MariaDB
+-- PHP 版本： 7.4.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -38,14 +38,6 @@ CREATE TABLE `cart_mealdelivery` (
   `next_time` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- 傾印資料表的資料 `cart_mealdelivery`
---
-
-INSERT INTO `cart_mealdelivery` (`sid`, `member_sid`, `meal_sid`, `product_id`, `meal_name`, `description`, `quantity`, `next_time`) VALUES
-(1, 1, 1, 'american01', '紅薯蛋糕', '這個鮮活的小數字在切碎的小寶石上鋪上堅固耐用的現成的地瓜餅，上面舖有自製的藍紋奶酪醬，並飾以鬆脆的烤山核桃。', 4, 0),
-(2, 1, 4, 'china01', '中國檸檬雞和嫩皮', '黏膩，甜美和酥脆的完美水平，這是一款永不失敗的複古經典。您需要在炸雞上塗上蜂蜜檸檬醬，再搭配米飯和Tenderstem西蘭花。', 3, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -64,20 +56,6 @@ CREATE TABLE `cart_simplemealcoupon` (
   `payment_method` varchar(255) DEFAULT NULL,
   `check_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- 傾印資料表的資料 `cart_simplemealcoupon`
---
-
-INSERT INTO `cart_simplemealcoupon` (`order_sid`, `member_sid`, `combination_sid`, `combination_name`, `description`, `quantity`, `total_coupon_num`, `total_price`, `payment_method`, `check_date`) VALUES
-(509572507, 1, 1, '吃飽飽沒煩惱組合', '(包含20張餐卷, 加贈5張免費餐券)', 1, 25, 7000, '信用卡線上刷卡一次付清', '2021-02-02 13:01:58'),
-(509572508, 1, 2, '食在很滿足組合', '(包含10張餐卷, 加贈2張免費餐券)', 1, 12, 1700, '銀聯卡', '2021-02-03 13:06:11'),
-(509572509, 1, 3, '經濟實惠組', '(包含5張餐卷, 加贈1張免費餐券)', 1, 6, 850, '信用卡線上刷卡一次付清', '2021-02-04 13:07:18'),
-(768452336, 1, 2, '食在很滿足組合', '(包含10張餐卷, 加贈2張免費餐券)', 3, 36, 5100, 'LINE PAY', '2021-02-08 15:14:12'),
-(773683259, 1, 2, '食在很滿足組合', '(包含10張餐卷, 加贈2張免費餐券)', 3, 36, 5000, '信用卡線上刷卡一次付清', '2021-02-08 16:41:23'),
-(773788123, 1, 1, '吃飽飽沒煩惱組合', '(包含20張餐卷, 加贈5張免費餐券)', 4, 100, 14000, 'LINE PAY', '2021-02-08 16:43:08'),
-(783950920, 1, 3, '經濟實惠組', '(包含5張餐卷, 加贈1張免費餐券)', 1, 6, 750, '銀聯卡', '2021-02-08 19:32:30'),
-(836190369, 1, 1, '吃飽飽沒煩惱組合', '(包含20張餐卷, 加贈5張免費餐券)', 3, 75, 10400, 'LINE PAY', '2021-02-09 10:03:10');
 
 -- --------------------------------------------------------
 
@@ -223,13 +201,6 @@ CREATE TABLE `history_mealdelivery` (
   `delivery_time` time DEFAULT NULL,
   `check_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- 傾印資料表的資料 `history_mealdelivery`
---
-
-INSERT INTO `history_mealdelivery` (`sid`, `member_sid`, `meal_sid`, `meal_name`, `quantity`, `member_name`, `mobile`, `address`, `delivery_date`, `delivery_time`, `check_date`) VALUES
-(509572507, 1, '1,4', '紅薯蛋糕,中國檸檬雞和嫩皮', '1,1', '王曉明', '0945456321', '台北市大安區復興南路一段390號2樓', '2021-02-02', '10:50:17', '2021-01-31 13:42:59');
 
 -- --------------------------------------------------------
 
@@ -696,14 +667,6 @@ CREATE TABLE `surprisekitchen_order` (
   `payment_method` varchar(255) DEFAULT NULL,
   `check_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- 傾印資料表的資料 `surprisekitchen_order`
---
-
-INSERT INTO `surprisekitchen_order` (`sid`, `member_number`, `order_sid`, `reservation_date`, `reservation_time`, `num_adult`, `num_child`, `adult_price`, `child_price`, `num_meal`, `remark`, `reservation_price`, `reservation_name`, `reservation_tel`, `reservation_email`, `payment_method`, `check_date`) VALUES
-(7, 20210001, 638455495, '2021-03-18', '18:00', 2, 2, 500, 100, 4, NULL, 1200, NULL, NULL, NULL, NULL, NULL),
-(8, 20210001, 638598559, '2021-02-10', '18:00', 2, 2, 500, 100, 4, NULL, 1200, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
