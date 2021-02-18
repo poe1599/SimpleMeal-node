@@ -30,7 +30,22 @@ router.use((req, res, next) => {
 // http://localhost:4000/test/getmealbyquery?sid=1
 router.get("/getMilestoneList", async (req, res) => {
 
-  const result = await db.query("select * from (select m.milestone_sid, m.stone_name, m.progress_goal, m.reward_point, m.subs, m.event_startime, m.event_endtime, m.unfinished_goal_pic, m.finished_goal_pic, sum(e.add_progress) AddProgress, t.Subs TriggerSubs from milestone_manager m join trigger_describe t left join event_record e on e.event_time > m.event_startime and (m.event_endtime> e.event_time or m.event_endtime is null) and e.member_number = ? and m.event_trigger = e.event_trigger and m.event_trigger = t.trigger_ID GROUP by m.Milestone_sid) temp", [
+  let filter = req.query.filter;
+  let filterQuery = " ";
+  switch (filter) {
+    case "limit":
+      filterQuery = " and event_endtime is not null ";
+      break;
+    case "finish":
+      filterQuery = " and AddProgress >= progress_goal ";
+      break;
+    case "unfinish":
+      filterQuery = " and AddProgress < progress_goal or AddProgress is null ";
+      break;
+    default:
+      filterQuery = " and 1 = 1 "
+  }
+  const result = await db.query("select * from (select m.milestone_sid, m.stone_name, m.progress_goal, m.reward_point, m.subs, m.event_startime, m.event_endtime, m.unfinished_goal_pic, m.finished_goal_pic, sum(e.add_progress) AddProgress, t.Subs TriggerSubs from milestone_manager m join trigger_describe t left join event_record e on e.event_time > m.event_startime and (m.event_endtime> e.event_time or m.event_endtime is null) and e.member_number = ? and m.event_trigger = e.event_trigger and m.event_trigger = t.trigger_ID GROUP by m.Milestone_sid) temp where 1=1 "+ filterQuery, [
     req.query.sid,
   ]);
   res.json(result[0]);
