@@ -194,13 +194,13 @@ router.post("/ordercheck", upload.none(), async (req, res) => {
     [member_sid]
   );
 
-  // 刪掉配送購物車
-  // const [
-  //   deleteRow,
-  // ] = await db.query(
-  //   "delete from `cart_mealdelivery` where `member_sid`= ? and `next_time`= 0",
-  //   [member_sid]
-  // );
+  刪掉配送購物車
+  const [
+    deleteRow,
+  ] = await db.query(
+    "delete from `cart_mealdelivery` where `member_sid`= ? and `next_time`= 0",
+    [member_sid]
+  );
 
   let meal_sid = "";
   let meal_name = "";
