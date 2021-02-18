@@ -23,7 +23,9 @@ router.use((req, res, next) => {
 // 顯示全部食譜
 // http://localhost:4000/sharerecipe/getallmeal
 router.get("/getallmeal", async (req, res) => {
-  const [result] = await db.query("SELECT * FROM `share_recipe`");
+  const [result] = await db.query(
+    "SELECT * FROM `share_recipe` ORDER BY `share_recipe`.`id` DESC"
+  );
   res.json(result);
 });
 
@@ -31,8 +33,22 @@ router.get("/getallmeal", async (req, res) => {
 // 新增食譜
 // http://localhost:4000/sharerecipe/add
 router.post("/add", upload.none(), async (req, res) => {
-  const [result] = await db.query("INSERT INTO `share_recipe`(`name`, `cooktime`, `introduction`) VALUES (?,?,?)",
-     [req.body.name, req.body.cooktime, req.body.introduction]);
+  const [
+    result,
+  ] = await db.query(
+    "INSERT INTO `share_recipe`(`name`, `cooktime`, `introduction`, `step1`, `step2`, `step3`, `step4`, `step5`,`pic`) VALUES (?,?,?,?,?,?,?,?,?)",
+    [
+      req.body.name,
+      req.body.cooktime,
+      req.body.introduction,
+      req.body.step1,
+      req.body.step2,
+      req.body.step3,
+      req.body.step4,
+      req.body.step5,
+      req.body.newpic,
+    ]
+  );
   // console.log(result);
   // 回傳
   res.json(result);
