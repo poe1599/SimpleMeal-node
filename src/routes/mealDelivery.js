@@ -194,7 +194,7 @@ router.post("/ordercheck", upload.none(), async (req, res) => {
     [member_sid]
   );
 
-  刪掉配送購物車
+  // 刪掉配送購物車
   const [
     deleteRow,
   ] = await db.query(

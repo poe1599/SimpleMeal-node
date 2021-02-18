@@ -30,16 +30,29 @@ router.get("/getorder", async (req, res) => {
     [member_number]
   );
   // console.log(row);
-  if (row.length !== 1) {
+
+  // 當資料庫沒有預約資料時
+  if (row.length === 0) {
     res.json([{ sid: 0 }]);
-  } else {
+    return
+  } 
+
+  // 當資料庫有1筆預約資料時
+  if(row.length === 1) {
     // 處理日期格式
     row[0].reservation_date = moment(row[0].reservation_date).format(
       "YYYY-MM-DD"
     );
-
     res.json(row);
+    return    
   }
+
+  // 當資料庫有多筆預約資料時 (不應該出現此情況, 由當初寫入訂單時控制1個會員只會有1筆未結帳預約)
+  if(row.length >= 1) {
+    res.json([{ sid: 0 ,msg:'不應該出現此情況, 由當初寫入訂單時控制1個會員只會有1筆未結帳預約'}]);
+    return 
+  }
+
 });
 
 // 訂單結帳
