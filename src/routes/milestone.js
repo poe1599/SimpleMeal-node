@@ -26,8 +26,8 @@ router.use((req, res, next) => {
 //   res.json(result);
 // });
 
-// 用query string拿資料
-// http://localhost:4000/test/getmealbyquery?sid=1
+// 用query string拿資料 取得成就列表
+// http://localhost:4000/milestone/getMilestoneList?sid=1
 router.get("/getMilestoneList", async (req, res) => {
 
   let filter = req.query.filter;
@@ -49,6 +49,19 @@ router.get("/getMilestoneList", async (req, res) => {
     req.query.sid,
   ]);
   res.json(result[0]);
+});
+
+// 用query string拿資料 取得點數
+// http://localhost:4000/milestone/getPoint?sid=1
+router.get("/getPoint", async (req, res) => {
+
+  const totalGetPoiont = await db.query("select sum(reward_point) Sum from (select m.milestone_sid, m.stone_name, m.progress_goal, m.reward_point, sum(e.add_progress) AddProgress from milestone_manager m left join event_record e on e.event_time > m.event_startime and (m.event_endtime> e.event_time or m.event_endtime is null) and e.member_number = ? and m.event_trigger = e.event_trigger GROUP by m.milestone_sid) temp where temp.progress_goal <= temp.AddProgress", [
+    req.query.sid,
+  ]);
+  const totalSpendPoint = await db.query("select sum(spend_point) Sum from `milestone_user` where memner_number = ? ", [
+    req.query.sid,
+  ]);
+  res.json({totalGetPoiont:totalGetPoiont[0][0].Sum,totalSpendPoint:totalSpendPoint[0][0].Sum});
 });
 
 // // 用params拿資料
