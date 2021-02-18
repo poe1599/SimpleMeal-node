@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2021-02-18 06:06:39
+-- 產生時間： 2021-02-18 17:04:29
 -- 伺服器版本： 10.4.16-MariaDB
 -- PHP 版本： 7.3.24
 
@@ -702,9 +702,8 @@ CREATE TABLE `surprisekitchen_order` (
 --
 
 INSERT INTO `surprisekitchen_order` (`sid`, `member_number`, `order_sid`, `reservation_date`, `reservation_time`, `num_adult`, `num_child`, `adult_price`, `child_price`, `num_meal`, `remark`, `reservation_price`, `reservation_name`, `reservation_tel`, `reservation_email`, `payment_method`, `check_date`) VALUES
-(1, 20210001, 843838714, '2021-02-19', '10:00', 1, 2, 500, 100, 2, '不要香菜 不要蔥 不要豬肉', 600, 'DD', 'DDD', 'DDDDD', '銀聯卡', '2021-02-09 12:10:38'),
-(2, 20210001, 509572502, '2021-02-26', '14:00', 2, 1, 500, 100, 3, '不吃牛肉', 1100, NULL, NULL, NULL, NULL, '2021-02-05 11:31:32'),
-(3, 20210001, 509572503, '2021-02-27', '18:00', 1, 2, 500, 100, 3, '素', 700, NULL, NULL, NULL, NULL, '2021-02-05 14:44:37');
+(7, 20210001, 638455495, '2021-03-18', '18:00', 2, 2, 500, 100, 4, NULL, 1200, NULL, NULL, NULL, NULL, NULL),
+(8, 20210001, 638598559, '2021-02-10', '18:00', 2, 2, 500, 100, 4, NULL, 1200, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1043,6 +1042,12 @@ ALTER TABLE `share_recipe_ingredients`
 --
 ALTER TABLE `simplemealcoupon`
   MODIFY `combination_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `surprisekitchen_order`
+--
+ALTER TABLE `surprisekitchen_order`
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `test`
