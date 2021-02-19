@@ -10,9 +10,9 @@ const db = require(__dirname + "/../modules/db_connect2");
 // 取得baseUrl與url, 將其放在locals
 router.use((req, res, next) => {
   // 沒登入? 出去! 現在!
-  //     if (!req.session.admin) {
-  //     return res.redirect('/');
-  // }
+  if (!req.session.admin) {
+    return res.redirect("/");
+  }
 
   res.locals.baseUrl = req.baseUrl;
   res.locals.url = req.url;
@@ -22,7 +22,7 @@ router.use((req, res, next) => {
 // 買餐券
 // http://localhost:4000/simplemealcoupon/addcheck
 router.post("/addcheck", upload.none(), async (req, res) => {
-  const member_sid = "1";
+  const member_sid = req.session.admin.id;
   const order_sid = (+new Date()).toString().slice(4);
   const [
     row,
