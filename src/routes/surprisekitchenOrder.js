@@ -24,6 +24,25 @@ router.use((req, res, next) => {
 router.post("/addreservation", upload.none(), async (req, res) => {
   const member_number = "20210001";
   const order_sid = (+new Date()).toString().slice(4);
+
+  const [
+    databaseOrderNow,
+  ] = await db.query(
+    "SELECT * FROM `surprisekitchen_order` WHERE `member_number` = ? and `check_date` is null ",
+    [member_number]
+  );
+
+  // 先確認資料庫有沒有該會員的未結帳預約, 如果已經有了就刪掉舊預約
+  if (databaseOrderNow.length === 1){
+    [
+      deleteDatabaseOrderNow
+    ] = await db.query(
+      "DELETE FROM `surprisekitchen_order` WHERE `member_number` = ? and `check_date` is null ",
+      [member_number]
+    );
+  }
+
+  // 寫入新預約
   const [
     row,
   ] = await db.query(
@@ -40,7 +59,7 @@ router.post("/addreservation", upload.none(), async (req, res) => {
       req.body.num_adult * 500 + req.body.num_child * 100,
     ]
   );
-  res.json({row,order_sid,msg:''});
+  res.json({ row, order_sid, msg: "" });
 });
 
 // // 用query string拿資料

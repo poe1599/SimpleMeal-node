@@ -10,9 +10,9 @@ const db = require(__dirname + "/../modules/db_connect2");
 // 取得baseUrl與url, 將其放在locals
 router.use((req, res, next) => {
   // 沒登入? 出去! 現在!
-  //     if (!req.session.admin) {
-  //     return res.redirect('/');
-  // }
+  if (!req.session.admin) {
+    return res.redirect("/");
+  }
 
   res.locals.baseUrl = req.baseUrl;
   res.locals.url = req.url;
@@ -21,7 +21,7 @@ router.use((req, res, next) => {
 
 // 增加配送商品進購物車
 router.get("/getmealtodelivery", async (req, res) => {
-  const member_sid = "1";
+  const member_sid = req.session.admin.id;
 
   // 用sid去meal資料庫撈餐點資料
   const [mealData] = await db.query("SELECT * FROM `meal` WHERE `sid`= ?", [
@@ -76,7 +76,7 @@ router.get("/getmealtodelivery", async (req, res) => {
 // 拿該會員的配送資料
 // http://localhost:4000/mealdelivery/getdeliverycart
 router.get("/getdeliverycart", async (req, res) => {
-  const member_sid = "1";
+  const member_sid = req.session.admin.id;
 
   // 這次
   const [
@@ -115,13 +115,13 @@ router.get("/getdeliverycart", async (req, res) => {
     remain: myCoupon[0].simplemeal_coupon - cost,
   };
 
-  res.json({ thisTime, nextTime, simpleMealCoupon });
+  res.json({ thisTime, nextTime, simpleMealCoupon, member_sid });
 });
 
 // 改變數量
 // http://localhost:4000/mealdelivery/setmealquantity?sid=${sid}&quantity=${quantity}
 router.get("/setmealquantity", async (req, res) => {
-  const member_sid = "1";
+  const member_sid = req.session.admin.id;
 
   if (req.query.quantity < 1 || req.query.quantity > 10) {
     res.json({
@@ -153,7 +153,7 @@ router.get("/deletecheckbox", async (req, res) => {
 
 // 勾選的改這次
 router.get("/tothistime", async (req, res) => {
-  const member_sid = "1";
+  const member_sid = req.session.admin.id;
   const sidArray = req.query.str.split(",");
   sidArray.map(async (v, i) => {
     const [
@@ -168,7 +168,7 @@ router.get("/tothistime", async (req, res) => {
 
 // 勾選的改下次
 router.get("/tonexttime", async (req, res) => {
-  const member_sid = "1";
+  const member_sid = req.session.admin.id;
   const sidArray = req.query.str.split(",");
   sidArray.map(async (v, i) => {
     const [
@@ -183,7 +183,7 @@ router.get("/tonexttime", async (req, res) => {
 
 // 送出訂單
 router.post("/ordercheck", upload.none(), async (req, res) => {
-  const member_sid = "1";
+  const member_sid = req.session.admin.id;
   const order_sid = (+new Date()).toString().slice(4);
 
   // 拿到有哪些這次要送的
@@ -195,12 +195,12 @@ router.post("/ordercheck", upload.none(), async (req, res) => {
   );
 
   // 刪掉配送購物車
-  // const [
-  //   deleteRow,
-  // ] = await db.query(
-  //   "delete from `cart_mealdelivery` where `member_sid`= ? and `next_time`= 0",
-  //   [member_sid]
-  // );
+  const [
+    deleteRow,
+  ] = await db.query(
+    "delete from `cart_mealdelivery` where `member_sid`= ? and `next_time`= 0",
+    [member_sid]
+  );
 
   let meal_sid = "";
   let meal_name = "";
