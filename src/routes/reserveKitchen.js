@@ -10,9 +10,9 @@ const db = require(__dirname + "/../modules/db_connect2");
 // 取得baseUrl與url, 將其放在locals
 router.use((req, res, next) => {
   // 沒登入? 出去! 現在!
-  //     if (!req.session.admin) {
-  //     return res.redirect('/');
-  // }
+      if (!req.session.admin) {
+      return res.redirect('/');
+  }
 
   res.locals.baseUrl = req.baseUrl;
   res.locals.url = req.url;
@@ -22,7 +22,7 @@ router.use((req, res, next) => {
 // 拿訂單資料
 // http://localhost:4000/reservekitchen/getorder
 router.get("/getorder", async (req, res) => {
-  const member_number = "20210001";
+  const member_number = req.session.admin.member_number;
   const [
     row,
   ] = await db.query(
@@ -57,7 +57,7 @@ router.get("/getorder", async (req, res) => {
 
 // 訂單結帳
 router.post("/ordercheck", upload.none(), async (req, res) => {
-  const member_number = "20210001";
+  const member_number = req.session.admin.member_number;
   const order_sid = (+new Date()).toString().slice(4);
   const [
     row,
