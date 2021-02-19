@@ -97,11 +97,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// 首頁
-app.get("/", (req, res) => {
-  res.render("index", { shortText: "這裡是後端伺服器, 你來錯地方了" });
-});
-
 // 測試模組
 app.use("/test", require(__dirname + "/routes/test"));
 
@@ -124,20 +119,49 @@ app.use("/milestone", require(__dirname + "/routes/milestone"));
 app.use("/reward", require(__dirname + "/routes/reward"));
 
 //餐點模組
-app.use("/meal",require(__dirname + "/routes/meal"))
+app.use("/meal", require(__dirname + "/routes/meal"));
 //預約廚房場次模組
 app.use("/reservationTimes", require(__dirname + "/routes/reservationTimes"));
 
 //預約廚房模組
-app.use("/surprisekitchenOrder", require(__dirname + "/routes/surprisekitchenOrder"));
+app.use(
+  "/surprisekitchenOrder",
+  require(__dirname + "/routes/surprisekitchenOrder")
+);
 
 app.get("/getdata", async (req, res) => {
   const [result] = await db.query("SELECT * FROM `test`");
   res.json(result);
 });
 
-// 通訊錄模組
-// app.use("/address-book", require(__dirname + "/routes/address-book"));
+// 接收登入
+app.post("/login", upload.none(), async (req, res) => {
+  // res.json(req.body);
+  const [
+    rows,
+  ] = await db.query(
+    "SELECT * FROM `membercenter` WHERE `email` = ? AND `password` =  SHA1(?)",
+    [req.body.email, req.body.password]
+  );
+
+  if (rows.length === 1) {
+    req.session.admin = rows[0];
+    res.json({
+      success: true,
+      session: rows[0],
+    });
+  } else {
+    res.json({
+      success: false,
+      body: req.body,
+    });
+  }
+});
+
+// 首頁
+app.get("/", (req, res) => {
+  res.render("index", { shortText: "這裡是後端伺服器, 你來錯地方了" });
+});
 
 // 這個要放最後, 不然會先被讀到
 app.use((req, res) => {
