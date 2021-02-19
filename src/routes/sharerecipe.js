@@ -34,8 +34,10 @@ router.get("/getallmeal", async (req, res) => {
   res.json(result);
 });
 
-router.post("/try-upload", upload.single("pic"), async (req, res) => {
-  console.log(req.body.body);
+// 上傳檔案
+// localhost:4000/sharerecipe/try-upload
+http: router.post("/try-upload", upload.single("pic"), async (req, res) => {
+  console.log(req.body.name);
   const [
     result,
   ] = await db.query(
@@ -59,35 +61,22 @@ router.post("/try-upload", upload.single("pic"), async (req, res) => {
   });
 });
 
-// 新增食譜
-// http://localhost:4000/sharerecipe/add
-// router.post("/add", upload.single("pic"), async (req, res) => {
-//   console.log('req666',req)
-//   const [
-//     result,
-//   ] = await db.query(
-//     "INSERT INTO `share_recipe`(`name`, `cooktime`, `introduction`, `step1`, `step2`, `step3`, `step4`, `step5`,`pic`) VALUES (?,?,?,?,?,?,?,?,?)",
-//     [
-//       req.body.name,
-//       req.body.cooktime,
-//       req.body.introduction,
-//       req.body.step1,
-//       req.body.step2,
-//       req.body.step3,
-//       req.body.step4,
-//       req.body.step5,
-//       req.file.filename,
-//     ]
-//   );
-//   console.log("666", result);
-//   // 回傳
-//   // res.json(result);
-//   res.json({
-//     file: req.file,
-//     // 其他欄位放這裡
-//     body: req.body,
-//   });
-// });
+// 刪除食譜
+// http://localhost:4000/sharerecipe/delmeal
+router.delete("/:id", async (req, res) => {
+  const [
+    result,
+  ] = await db.query(
+    "DELETE FROM `share_recipe` WHERE `share_recipe`.`id` = ?",
+    [req.params.id]
+  );
+  res.json({
+    success: result.affectedRows === 1,
+  });
+});
+
+
+
 
 // // 用query string拿資料
 // // http://localhost:4000/test/getmealbyquery?sid=1
