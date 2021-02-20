@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2021-02-18 16:21:51
--- 伺服器版本： 10.4.17-MariaDB
--- PHP 版本： 7.4.13
+-- 產生時間： 2021-02-20 07:06:23
+-- 伺服器版本： 10.4.16-MariaDB
+-- PHP 版本： 7.3.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -352,7 +352,7 @@ CREATE TABLE `membercenter` (
   `password` varchar(255) NOT NULL,
   `name` varchar(10) NOT NULL,
   `nickname` varchar(10) NOT NULL,
-  `mobile` varchar(10) NOT NULL,
+  `mobile` varchar(10) NOT NULL,
   `birthday` date NOT NULL,
   `credit＿card` varchar(255) NOT NULL,
   `addr` varchar(255) NOT NULL,
@@ -364,8 +364,8 @@ CREATE TABLE `membercenter` (
 -- 傾印資料表的資料 `membercenter`
 --
 
-INSERT INTO `membercenter` (`id`, `member_number`, `avater`, `level`, `email`, `password`, `name`, `nickname`, `mobile`, `birthday`, `credit＿card`, `addr`, `love`, `simplemeal_coupon`) VALUES
-(1, '20210001', 'avatar01.jpg', 'vip會員', 'GoodGoodEat@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '王曉明', '小明', '0945456321', '1990-10-10', '1234-1234-1234-1234', '台北市大安區復興南路一段390號2樓', '1,2,3', 100);
+INSERT INTO `membercenter` (`id`, `member_number`, `avater`, `level`, `email`, `password`, `name`, `nickname`, `mobile`, `birthday`, `credit＿card`, `addr`, `love`, `simplemeal_coupon`) VALUES
+(1, '20210001', 'avatar01.jpg', 'vip會員', 'GoodGoodEat@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '王曉明', '小明', '0978565545', '1990-10-10', '1234-1234-1234-1234', '台北市大安區復興南路一段390號2樓', '1,2,3', 100);
 
 -- --------------------------------------------------------
 
@@ -543,6 +543,13 @@ CREATE TABLE `sessions` (
   `expires` int(11) UNSIGNED NOT NULL,
   `data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- 傾印資料表的資料 `sessions`
+--
+
+INSERT INTO `sessions` (`session_id`, `expires`, `data`) VALUES
+('iV2vQYV2-ZRq6BbpiYx-e-tJ0wCp_zdK', 1613819084, '{\"cookie\":{\"originalMaxAge\":18000000,\"expires\":\"2021-02-20T11:00:54.822Z\",\"httpOnly\":true,\"path\":\"/\"},\"admin\":{\"id\":1,\"member_number\":\"20210001\",\"avater\":\"avatar01.jpg\",\"level\":\"vip會員\",\"email\":\"GoodGoodEat@gmail.com\",\"password\":\"7c4a8d09ca3762af61e59520943dc26494f8941b\",\"name\":\"王曉明\",\"nickname\":\"小明\",\"mobile\":\"0978565545\",\"birthday\":\"1990-10-09T16:00:00.000Z\",\"credit＿card\":\"1234-1234-1234-1234\",\"addr\":\"台北市大安區復興南路一段390號2樓\",\"love\":\"1,2,3\",\"simplemeal_coupon\":100}}');
 
 -- --------------------------------------------------------
 
@@ -908,7 +915,7 @@ ALTER TABLE `trigger_describe`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `cart_mealdelivery`
 --
 ALTER TABLE `cart_mealdelivery`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `cart_simplemealcoupon`
