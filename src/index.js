@@ -57,7 +57,7 @@ app.use(
     store: sessionStore,
     cookie: {
       // maxAge: 1000 為1秒,
-      maxAge: 1800000,
+      maxAge: 18000000,
     },
   })
 );
@@ -158,6 +158,11 @@ app.post("/login", upload.none(), async (req, res) => {
       body: req.body,
     });
   }
+});
+
+app.get("/logout", async (req, res) => {
+  delete req.session.admin;
+  res.json({ msg: "後端刪除登入SESSION" });
 });
 
 // 首頁
