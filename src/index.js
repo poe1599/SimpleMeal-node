@@ -101,7 +101,7 @@ app.use((req, res, next) => {
 app.use("/test", require(__dirname + "/routes/test"));
 
 //會員中心
-app.use("/membercenter", require(__dirname + "/router/membercenter"));
+app.use("/membercenter", require(__dirname + "/routes/membercenter"));
 // 共享食譜
 app.use("/sharerecipe", require(__dirname + "/routes/sharerecipe"));
 
