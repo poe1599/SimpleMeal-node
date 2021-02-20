@@ -122,6 +122,7 @@ app.use("/reward", require(__dirname + "/routes/reward"));
 
 //餐點模組
 app.use("/meal", require(__dirname + "/routes/meal"));
+
 //預約廚房場次模組
 app.use("/reservationTimes", require(__dirname + "/routes/reservationTimes"));
 
@@ -130,6 +131,13 @@ app.use(
   "/surprisekitchenOrder",
   require(__dirname + "/routes/surprisekitchenOrder")
 );
+
+//廚房評論模組
+app.use(
+  "/reservationComment",
+  require(__dirname + "/routes/reservationComment")
+);
+
 
 app.get("/getdata", async (req, res) => {
   const [result] = await db.query("SELECT * FROM `test`");

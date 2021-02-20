@@ -62,6 +62,13 @@ router.post("/addreservation", upload.none(), async (req, res) => {
   res.json({ row, order_sid, msg: "" });
 });
 
+//單純拿全部
+// http://localhost:4000/surprisekitchenOrder/getReservationInfo
+router.get("/getReservationInfo", async (req, res) => {
+  const [result] = await db.query("SELECT `reservation_date`, `reservation_time`FROM `surprisekitchen_order` WHERE 1");
+  res.json(result);
+});
+
 // // 用query string拿資料
 // // http://localhost:4000/test/getmealbyquery?sid=1
 // router.get("/getmealbyquery", async (req, res) => {
