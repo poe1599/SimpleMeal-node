@@ -160,9 +160,32 @@ app.post("/login", upload.none(), async (req, res) => {
   }
 });
 
+// 登出
 app.get("/logout", async (req, res) => {
   delete req.session.admin;
   res.json({ msg: "後端刪除登入SESSION" });
+});
+
+// 取得會員資料給前端做表單填入
+app.get("/getmemberinfo", async (req, res) => {
+  // 沒登入? 出去! 現在!
+  if (!req.session.admin) {
+    return res.redirect("/");
+  }
+
+  const member_sid = req.session.admin.id;
+
+  // 資料庫取得該會員的資料 (也可以從已有的SESSION取得)
+  const [
+    memberInfoArray,
+  ] = await db.query("select * from `membercenter` where `id` = ?", [
+    member_sid,
+  ]);
+
+  const memberInfoObj = memberInfoArray[0];
+  // console.log(memberInfoObj);
+
+  res.json(memberInfoObj);
 });
 
 // 首頁
