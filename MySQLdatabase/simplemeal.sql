@@ -392,8 +392,8 @@ CREATE TABLE `milestone_manager` (
 
 INSERT INTO `milestone_manager` (`milestone_sid`, `stone_name`, `event_startime`, `event_endtime`, `event_trigger`, `progress_goal`, `reward_point`, `subs`, `unfinished_goal_pic`, `finished_goal_pic`) VALUES
 (1, '累積消費一萬元', '2021-01-01 00:00:00', NULL, 1, 10000, 200, '累積消費一萬元可得200點', 'ms-001-unfinish.png', 'ms-001-finish.png'),
-(2, '累積消費十萬元', '2021-01-01 00:00:00', NULL, 1, 100000, 1000, '累積消費十萬元可得1000點', 'ms-002-unfinish.png', 'ms-002-finish.png'),
-(3, '累積消費五萬元', '2021-01-01 00:00:00', NULL, 1, 50000, 5000, '累積消費5萬元可得5000點', 'ms-003-unfinish.png', 'ms-003-finish.png'),
+(2, '累積消費十萬元', '2021-01-01 00:00:00', NULL, 1, 100000, 1000, '累積消費十萬元可得1000點', 'ms-003-unfinish.png', 'ms-003-finish.png'),
+(3, '累積消費五萬元', '2021-01-01 00:00:00', NULL, 1, 50000, 5000, '累積消費5萬元可得5000點', 'ms-002-unfinish.png', 'ms-002-finish.png'),
 (4, '第一筆評論', '2021-01-01 00:00:00', NULL, 3, 1, 50, '第一次對餐點評分可得50點', 'ms-004-unfinish.png', 'ms-004-finish.png'),
 (5, '我是評論家', '2021-01-01 00:00:00', NULL, 3, 10, 200, '累積發表十篇心得可得200點', 'ms-005-unfinish.png', 'ms-005-finish.png'),
 (6, '累積消費滿五千元', '2021-01-01 00:00:00', NULL, 1, 5000, 100, '累積消費滿五千元，可獲得100點獎勵點數', 'ms-006-unfinish.png', 'ms-006-finish.png'),
