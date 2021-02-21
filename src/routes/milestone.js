@@ -27,11 +27,12 @@ router.use((req, res, next) => {
 // });
 
 // 用query string拿資料 取得成就列表
-// http://localhost:4000/milestone/getMilestoneList?sid=1
+// http://localhost:4000/milestone/getMilestoneList?sid=1&filter=finish&page=1&perpage=4
 router.get("/getMilestoneList", async (req, res) => {
 
   let filter = req.query.filter;
   let filterQuery = " ";
+  let limit = " limit ";
   switch (filter) {
     case "limit":
       filterQuery = " and event_endtime is not null ";
@@ -45,7 +46,12 @@ router.get("/getMilestoneList", async (req, res) => {
     default:
       filterQuery = " and 1 = 1 "
   }
-  const result = await db.query("select * from (select m.milestone_sid, m.stone_name, m.progress_goal, m.reward_point, m.subs, m.event_startime, m.event_endtime, m.unfinished_goal_pic, m.finished_goal_pic, sum(e.add_progress) AddProgress, t.Subs TriggerSubs from milestone_manager m join trigger_describe t left join event_record e on e.event_time > m.event_startime and (m.event_endtime> e.event_time or m.event_endtime is null) and e.member_number = ? and m.event_trigger = e.event_trigger and m.event_trigger = t.trigger_ID GROUP by m.Milestone_sid) temp where 1=1 "+ filterQuery, [
+
+  if(req.query.perpage == 0)//畫面小於576px 不下limit
+    limit = " ";
+  else
+    limit += req.query.perpage*(req.query.page-1)+","+ req.query.perpage+" ";
+  const result = await db.query("select * from (select m.milestone_sid, m.stone_name, m.progress_goal, m.reward_point, m.subs, m.event_startime, m.event_endtime, m.unfinished_goal_pic, m.finished_goal_pic, sum(e.add_progress) AddProgress, t.Subs TriggerSubs from milestone_manager m join trigger_describe t left join event_record e on e.event_time > m.event_startime and (m.event_endtime> e.event_time or m.event_endtime is null) and e.member_number = ? and m.event_trigger = e.event_trigger and m.event_trigger = t.trigger_ID GROUP by m.Milestone_sid) temp where 1=1 "+ filterQuery+ limit, [
     req.query.sid,
   ]);
   res.json(result[0]);

@@ -10,9 +10,9 @@ const db = require(__dirname + "/../modules/db_connect2");
 // 取得baseUrl與url, 將其放在locals
 router.use((req, res, next) => {
   // 沒登入? 出去! 現在!
-  //     if (!req.session.admin) {
-  //     return res.redirect('/');
-  // }
+  if (!req.session.admin) {
+    return res.redirect("/");
+  }
 
   res.locals.baseUrl = req.baseUrl;
   res.locals.url = req.url;
@@ -22,7 +22,7 @@ router.use((req, res, next) => {
 // 拿訂單資料
 // http://localhost:4000/reservekitchen/getorder
 router.get("/getorder", async (req, res) => {
-  const member_number = "20210001";
+  const member_number = req.session.admin.member_number;
   const [
     row,
   ] = await db.query(
@@ -34,30 +34,34 @@ router.get("/getorder", async (req, res) => {
   // 當資料庫沒有預約資料時
   if (row.length === 0) {
     res.json([{ sid: 0 }]);
-    return
-  } 
+    return;
+  }
 
   // 當資料庫有1筆預約資料時
-  if(row.length === 1) {
+  if (row.length === 1) {
     // 處理日期格式
     row[0].reservation_date = moment(row[0].reservation_date).format(
       "YYYY-MM-DD"
     );
     res.json(row);
-    return    
+    return;
   }
 
   // 當資料庫有多筆預約資料時 (不應該出現此情況, 由當初寫入訂單時控制1個會員只會有1筆未結帳預約)
-  if(row.length >= 1) {
-    res.json([{ sid: 0 ,msg:'不應該出現此情況, 由當初寫入訂單時控制1個會員只會有1筆未結帳預約'}]);
-    return 
+  if (row.length >= 1) {
+    res.json([
+      {
+        sid: 0,
+        msg: "不應該出現此情況, 由當初寫入訂單時控制1個會員只會有1筆未結帳預約",
+      },
+    ]);
+    return;
   }
-
 });
 
 // 訂單結帳
 router.post("/ordercheck", upload.none(), async (req, res) => {
-  const member_number = "20210001";
+  const member_number = req.session.admin.member_number;
   const order_sid = (+new Date()).toString().slice(4);
   const [
     row,

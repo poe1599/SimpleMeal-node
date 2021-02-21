@@ -57,7 +57,7 @@ app.use(
     store: sessionStore,
     cookie: {
       // maxAge: 1000 為1秒,
-      maxAge: 1800000,
+      maxAge: 18000000,
     },
   })
 );
@@ -123,6 +123,7 @@ app.use("/reward", require(__dirname + "/routes/reward"));
 
 //餐點模組
 app.use("/meal", require(__dirname + "/routes/meal"));
+
 //預約廚房場次模組
 app.use("/reservationTimes", require(__dirname + "/routes/reservationTimes"));
 
@@ -131,6 +132,13 @@ app.use(
   "/surprisekitchenOrder",
   require(__dirname + "/routes/surprisekitchenOrder")
 );
+
+//廚房評論模組
+app.use(
+  "/reservationComment",
+  require(__dirname + "/routes/reservationComment")
+);
+
 
 app.get("/getdata", async (req, res) => {
   const [result] = await db.query("SELECT * FROM `test`");
@@ -159,6 +167,34 @@ app.post("/login", upload.none(), async (req, res) => {
       body: req.body,
     });
   }
+});
+
+// 登出
+app.get("/logout", async (req, res) => {
+  delete req.session.admin;
+  res.json({ msg: "後端刪除登入SESSION" });
+});
+
+// 取得會員資料給前端做表單填入
+app.get("/getmemberinfo", async (req, res) => {
+  // 沒登入? 出去! 現在!
+  if (!req.session.admin) {
+    return res.redirect("/");
+  }
+
+  const member_sid = req.session.admin.id;
+
+  // 資料庫取得該會員的資料 (也可以從已有的SESSION取得)
+  const [
+    memberInfoArray,
+  ] = await db.query("select * from `membercenter` where `id` = ?", [
+    member_sid,
+  ]);
+
+  const memberInfoObj = memberInfoArray[0];
+  // console.log(memberInfoObj);
+
+  res.json(memberInfoObj);
 });
 
 // 首頁

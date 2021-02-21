@@ -115,7 +115,16 @@ router.get("/getdeliverycart", async (req, res) => {
     remain: myCoupon[0].simplemeal_coupon - cost,
   };
 
-  res.json({ thisTime, nextTime, simpleMealCoupon, member_sid });
+  const [
+    memberInfoArray,
+  ] = await db.query("select * from `membercenter` where `id` = ?", [
+    member_sid,
+  ]);
+
+  const memberInfoObj = { ...memberInfoArray[0] };
+  // console.log(memberInfoObj);
+
+  res.json({ thisTime, nextTime, simpleMealCoupon, member_sid, memberInfoObj });
 });
 
 // 改變數量
