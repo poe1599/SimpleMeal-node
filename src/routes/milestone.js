@@ -51,7 +51,7 @@ router.get("/getMilestoneList", async (req, res) => {
     limit = " ";
   else
     limit += req.query.perpage*(req.query.page-1)+","+ req.query.perpage+" ";
-  const result = await db.query("select * from (select m.milestone_sid, m.stone_name, m.progress_goal, m.reward_point, m.subs, m.event_startime, m.event_endtime, m.unfinished_goal_pic, m.finished_goal_pic, sum(e.add_progress) AddProgress, t.Subs TriggerSubs from milestone_manager m join trigger_describe t left join event_record e on e.event_time > m.event_startime and (m.event_endtime> e.event_time or m.event_endtime is null) and e.member_number = ? and m.event_trigger = e.event_trigger and m.event_trigger = t.trigger_ID GROUP by m.Milestone_sid) temp where 1=1 "+ filterQuery+ limit, [
+  const result = await db.query("select * from (select m.milestone_sid, m.stone_name, m.progress_goal, m.reward_point, m.subs, m.event_startime, m.event_endtime, m.unfinished_goal_pic, m.finished_goal_pic, sum(e.add_progress) AddProgress, t.Subs TriggerSubs from milestone_manager m join trigger_describe t on t.trigger_ID = m.event_trigger left join event_record e on e.event_time > m.event_startime and (m.event_endtime> e.event_time or m.event_endtime is null) and e.member_number = ? and m.event_trigger = e.event_trigger GROUP by m.Milestone_sid) temp where 1=1 "+ filterQuery+ limit, [
     req.query.sid,
   ]);
   res.json(result[0]);
