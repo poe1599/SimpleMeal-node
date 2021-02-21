@@ -31,6 +31,17 @@ router.get("/getGooDList", async (req, res) => {
   res.json(GooDList[0]);
 });
 
+// 用query string拿資料 取得兌換紀錄
+// http://localhost:4000/reward/getExchangeRecord?sid=1
+router.get("/getExchangeRecord", async (req, res) => {
+
+  //直接在SQL中處理日期格式以及加一個月的日期
+  const GooDList = await db.query("SELECT m.exchange_sid, m.spend_point, DATE_FORMAT(m.event_time, '%Y/%m/%d') event_time, DATE_FORMAT(DATE_ADD(m.event_time,INTERVAL 1 MONTH ), '%Y/%m/%d') end_date, m.used_date, e.good_name, e.good_pic FROM milestone_user m join exchange_good e on m.exchange_sid = e.good_ID and m.memner_number = ? ORDER by m.event_time ASC", [
+    req.query.sid,
+  ]);
+  res.json(GooDList[0]);
+});
+
 
 router.use((req, res) => {
   res.type("text/plain");
