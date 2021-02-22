@@ -16,9 +16,9 @@ const upload = require(__dirname + "/../modules/upload-imgs");
 // 取得baseUrl與url, 將其放在locals
 router.use((req, res, next) => {
   // 沒登入? 出去! 現在!
-  //     if (!req.session.admin) {
-  //     return res.redirect('/');
-  // }
+      if (!req.session.admin) {
+      return res.redirect('/');
+  }
 
   res.locals.baseUrl = req.baseUrl;
   res.locals.url = req.url;
@@ -38,7 +38,9 @@ router.get("/getallmeal", async (req, res) => {
 // http://localhost:4000/sharerecipe/getusermeal
 router.get("/getusermeal", async (req, res) => {
   const [result] = await db.query(
-    "SELECT `creator`,`id`,`pic`,`name` FROM `share_recipe` WHERE `creator`=1 ORDER BY `share_recipe`.`id` DESC"
+    "SELECT `creator`,`id`,`pic`,`name` FROM `share_recipe` WHERE `creator`=? ORDER BY `share_recipe`.`id` DESC", [
+      req.session.admin.id
+    ]
   );
   res.json(result);
 });
@@ -55,7 +57,7 @@ router.post("/try-upload", upload.single("pic"), async (req, res) => {
     "INSERT INTO `share_recipe`(`name`,`creator`, `cooktime`, `introduction`, `step1`, `step2`, `step3`, `step4`, `step5`,`pic`) VALUES (?,?,?,?,?,?,?,?,?,?)",
     [
       req.body.name,
-      1,
+      req.session.admin.id,
       req.body.cooktime,
       req.body.introduction,
       req.body.step1,
