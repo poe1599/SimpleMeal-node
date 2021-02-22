@@ -38,10 +38,12 @@ router.get("/getallmeal", async (req, res) => {
 // http://localhost:4000/sharerecipe/getusermeal
 router.get("/getusermeal", async (req, res) => {
   const [result] = await db.query(
-    "SELECT `creator`,`id`,`pic`,`name` FROM `share_recipe` WHERE `creator`=1"
+    "SELECT `creator`,`id`,`pic`,`name` FROM `share_recipe` WHERE `creator`=1 ORDER BY `share_recipe`.`id` DESC"
   );
   res.json(result);
 });
+
+
 
 // 上傳檔案
 // localhost:4000/sharerecipe/try-upload
@@ -50,9 +52,10 @@ router.post("/try-upload", upload.single("pic"), async (req, res) => {
   const [
     result,
   ] = await db.query(
-    "INSERT INTO `share_recipe`(`name`, `cooktime`, `introduction`, `step1`, `step2`, `step3`, `step4`, `step5`,`pic`) VALUES (?,?,?,?,?,?,?,?,?)",
+    "INSERT INTO `share_recipe`(`name`,`creator`, `cooktime`, `introduction`, `step1`, `step2`, `step3`, `step4`, `step5`,`pic`) VALUES (?,?,?,?,?,?,?,?,?,?)",
     [
       req.body.name,
+      1,
       req.body.cooktime,
       req.body.introduction,
       req.body.step1,
@@ -84,6 +87,20 @@ router.delete("/:id", async (req, res) => {
   });
 });
 
+
+// 顯示食譜內容頁
+// http://localhost:4000/sharerecipe/21
+
+router.get("/:id", async (req, res) => {
+  const [
+    result,
+  ] = await db.query(
+    "SELECT * FROM `share_recipe` WHERE `share_recipe`.`id`=?",
+    [req.params.id]
+  );
+  res.json(result);
+});
+
 // 修改食譜前的顯示食譜
 // http://localhost:4000/sharerecipe/edit/21
 
@@ -96,6 +113,7 @@ router.get("/edit/:id", async (req, res) => {
   );
   res.json(result);
 });
+
 
 // 修改食譜
 // http://localhost:4000/sharerecipe/edit/31
@@ -124,33 +142,7 @@ router.put("/edit/:id", upload.single("pic"), async (req, res) => {
     body: req.body,
   });
 });
-// // 修改食譜
-// // http://localhost:4000/sharerecipe/edit/id
-// router.put("/edit/:id", upload.single("pic"), async (req, res) => {
-//   console.log(req.body.name);
-//   const [
-//     result,
-//   ] = await db.query(
-//     "UPDATE `share_recipe` SET `id`=?,`name`=?,`cooktime`=?,`introduction`=?,`pic`=?,`step1`=?,`step2`=?,`step3`=?,`step4`=?,`step5`=? WHERE 1",
-//     [
-//       req.params.id,
-//       req.body.name,
-//       req.body.cooktime,
-//       req.body.introduction,
-//       "http://localhost:4000/img/" + req.file.filename,
-//       req.body.step1,
-//       req.body.step2,
-//       req.body.step3,
-//       req.body.step4,
-//       req.body.step5,
-//     ]
-//   );
-//   res.json({
-//     file: req.file,
-//     // 其他欄位放這裡
-//     body: req.body,
-//   });
-// });
+
 
 // // 用query string拿資料
 // // http://localhost:4000/test/getmealbyquery?sid=1
