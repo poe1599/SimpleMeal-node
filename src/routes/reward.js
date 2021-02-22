@@ -42,6 +42,16 @@ router.get("/getExchangeRecord", async (req, res) => {
   res.json(GooDList[0]);
 });
 
+//http://localhost:4000/reward/setExchange
+router.post("/setExchange", upload.none(), async (req, res) => {
+  let success = false;
+  let msg = "";
+  let totalPotint = 0;
+  const count = req.body.count;
+  const good_ID = req.body.good_ID;
+  console.log("count",count,"good_ID",good_ID);
+})
+
 
 router.use((req, res) => {
   res.type("text/plain");
