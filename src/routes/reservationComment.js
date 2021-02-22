@@ -23,6 +23,14 @@ router.use((req, res, next) => {
 // http://localhost:4000/reservationComment/getReservationComment
 router.get("/getReservationComment", async (req, res) => {
   const [result] = await db.query("SELECT * FROM `surprise_comment` WHERE 1");
+  result.map((v, i) => {
+    v.used_date = moment(v.used_date).format(
+      "YYYY-MM-DD"
+    );
+    v.builded_date = moment(v.builded_date).format(
+      "YYYY-MM-DD"
+    );
+  })
   res.json(result);
 });
 
