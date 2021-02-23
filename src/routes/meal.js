@@ -49,4 +49,34 @@ router.get("/selectMeal", upload.none(), async (req, res) => {
   ]);
   res.json(result[0]);
 });
+
+
+
+
+router.get("/getmealtodelivery",  async (req, res) => {
+  const [mealData] = await db.query("select * from `meal` where `sid` = ?", [
+    req.query.sid,
+  ]);
+  const [recipeData] = await db.query(
+    "select * from `recipe` where `sid` = ?",
+    [req.query.sid]
+  );
+// const a  = `(${req.query.ingredient_id})`
+console.log(req.query.ingredient_id)
+  const [
+    ingredientsData,
+  ] = await db.query(`SELECT * FROM ingredients WHERE sid in (${req.query.ingredient_id})`);
+
+  res.json({ mealData, recipeData, ingredientsData });
+});
+
+// router.get("/selectMealtest",  async (req, res) => {
+//   const a=req.query.ingredient_id
+//   const [result] = await db.query("SELECT * FROM `ingredients` WHERE `sid` IN (?)", [
+//     a,
+//   ]);
+//   console.log( a)
+//   res.json(result[0]);
+// });
+
 module.exports = router;
