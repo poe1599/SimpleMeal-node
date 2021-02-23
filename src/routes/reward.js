@@ -32,7 +32,7 @@ router.get("/getGooDList", async (req, res) => {
 });
 
 // 用query string拿資料 取得兌換紀錄
-// http://localhost:4000/reward/getExchangeRecord?sid=1
+// http://localhost:4000/reward/getExchangeRecord
 router.get("/getExchangeRecord", async (req, res) => {
 
   //直接在SQL中處理日期格式以及加一個月的日期
@@ -44,12 +44,78 @@ router.get("/getExchangeRecord", async (req, res) => {
 
 //http://localhost:4000/reward/setExchange
 router.post("/setExchange", upload.none(), async (req, res) => {
-  let success = false;
+  //檢查
+  console.log(" setExchange id:",req.session);
+  let success = true;
   let msg = "";
   let totalPotint = 0;
+  let cost = 0;
+  let good_type = 0;
+  let discount = null;
   const count = req.body.count;
   const good_ID = req.body.good_ID;
-  console.log("count",count,"good_ID",good_ID);
+  const id = req.session.admin.id;
+  //將完成的成就點數加總
+  const totalGetPoiont = await db.query(
+    "select sum(reward_point) Sum from (select m.milestone_sid, m.stone_name, m.progress_goal, m.reward_point, sum(e.add_progress) AddProgress from milestone_manager m left join event_record e on e.event_time > m.event_startime and (m.event_endtime> e.event_time or m.event_endtime is null) and e.member_number = ? and m.event_trigger = e.event_trigger GROUP by m.milestone_sid) temp where temp.progress_goal <= temp.AddProgress",
+    [id]
+  );
+  //將所有花費過的點數加總
+  const totalSpendPoint = await db.query(
+    "select sum(spend_point) Sum from `milestone_user` where memner_number = ? ",
+    [id]
+  );
+  totalPotint = totalGetPoiont[0][0].Sum - totalSpendPoint[0][0].Sum;
+  if (totalPotint <= 0) {
+    msg = "點數不足";
+    success = false;
+  }
+  if(success){
+    const GooDList = await db.query("SELECT * FROM `exchange_good` where good_ID = ? ", [
+      good_ID,
+    ]);
+    if(GooDList[0].length != 1)
+    {
+      msg = "商品資訊錯誤";
+      success = false;
+    }
+    else{
+      if(GooDList[0][0].need_point * count < totalPotint)
+      {
+        msg = "剩餘點數不足";
+        success = false;
+      }
+      else{
+        cost = GooDList[0][0].need_point * count;
+        good_type = GooDList[0][0].good_type;
+        discount = GooDList[0][0].good_discount;
+      }
+    }
+  }
+  if(success)
+  {
+    const [
+      newExchange
+    ] = await db.query(
+      "INSERT INTO `milestone_user`"+
+      "(`exchange_sid`, "+
+      "`good_type`, "+
+      "`spend_point`, "+
+      "`event_time`, "+
+      "`memner_number`, "+
+      "`discount` ) VALUES ( ?,?,?,now(),?,?)",
+      [
+        good_ID,
+        good_type,
+        cost,
+        id,
+        discount,
+      ]
+    );
+      msg= "新增";
+  }
+
+  res.json({ success: success, msg: msg});
 })
 
 

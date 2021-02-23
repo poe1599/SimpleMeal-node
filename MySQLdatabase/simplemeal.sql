@@ -165,22 +165,23 @@ CREATE TABLE `exchange_good` (
   `good_name` varchar(255) NOT NULL COMMENT '優惠名稱',
   `good_subs` varchar(255) NOT NULL COMMENT '優惠說明',
   `need_point` int(6) NOT NULL COMMENT '兌換優惠所需點數',
-  `good_pic` varchar(255) NOT NULL COMMENT '優惠顯示圖片'
+  `good_pic` varchar(255) NOT NULL COMMENT '優惠顯示圖片',
+  `good_discount` int(5) DEFAULT NULL  COMMENT '折扣'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- 傾印資料表的資料 `exchange_good`
 --
 
-INSERT INTO `exchange_good` (`good_ID`, `good_type`, `good_name`, `good_subs`, `need_point`, `good_pic`) VALUES
-(1, 1, '星巴克買一送一', '憑QR CODE可以獲得同口味大小星巴克飲料買一送一', 100, 'rw-example.png'),
-(2, 1, '7-11超商折價券50元', '我就是一段唬爛打我啊哈哈笨蛋', 100, 'rw-example.png'),
-(3, 1, '全家咖啡買一送一', '憑QR CODE可以獲得同口味咖啡買一送一', 50, 'rw-example.png'),
-(4, 1, '7-11超商折價券100元', '我就是一段唬爛打我啊哈哈笨蛋', 200, 'rw-example.png'),
-(5, 2, '站內50元折價', '你好我是一個介紹優惠的唬爛，你好我是一個介紹優惠的唬爛，你好我是一個介紹優惠的唬爛', 100, 'rw-005.png'),
-(6, 2, '站內100元折價', ' 儘管如此，別人往往卻不這麼想。蕭伯納告訴我們，勞動是惟一導向知識的道路。這段話對世界的改變有著深遠的影響。話雖如此，我們卻也不能夠這麼篤定。', 100, 'rw-006.png'),
-(7, 2, '站內150元折價', '如果仔細思考站內優惠，會發現其中蘊含的深遠意義。\r\n對於站內優惠，我們不能不去想，卻也不能走火入魔。', 150, 'rw-example.png'),
-(8, 2, '站內200元折價', '我就是一段唬爛打我啊哈哈笨蛋', 200, 'rw-example.png');
+INSERT INTO `exchange_good` (`good_ID`, `good_type`, `good_name`, `good_subs`, `need_point`, `good_pic`, `good_discount`) VALUES
+(1, 1, '星巴克買一送一', '憑QR CODE可以獲得同口味大小星巴克飲料買一送一', 100, 'rw-example.png', NULL),
+(2, 1, '7-11超商折價券50元', '我就是一段唬爛打我啊哈哈笨蛋', 100, 'rw-example.png', NULL),
+(3, 1, '全家咖啡買一送一', '憑QR CODE可以獲得同口味咖啡買一送一', 50, 'rw-example.png', NULL),
+(4, 1, '7-11超商折價券100元', '我就是一段唬爛打我啊哈哈笨蛋', 200, 'rw-example.png', NULL),
+(5, 2, '站內50元折價', '你好我是一個介紹優惠的唬爛，你好我是一個介紹優惠的唬爛，你好我是一個介紹優惠的唬爛', 100, 'rw-005.png', 50),
+(6, 2, '站內100元折價', ' 儘管如此，別人往往卻不這麼想。蕭伯納告訴我們，勞動是惟一導向知識的道路。這段話對世界的改變有著深遠的影響。話雖如此，我們卻也不能夠這麼篤定。', 100, 'rw-006.png', 100),
+(7, 2, '站內150元折價', '如果仔細思考站內優惠，會發現其中蘊含的深遠意義。\r\n對於站內優惠，我們不能不去想，卻也不能走火入魔。', 150, 'rw-example.png', 150),
+(8, 2, '站內200元折價', '我就是一段唬爛打我啊哈哈笨蛋', 200, 'rw-example.png', 200);
 
 -- --------------------------------------------------------
 
@@ -391,7 +392,7 @@ CREATE TABLE `milestone_manager` (
 --
 
 INSERT INTO `milestone_manager` (`milestone_sid`, `stone_name`, `event_startime`, `event_endtime`, `event_trigger`, `progress_goal`, `reward_point`, `subs`, `unfinished_goal_pic`, `finished_goal_pic`) VALUES
-(1, '累積消費一萬元', '2021-01-01 00:00:00', NULL, 1, 10000, 200, '累積消費一萬元可得200點', 'ms-001-unfinish.png', 'ms-001-finish.png'),
+(1, '累積消費一萬元', '2021-01-01 00:00:00', NULL, 1, 10000, 400, '累積消費一萬元可得400點', 'ms-001-unfinish.png', 'ms-001-finish.png'),
 (2, '累積消費十萬元', '2021-01-01 00:00:00', NULL, 1, 100000, 1000, '累積消費十萬元可得1000點', 'ms-003-unfinish.png', 'ms-003-finish.png'),
 (3, '累積消費五萬元', '2021-01-01 00:00:00', NULL, 1, 50000, 5000, '累積消費5萬元可得5000點', 'ms-002-unfinish.png', 'ms-002-finish.png'),
 (4, '第一筆評論', '2021-01-01 00:00:00', NULL, 3, 1, 50, '第一次對餐點評分可得50點', 'ms-004-unfinish.png', 'ms-004-finish.png'),
