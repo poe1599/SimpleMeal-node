@@ -63,6 +63,8 @@ router.get("/getorder", async (req, res) => {
 router.post("/ordercheck", upload.none(), async (req, res) => {
   const member_number = req.session.admin.member_number;
   const order_sid = (+new Date()).toString().slice(4);
+  
+  // 更新現有的預約資訊並填入結帳日期
   const [
     row,
   ] = await db.query(
@@ -76,6 +78,17 @@ router.post("/ordercheck", upload.none(), async (req, res) => {
       member_number,
     ]
   );
+
+  // 註銷已使用的優惠券(需先判斷優惠碼, 避免更動到)
+  if (req.body.couponString !== null && req.body.couponString !== "") {
+    const [
+      couponData,
+    ] = await db.query(
+      "UPDATE `milestone_user` SET `used_date`= now() where `good_type` = 2 and `discount_code` = ? ",
+      [req.body.couponString]
+    );
+  }
+
   const result = { order_sid: order_sid };
   res.json(result);
 });

@@ -24,6 +24,8 @@ router.use((req, res, next) => {
 router.post("/addcheck", upload.none(), async (req, res) => {
   const member_sid = req.session.admin.id;
   const order_sid = (+new Date()).toString().slice(4);
+
+  // 資料庫增加新的餐券訂單
   const [
     row,
   ] = await db.query(
@@ -40,6 +42,16 @@ router.post("/addcheck", upload.none(), async (req, res) => {
       req.body.payment_method,
     ]
   );
+
+  // 註銷已使用的優惠券(需先判斷優惠碼, 避免更動到)
+  if (req.body.couponString !== null && req.body.couponString !== "") {
+    const [
+      couponData,
+    ] = await db.query(
+      "UPDATE `milestone_user` SET `used_date`= now() where `good_type` = 2 and `discount_code` = ? ",
+      [req.body.couponString]
+    );
+  }
 
   // 會員中心增加購買的餐券數量
   const [
