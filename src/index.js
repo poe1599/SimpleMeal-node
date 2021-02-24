@@ -139,6 +139,12 @@ app.use(
   require(__dirname + "/routes/reservationComment")
 );
 
+//廚房頁面獲取優惠券模組
+app.use(
+  "/activityCoupon",
+  require(__dirname + "/routes/activityCoupon")
+);
+
 
 app.get("/getdata", async (req, res) => {
   const [result] = await db.query("SELECT * FROM `test`");

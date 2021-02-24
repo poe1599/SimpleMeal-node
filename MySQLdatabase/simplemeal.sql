@@ -2,10 +2,10 @@
 -- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- 主機： localhost
--- 產生時間： 2021 年 02 月 22 日 06:47
--- 伺服器版本： 10.4.17-MariaDB
--- PHP 版本： 7.4.12
+-- 主機： 127.0.0.1
+-- 產生時間： 2021-02-24 13:04:03
+-- 伺服器版本： 10.4.16-MariaDB
+-- PHP 版本： 7.3.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -166,7 +166,7 @@ CREATE TABLE `exchange_good` (
   `good_subs` varchar(255) NOT NULL COMMENT '優惠說明',
   `need_point` int(6) NOT NULL COMMENT '兌換優惠所需點數',
   `good_pic` varchar(255) NOT NULL COMMENT '優惠顯示圖片',
-  `good_discount` int(5) DEFAULT NULL  COMMENT '折扣'
+  `good_discount` int(5) DEFAULT NULL COMMENT '折扣'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -181,7 +181,8 @@ INSERT INTO `exchange_good` (`good_ID`, `good_type`, `good_name`, `good_subs`, `
 (5, 2, '站內50元折價', '你好我是一個介紹優惠的唬爛，你好我是一個介紹優惠的唬爛，你好我是一個介紹優惠的唬爛', 100, 'rw-005.png', 50),
 (6, 2, '站內100元折價', ' 儘管如此，別人往往卻不這麼想。蕭伯納告訴我們，勞動是惟一導向知識的道路。這段話對世界的改變有著深遠的影響。話雖如此，我們卻也不能夠這麼篤定。', 100, 'rw-006.png', 100),
 (7, 2, '站內150元折價', '如果仔細思考站內優惠，會發現其中蘊含的深遠意義。\r\n對於站內優惠，我們不能不去想，卻也不能走火入魔。', 150, 'rw-example.png', 150),
-(8, 2, '站內200元折價', '我就是一段唬爛打我啊哈哈笨蛋', 200, 'rw-example.png', 200);
+(8, 2, '站內200元折價', '我就是一段唬爛打我啊哈哈笨蛋', 200, 'rw-example.png', 200),
+(9, 3, '站內100元折價券', '快來按我啊, 我是Lemon, 我就囂張, 我睡', 0, '', 100);
 
 -- --------------------------------------------------------
 
@@ -551,7 +552,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`session_id`, `expires`, `data`) VALUES
-('-30ylhPYP38GQjKoAk-YP7HKk2H68eV6', 1613987115, '{\"cookie\":{\"originalMaxAge\":18000000,\"expires\":\"2021-02-22T09:34:35.565Z\",\"httpOnly\":true,\"path\":\"/\"},\"admin\":{\"id\":1,\"member_number\":\"20210001\",\"avater\":\"avatar01.jpg\",\"level\":\"vip會員\",\"email\":\"GoodGoodEat@gmail.com\",\"password\":\"7c4a8d09ca3762af61e59520943dc26494f8941b\",\"name\":\"王曉明\",\"nickname\":\"小明\",\"mobile\":\"0978565545\",\"birthday\":\"1990-10-09T16:00:00.000Z\",\"credit＿card\":\"1234-1234-1234-1234\",\"addr\":\"台北市大安區復興南路一段390號2樓\",\"love\":\"1,2,3\",\"simplemeal_coupon\":100}}');
+('a3YwWywNYr-mCG7Q8R_ARMOoqcXhwVE-', 1614157173, '{\"cookie\":{\"originalMaxAge\":18000000,\"expires\":\"2021-02-24T08:07:51.180Z\",\"httpOnly\":true,\"path\":\"/\"},\"admin\":{\"id\":1,\"member_number\":\"20210001\",\"avater\":\"avatar01.jpg\",\"level\":\"vip會員\",\"email\":\"GoodGoodEat@gmail.com\",\"password\":\"7c4a8d09ca3762af61e59520943dc26494f8941b\",\"name\":\"王曉明\",\"nickname\":\"小明\",\"mobile\":\"0978565545\",\"birthday\":\"1990-10-09T16:00:00.000Z\",\"credit＿card\":\"1234-1234-1234-1234\",\"addr\":\"台北市大安區復興南路一段390號2樓\",\"love\":\"1,2,3\",\"simplemeal_coupon\":100}}');
 
 -- --------------------------------------------------------
 
@@ -937,7 +938,7 @@ ALTER TABLE `comment_get_good`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `exchange_good`
 --
 ALTER TABLE `exchange_good`
-  MODIFY `good_ID` int(6) NOT NULL AUTO_INCREMENT COMMENT '優惠編號', AUTO_INCREMENT=9;
+  MODIFY `good_ID` int(6) NOT NULL AUTO_INCREMENT COMMENT '優惠編號', AUTO_INCREMENT=10;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `history_mealdelivery`
