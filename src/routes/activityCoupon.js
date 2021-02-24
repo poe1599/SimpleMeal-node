@@ -19,22 +19,33 @@ router.use((req, res, next) => {
   next();
 });
 
-// 100元購物金post資料表內
+// 增加100元購物金到milestone_user
 // http://localhost:4000/activityCoupon/getlemoncoupon
-router.post("/addreservation", upload.none(), async (req, res) => {
+router.get("/getlemoncoupon", upload.none(), async (req, res) => {
     const member_number = req.session.admin.member_number;
-    const discount_code = toString().slice(5);
+    const discount_code = 123;
 
+// 取得優惠券項目資料表
+    // const [exChangeData] = await db.query("select * from `exchange_good` where `good_ID` = 9"); 
+    // res.json(exChangeData);
+    
+// 檢查milestone_user, 該會員是否有sid 9兌換商品編號
+  const [milestoneUserData] = await db.query(
+    "SELECT * FROM `milestone_user` WHERE `member_number`=? and `exchange_sid`= 9",
+    [member_number]
+  );
+
+  if (milestoneUserData.length === 0) {
     const [result] = await db.query(
         "INSERT INTO `milestone_user`(`exchange_sid`, `good_type`, `spend_point`, `event_time`, `member_number`, `discount`, `discount_code`, `used_date`) VALUES (9, 3, 0, NOW(), ?, 100, ?, null)",
         [member_number,
         discount_code,
-
         ]);
-
-
-      res.json({ result });
+        res.json({ result });
+        return;
+      }
     });
+
 // 單純拿全部
 // http://localhost:4000/test/getallmeal
 // router.get("/getallmeal", async (req, res) => {
@@ -44,10 +55,10 @@ router.post("/addreservation", upload.none(), async (req, res) => {
 
 // 用query string拿資料
 // http://localhost:4000/activityCoupon/getlemoncoupon?good_ID=9
-router.get("/getlemoncoupon", async (req, res) => {
-  const [result] = await db.query("select * from `exchange_good` where `good_ID` = 9");
-  res.json(result);
-});
+// router.get("/getlemoncoupon", async (req, res) => {
+//   const [result] = await db.query("select * from `exchange_good` where `good_ID` = 9");
+//   res.json(result);
+// });
 
 // 用params拿資料
 // http://localhost:4000/test/getmealbyparams/1
