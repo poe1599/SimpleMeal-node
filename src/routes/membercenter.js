@@ -19,7 +19,8 @@ router.use((req, res, next) => {
   next();
 });
 
-//   餐卷歷史紀錄
+
+//   購買餐卷歷史紀錄
 // http://localhost:4000/membercenter/cart_simplemealcoupon
 router.get("/cart_simplemealcoupon", async (req, res) => {
   
@@ -29,47 +30,59 @@ router.get("/cart_simplemealcoupon", async (req, res) => {
     res.json(result);
     return;
   }
-    const [result] = await db.query("SELECT * FROM `cart_simplemealcoupon` WHERE `check_date` >= ?  AND `check_date` <= ? ORDER BY `cart_simplemealcoupon`.`check_date` ASC",[req.query.start, req.query.end]);
+    const [result] = await db.query("SELECT * FROM `cart_simplemealcoupon` WHERE `check_date` >= ?  AND `check_date` <= DATE_ADD(?, INTERVAL 1 DAY) ORDER BY `cart_simplemealcoupon`.`check_date` ASC",[req.query.start, req.query.end]);
 
+  res.json(result);
+});
+//   餐卷歷史紀錄
+// http://localhost:4000/membercenter/history_mealdelivery
+router.get("/history_mealdelivery", async (req, res) => {
   
+
+  if(req.query.start === 'null' && req.query.end === 'null'){
+    const [result,] = await db.query("SELECT * FROM `history_mealdelivery` ");
+    res.json(result);
+   return;
+ }
+
+ const[result,] =await db.query("SELECT * FROM `history_mealdelivery` WHERE `check_date` >= ?  AND `check_date` <= DATE_ADD(?, INTERVAL 1 DAY) ",[req.query.start, req.query.end])
+ res.json(result); 
+});
+// 驚喜廚房紀錄
+// http://localhost:4000/membercenter/surprisekitchen_order
+router.get("/surprisekitchen_order", async (req, res) => {
+
+  if(req.query.start === 'null' && req.query.end === 'null'){
+    const [result,] = await db.query("SELECT * FROM `surprisekitchen_order`");
+    res.json(result);
+   return;
+ }
+ const[result,] =await db.query("SELECT * FROM `surprisekitchen_order` WHERE `check_date` >= ?  AND `check_date` <= DATE_ADD(?, INTERVAL 1 DAY) ",[req.query.start, req.query.end])
+ res.json(result);
+});
+
+// 會員註冊
+// http://localhost:4000/membercenter/registered //upload上傳檔關閉 none
+router.post("/registered",upload.none(), async (req, res) => {
+  
+  const [result] = await db.query("INSERT INTO `membercenter` (`email`, `password`, `password1`, `name`, `mobile`,`addr`) VALUES (? ,? ,? ,? ,? ,? )", [
+    req.body.email,
+    req.body.password,
+    req.body.password1,
+    req.body.name,
+    req.body.mobile,
+    req.body.addr
+  ]);
+  res.json(result);
+});
+// 驚喜廚房紀錄
+// http://localhost:4000/membercenter/info
+router.get("/info", async (req, res) => {
+    const [result,] = await db.query("SELECT * FROM `membercenter` WHERE id=1 ");
+    res.json(result);
+   return;
  
-
-
-  
-  // const [result] = await db.query("SELECT * FROM `cart_simplemealcoupon` ORDER BY `order_sid` ASC");
-  res.json(result);
-});
-
-
-  // 驚喜廚房歷史紀錄
-// http://localhost:4000/membercenter/cart_simplemealcoupon
-router.get("/cart_simplemealcoupon", async (req, res) => {
-  // const [result] = await db.query("SELECT * FROM `cart_simplemealcoupon` WHERE `check_date` > ?  AND `check_date`<  ?" ,[req.query.start, req.query.end]);
-   // SELECT * FROM `cart_simplemealcoupon` WHERE `check_date` <  '2021-02-23'  AND `check_date` > '2021-01-15'
-  const [result] = await db.query("SELECT * FROM `cart_mealdelivery`");
-  res.json(result);
-  
-
-});
-  // 我的餐點歷史紀錄
-// http://localhost:4000/membercenter/cart_mealdelivery
-router.get("/cart_mealdelivery", async (req, res) => {
  
-  const [result] = await db.query("SELECT * FROM `cart_mealdelivery`");
-  res.json(result);
-});
-  // 會員中心資料
-// http://localhost:4000/membercenter/membercenter
-router.get("/membercenter", async (req, res) => {
-  const [result] = await db.query("SELECT * FROM `membercenter`");
-  res.json(result);
-});
-
-  // 會員中心資料新增
-// http://localhost:4000/membercenter/cart_simplemealcoupon
-router.get("/membercenter", async (req, res) => {
-  const [result] = await db.query("SELECT * FROM `membercenter`");
-  res.json(result);
 });
 
 
