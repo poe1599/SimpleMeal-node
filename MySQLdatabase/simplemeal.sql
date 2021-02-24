@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2021-02-24 15:31:10
+-- 產生時間： 2021-02-24 19:09:14
 -- 伺服器版本： 10.4.16-MariaDB
 -- PHP 版本： 7.3.24
 
@@ -367,7 +367,12 @@ CREATE TABLE `membercenter` (
 --
 
 INSERT INTO `membercenter` (`id`, `member_number`, `avater`, `level`, `email`, `password`, `name`, `nickname`, `mobile`, `birthday`, `credit＿card`, `addr`, `love`, `simplemeal_coupon`) VALUES
-(1, '20210001', 'avatar01.jpg', 'vip會員', 'GoodGoodEat@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '王曉明', '小明', '0978565545', '1990-10-10', '1234-1234-1234-1234', '台北市大安區復興南路一段390號2樓', '1,2,3', 100);
+(1, '20210001', 'avatar01.jpg', 'VIP會員', 'GoodGoodEat@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '王曉明', '小明', '0978565545', '1990-10-10', '1234-1234-1234-1234', '台北市大安區復興南路一段390號2樓', '1,2,3', 100),
+(2, '20210002', NULL, '一般會員', 'FoodEat@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'Lemon', 'yellow', '0911111111', '2021-02-19', '1234-1234-1234-1234', '台北市信義區仁愛路四段505號', NULL, 0),
+(3, '20210003', NULL, '一般會員', 'tomato@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'Tomato', 'orange', '0912345678', '2021-03-05', '1234-1234-1234-1234', '台北市信義區光復南路133號', NULL, 0),
+(4, '20210004', NULL, 'VIP會員', 'bacon@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'Bacon', 'red', '0978965842', '2021-01-01', '1234-1234-1234-1234', '台北市中正區仁愛路二段108號', NULL, 0),
+(5, NULL, NULL, '一般會員', 'cheese@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'Cheese', 'stench', '0965423685', '2021-01-21', '1234-1234-1234-1234\r\n', '台北市中山區八德路二段306號', NULL, 0),
+(6, NULL, NULL, 'VIP會員', 'pork@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'Pork', 'pig', '0975888426', '2021-01-30', '1234-1234-1234-1234', '台北市中山區松江路199號', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -427,7 +432,9 @@ INSERT INTO `milestone_user` (`exchange_sid`, `good_type`, `spend_point`, `event
 (1, 1, 100, '2020-12-25 01:40:09', 1, NULL, '', NULL),
 (2, 1, 100, '2020-12-25 01:57:48', 1, NULL, '', NULL),
 (5, 2, 100, '2020-12-25 02:18:34', 1, 50, '', NULL),
-(5, 2, 100, '2021-02-08 10:05:07', 1, 50, '', NULL);
+(5, 2, 100, '2021-02-08 10:05:07', 1, 50, '', NULL),
+(9, 3, 0, '2021-02-24 18:53:28', 20210001, 100, '123', NULL),
+(9, 3, 0, '2021-02-24 19:00:42', 20210002, 100, '123', NULL);
 
 -- --------------------------------------------------------
 
@@ -552,7 +559,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`session_id`, `expires`, `data`) VALUES
-('a3YwWywNYr-mCG7Q8R_ARMOoqcXhwVE-', 1614167927, '{\"cookie\":{\"originalMaxAge\":18000000,\"expires\":\"2021-02-24T08:07:51.180Z\",\"httpOnly\":true,\"path\":\"/\"},\"admin\":{\"id\":1,\"member_number\":\"20210001\",\"avater\":\"avatar01.jpg\",\"level\":\"vip會員\",\"email\":\"GoodGoodEat@gmail.com\",\"password\":\"7c4a8d09ca3762af61e59520943dc26494f8941b\",\"name\":\"王曉明\",\"nickname\":\"小明\",\"mobile\":\"0978565545\",\"birthday\":\"1990-10-09T16:00:00.000Z\",\"credit＿card\":\"1234-1234-1234-1234\",\"addr\":\"台北市大安區復興南路一段390號2樓\",\"love\":\"1,2,3\",\"simplemeal_coupon\":100}}');
+('5VN4mQEPfvK6Tiky0vdJdO0dWprJ0SWS', 1614182452, '{\"cookie\":{\"originalMaxAge\":18000000,\"expires\":\"2021-02-24T16:00:38.317Z\",\"httpOnly\":true,\"path\":\"/\"},\"admin\":{\"id\":2,\"member_number\":\"20210002\",\"avater\":null,\"level\":\"一般會員\",\"email\":\"FoodEat@gmail.com\",\"password\":\"7c4a8d09ca3762af61e59520943dc26494f8941b\",\"name\":\"Lemon\",\"nickname\":\"yellow\",\"mobile\":\"0911111111\",\"birthday\":\"2021-02-18T16:00:00.000Z\",\"credit＿card\":\"1234-1234-1234-1234\",\"addr\":\"台北市信義區仁愛路四段505號\",\"love\":null,\"simplemeal_coupon\":0}}'),
+('a3YwWywNYr-mCG7Q8R_ARMOoqcXhwVE-', 1614170940, '{\"cookie\":{\"originalMaxAge\":18000000,\"expires\":\"2021-02-24T08:07:51.180Z\",\"httpOnly\":true,\"path\":\"/\"},\"admin\":{\"id\":1,\"member_number\":\"20210001\",\"avater\":\"avatar01.jpg\",\"level\":\"vip會員\",\"email\":\"GoodGoodEat@gmail.com\",\"password\":\"7c4a8d09ca3762af61e59520943dc26494f8941b\",\"name\":\"王曉明\",\"nickname\":\"小明\",\"mobile\":\"0978565545\",\"birthday\":\"1990-10-09T16:00:00.000Z\",\"credit＿card\":\"1234-1234-1234-1234\",\"addr\":\"台北市大安區復興南路一段390號2樓\",\"love\":\"1,2,3\",\"simplemeal_coupon\":100}}');
 
 -- --------------------------------------------------------
 
@@ -679,7 +687,7 @@ CREATE TABLE `surprisekitchen_order` (
 --
 
 INSERT INTO `surprisekitchen_order` (`sid`, `member_number`, `order_sid`, `reservation_date`, `reservation_time`, `num_adult`, `num_child`, `adult_price`, `child_price`, `num_meal`, `remark`, `reservation_price`, `reservation_name`, `reservation_tel`, `reservation_email`, `payment_method`, `check_date`) VALUES
-(21, 20210001, 149374664, '0000-00-00', '', 0, 0, 500, 100, 0, '', 0, NULL, NULL, NULL, NULL, NULL);
+(22, 20210001, 163987153, '0000-00-00', '', 0, 0, 500, 100, 0, '', 0, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -969,7 +977,7 @@ ALTER TABLE `meal`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `membercenter`
 --
 ALTER TABLE `membercenter`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `milestone_manager`
@@ -1023,7 +1031,7 @@ ALTER TABLE `simplemealcoupon`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `surprisekitchen_order`
 --
 ALTER TABLE `surprisekitchen_order`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `test`

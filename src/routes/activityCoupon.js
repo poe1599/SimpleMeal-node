@@ -21,7 +21,7 @@ router.use((req, res, next) => {
 
 // 增加100元購物金到milestone_user
 // http://localhost:4000/activityCoupon/getlemoncoupon
-router.get("/getlemoncoupon", upload.none(), async (req, res) => {
+router.get("/getlemoncoupon", async (req, res) => {
     const member_number = req.session.admin.member_number;
     const discount_code = 123;
 
@@ -41,9 +41,11 @@ router.get("/getlemoncoupon", upload.none(), async (req, res) => {
         [member_number,
         discount_code,
         ]);
-        res.json({ result });
+        res.json({ msg:'拿到優惠券',success:true });
         return;
       }
+
+      res.json({msg:'拿過了',success:false})
     });
 
 // 單純拿全部
