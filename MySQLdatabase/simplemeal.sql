@@ -2,10 +2,10 @@
 -- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- 主機： 127.0.0.1
--- 產生時間： 2021-02-24 12:26:59
--- 伺服器版本： 10.4.16-MariaDB
--- PHP 版本： 7.3.24
+-- 主機： localhost
+-- 產生時間： 2021 年 02 月 24 日 23:35
+-- 伺服器版本： 10.4.17-MariaDB
+-- PHP 版本： 7.4.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -174,14 +174,14 @@ CREATE TABLE `exchange_good` (
 --
 
 INSERT INTO `exchange_good` (`good_ID`, `good_type`, `good_name`, `good_subs`, `need_point`, `good_pic`, `good_discount`) VALUES
-(1, 1, '星巴克買一送一', '憑QR CODE可以獲得同口味大小星巴克飲料買一送一', 100, 'rw-example.png', NULL),
-(2, 1, '7-11超商折價券50元', '我就是一段唬爛打我啊哈哈笨蛋', 100, 'rw-example.png', NULL),
-(3, 1, '全家咖啡買一送一', '憑QR CODE可以獲得同口味咖啡買一送一', 50, 'rw-example.png', NULL),
-(4, 1, '7-11超商折價券100元', '我就是一段唬爛打我啊哈哈笨蛋', 200, 'rw-example.png', NULL),
-(5, 2, '站內50元折價', '你好我是一個介紹優惠的唬爛，你好我是一個介紹優惠的唬爛，你好我是一個介紹優惠的唬爛', 100, 'rw-005.png', 50),
-(6, 2, '站內100元折價', ' 儘管如此，別人往往卻不這麼想。蕭伯納告訴我們，勞動是惟一導向知識的道路。這段話對世界的改變有著深遠的影響。話雖如此，我們卻也不能夠這麼篤定。', 100, 'rw-006.png', 100),
-(7, 2, '站內150元折價', '如果仔細思考站內優惠，會發現其中蘊含的深遠意義。\r\n對於站內優惠，我們不能不去想，卻也不能走火入魔。', 150, 'rw-example.png', 150),
-(8, 2, '站內200元折價', '我就是一段唬爛打我啊哈哈笨蛋', 200, 'rw-example.png', 200),
+(1, 1, '星巴克買一送一', '憑QR CODE可以獲得同口味大小星巴克飲料買一送一', 100, 'rw-001.png', NULL),
+(2, 1, '7-11折價券50元', '憑QR CODE於7-11消費折扣50元', 100, 'rw-002.png', NULL),
+(3, 1, '全家咖啡買一送一', '憑QR CODE可以獲得同口味咖啡買一送一', 50, 'rw-003.png', NULL),
+(4, 1, '7-11折價券100元', '憑QR CODE於7-11消費折扣100元', 200, 'rw-004.png', NULL),
+(5, 2, '站內50元折價', '購買餐卷或是預約廚房時可兌換50元折價', 100, 'rw-005.png', 50),
+(6, 2, '站內100元折價', '購買餐卷或是預約廚房時可兌換100元折價', 100, 'rw-006.png', 100),
+(7, 2, '站內150元折價', '購買餐卷或是預約廚房時可兌換150元折價', 150, 'rw-007.png', 150),
+(8, 2, '站內200元折價', '購買餐卷或是預約廚房時可兌換200元折價', 200, 'rw-008.png', 200),
 (9, 3, '站內100元折價券', '快來按我啊, 我是Lemon, 我就囂張, 我睡', 0, '', 100);
 
 -- --------------------------------------------------------
@@ -405,7 +405,10 @@ INSERT INTO `milestone_manager` (`milestone_sid`, `stone_name`, `event_startime`
 (5, '我是評論家', '2021-01-01 00:00:00', NULL, 3, 10, 200, '累積發表十篇心得可得200點', 'ms-005-unfinish.png', 'ms-005-finish.png'),
 (6, '累積消費滿五千元', '2021-01-01 00:00:00', NULL, 1, 5000, 100, '累積消費滿五千元，可獲得100點獎勵點數', 'ms-006-unfinish.png', 'ms-006-finish.png'),
 (7, '初學小廚師', '2021-01-01 00:00:00', NULL, 5, 1, 100, '第一次參加驚喜廚房', 'ms-007-unfinish.png', 'ms-007-finish.png'),
-(8, '熟能生巧', '2021-01-01 00:00:00', NULL, 5, 5, 200, '成功預約五次驚喜廚房', 'ms-008-unfinish.png', 'ms-008-finish.png');
+(8, '熟能生巧', '2021-01-01 00:00:00', NULL, 5, 5, 200, '成功預約五次驚喜廚房', 'ms-008-unfinish.png', 'ms-008-finish.png'),
+(9, '一月吃美式', '2021-01-01 00:00:00', '2021-01-31 23:59:59', 6, 1, 100, '於一月點購任何一道美式食譜', 'ms-009-unfinish.png', 'ms-009-finish.png'),
+(10, '二月吃中式', '2021-02-01 00:00:00', '2021-02-28 23:59:59', 7, 1, 100, '於二月點購任何一道中式食譜', 'ms-010-unfinish.png', 'ms-010-finish.png'),
+(11, '三月吃義式', '2021-03-01 00:00:00', '2021-03-31 23:59:59', 8, 1, 100, '於三月點購任何一道義式食譜', 'ms-011-unfinish.png', 'ms-011-finish.png');
 
 -- --------------------------------------------------------
 
@@ -558,8 +561,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`session_id`, `expires`, `data`) VALUES
-('5VN4mQEPfvK6Tiky0vdJdO0dWprJ0SWS', 1614182452, '{\"cookie\":{\"originalMaxAge\":18000000,\"expires\":\"2021-02-24T16:00:38.317Z\",\"httpOnly\":true,\"path\":\"/\"},\"admin\":{\"id\":2,\"member_number\":\"20210002\",\"avater\":null,\"level\":\"一般會員\",\"email\":\"FoodEat@gmail.com\",\"password\":\"7c4a8d09ca3762af61e59520943dc26494f8941b\",\"name\":\"Lemon\",\"nickname\":\"yellow\",\"mobile\":\"0911111111\",\"birthday\":\"2021-02-18T16:00:00.000Z\",\"credit＿card\":\"1234-1234-1234-1234\",\"addr\":\"台北市信義區仁愛路四段505號\",\"love\":null,\"simplemeal_coupon\":0}}'),
-('a3YwWywNYr-mCG7Q8R_ARMOoqcXhwVE-', 1614170940, '{\"cookie\":{\"originalMaxAge\":18000000,\"expires\":\"2021-02-24T08:07:51.180Z\",\"httpOnly\":true,\"path\":\"/\"},\"admin\":{\"id\":1,\"member_number\":\"20210001\",\"avater\":\"avatar01.jpg\",\"level\":\"vip會員\",\"email\":\"GoodGoodEat@gmail.com\",\"password\":\"7c4a8d09ca3762af61e59520943dc26494f8941b\",\"name\":\"王曉明\",\"nickname\":\"小明\",\"mobile\":\"0978565545\",\"birthday\":\"1990-10-09T16:00:00.000Z\",\"credit＿card\":\"1234-1234-1234-1234\",\"addr\":\"台北市大安區復興南路一段390號2樓\",\"love\":\"1,2,3\",\"simplemeal_coupon\":100}}');
+('GA45o0fEdJClLpsGZWYmWI4DSylPswYQ', 1614223822, '{\"cookie\":{\"originalMaxAge\":18000000,\"expires\":\"2021-02-25T02:30:17.706Z\",\"httpOnly\":true,\"path\":\"/\"},\"admin\":{\"id\":1,\"member_number\":\"20210001\",\"avater\":\"avatar01.jpg\",\"level\":\"VIP會員\",\"email\":\"GoodGoodEat@gmail.com\",\"password\":\"7c4a8d09ca3762af61e59520943dc26494f8941b\",\"name\":\"王曉明\",\"nickname\":\"小明\",\"mobile\":\"0978565545\",\"birthday\":\"1990-10-09T16:00:00.000Z\",\"credit＿card\":\"1234-1234-1234-1234\",\"addr\":\"台北市大安區復興南路一段390號2樓\",\"love\":\"1,2,3\",\"simplemeal_coupon\":0}}');
 
 -- --------------------------------------------------------
 
@@ -769,7 +771,10 @@ INSERT INTO `trigger_describe` (`trigger_ID`, `subs`) VALUES
 (2, '訂餐次數'),
 (3, '餐點評論次數'),
 (4, '抓到咧孟'),
-(5, '預約驚喜廚房次數');
+(5, '預約驚喜廚房次數'),
+(6, '嘗試美式料理'),
+(7, '嘗試中式料理'),
+(8, '嘗試義式料理');
 
 --
 -- 已傾印資料表的索引
@@ -982,7 +987,7 @@ ALTER TABLE `membercenter`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `milestone_manager`
 --
 ALTER TABLE `milestone_manager`
-  MODIFY `milestone_sid` int(6) NOT NULL AUTO_INCREMENT COMMENT '成就編號', AUTO_INCREMENT=9;
+  MODIFY `milestone_sid` int(6) NOT NULL AUTO_INCREMENT COMMENT '成就編號', AUTO_INCREMENT=12;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `partner`
@@ -1042,7 +1047,7 @@ ALTER TABLE `test`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `trigger_describe`
 --
 ALTER TABLE `trigger_describe`
-  MODIFY `trigger_ID` int(11) NOT NULL AUTO_INCREMENT COMMENT '觸發的條件編號', AUTO_INCREMENT=6;
+  MODIFY `trigger_ID` int(11) NOT NULL AUTO_INCREMENT COMMENT '觸發的條件編號', AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
