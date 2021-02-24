@@ -19,6 +19,22 @@ router.use((req, res, next) => {
   next();
 });
 
+// 100元購物金post資料表內
+// http://localhost:4000/activityCoupon/getlemoncoupon
+router.post("/addreservation", upload.none(), async (req, res) => {
+    const member_number = req.session.admin.member_number;
+    const discount_code = toString().slice(5);
+
+    const [result] = await db.query(
+        "INSERT INTO `milestone_user`(`exchange_sid`, `good_type`, `spend_point`, `event_time`, `member_number`, `discount`, `discount_code`, `used_date`) VALUES (9, 3, 0, NOW(), ?, 100, ?, null)",
+        [member_number,
+        discount_code,
+
+        ]);
+
+
+      res.json({ result });
+    });
 // 單純拿全部
 // http://localhost:4000/test/getallmeal
 // router.get("/getallmeal", async (req, res) => {
@@ -27,31 +43,29 @@ router.use((req, res, next) => {
 // });
 
 // 用query string拿資料
-// http://localhost:4000/activityCoupon/getlemoncoupon?sid=
+// http://localhost:4000/activityCoupon/getlemoncoupon?good_ID=9
 router.get("/getlemoncoupon", async (req, res) => {
-  const [result] = await db.query("select * from `meal` where `sid` = ?", [
-    req.query.sid,
-  ]);
+  const [result] = await db.query("select * from `exchange_good` where `good_ID` = 9");
   res.json(result);
 });
 
 // 用params拿資料
 // http://localhost:4000/test/getmealbyparams/1
-router.get("/getmealbyparams/:sid?", async (req, res) => {
-  const [result] = await db.query("select * from `meal` where `sid` = ?", [
-    req.params.sid,
-  ]);
-  res.json(result);
-});
+// router.get("/getmealbyparams/:sid?", async (req, res) => {
+//   const [result] = await db.query("select * from `meal` where `sid` = ?", [
+//     req.params.sid,
+//   ]);
+//   res.json(result);
+// });
 
 // 用post提供資料庫訊息
 // http://localhost:4000/test/postmealsid (用POSTMAN測試 或 用Live server打開根目錄的testpost.html)
-router.post("/postmealsid", upload.none(), async (req, res) => {
-  const [result] = await db.query("select * from `meal` where `sid` = ?", [
-    req.body.sid,
-  ]);
-  res.json(result);
-});
+// router.post("/postmealsid", upload.none(), async (req, res) => {
+//   const [result] = await db.query("select * from `meal` where `sid` = ?", [
+//     req.body.sid,
+//   ]);
+//   res.json(result);
+// });
 
 router.use((req, res) => {
   res.type("text/plain");

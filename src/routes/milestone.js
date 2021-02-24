@@ -102,10 +102,10 @@ router.get("/getPoint", async (req, res) => {
 
 // 用在購物車取得該會員有什麼優惠券
 router.get("/cartForDiscount", async (req, res) => {
-  const memner_number = req.session.admin.id;
+  const member_number = req.session.admin.id;
   const result = await db.query(
-    "SELECT * FROM `milestone_user` WHERE `memner_number` = ? and (`good_type` = 2 or `good_type` = 3) and `used_date` is null ",
-    [memner_number]
+    "SELECT * FROM `milestone_user` WHERE `member_number` = ? and (`good_type` = 2 or `good_type` = 3) and `used_date` is null ",
+    [member_number]
   );
 
   res.json(result[0]);

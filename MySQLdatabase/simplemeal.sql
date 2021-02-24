@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2021-02-24 13:04:03
+-- 產生時間： 2021-02-24 15:31:10
 -- 伺服器版本： 10.4.16-MariaDB
 -- PHP 版本： 7.3.24
 
@@ -413,7 +413,7 @@ CREATE TABLE `milestone_user` (
   `good_type` int(2) NOT NULL COMMENT '1=站外2=站內',
   `spend_point` int(6) NOT NULL DEFAULT 0 COMMENT '花費的點數',
   `event_time` datetime NOT NULL COMMENT '兌換的觸發時間',
-  `memner_number` int(11) NOT NULL COMMENT '該會員的ID',
+  `member_number` int(11) NOT NULL COMMENT '該會員的ID',
   `discount` int(11) DEFAULT NULL,
   `discount_code` varchar(255) NOT NULL,
   `used_date` datetime DEFAULT NULL
@@ -423,7 +423,7 @@ CREATE TABLE `milestone_user` (
 -- 傾印資料表的資料 `milestone_user`
 --
 
-INSERT INTO `milestone_user` (`exchange_sid`, `good_type`, `spend_point`, `event_time`, `memner_number`, `discount`, `discount_code`, `used_date`) VALUES
+INSERT INTO `milestone_user` (`exchange_sid`, `good_type`, `spend_point`, `event_time`, `member_number`, `discount`, `discount_code`, `used_date`) VALUES
 (1, 1, 100, '2020-12-25 01:40:09', 1, NULL, '', NULL),
 (2, 1, 100, '2020-12-25 01:57:48', 1, NULL, '', NULL),
 (5, 2, 100, '2020-12-25 02:18:34', 1, 50, '', NULL),
@@ -552,7 +552,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`session_id`, `expires`, `data`) VALUES
-('a3YwWywNYr-mCG7Q8R_ARMOoqcXhwVE-', 1614157173, '{\"cookie\":{\"originalMaxAge\":18000000,\"expires\":\"2021-02-24T08:07:51.180Z\",\"httpOnly\":true,\"path\":\"/\"},\"admin\":{\"id\":1,\"member_number\":\"20210001\",\"avater\":\"avatar01.jpg\",\"level\":\"vip會員\",\"email\":\"GoodGoodEat@gmail.com\",\"password\":\"7c4a8d09ca3762af61e59520943dc26494f8941b\",\"name\":\"王曉明\",\"nickname\":\"小明\",\"mobile\":\"0978565545\",\"birthday\":\"1990-10-09T16:00:00.000Z\",\"credit＿card\":\"1234-1234-1234-1234\",\"addr\":\"台北市大安區復興南路一段390號2樓\",\"love\":\"1,2,3\",\"simplemeal_coupon\":100}}');
+('a3YwWywNYr-mCG7Q8R_ARMOoqcXhwVE-', 1614167927, '{\"cookie\":{\"originalMaxAge\":18000000,\"expires\":\"2021-02-24T08:07:51.180Z\",\"httpOnly\":true,\"path\":\"/\"},\"admin\":{\"id\":1,\"member_number\":\"20210001\",\"avater\":\"avatar01.jpg\",\"level\":\"vip會員\",\"email\":\"GoodGoodEat@gmail.com\",\"password\":\"7c4a8d09ca3762af61e59520943dc26494f8941b\",\"name\":\"王曉明\",\"nickname\":\"小明\",\"mobile\":\"0978565545\",\"birthday\":\"1990-10-09T16:00:00.000Z\",\"credit＿card\":\"1234-1234-1234-1234\",\"addr\":\"台北市大安區復興南路一段390號2樓\",\"love\":\"1,2,3\",\"simplemeal_coupon\":100}}');
 
 -- --------------------------------------------------------
 
@@ -673,6 +673,13 @@ CREATE TABLE `surprisekitchen_order` (
   `payment_method` varchar(255) DEFAULT NULL,
   `check_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- 傾印資料表的資料 `surprisekitchen_order`
+--
+
+INSERT INTO `surprisekitchen_order` (`sid`, `member_number`, `order_sid`, `reservation_date`, `reservation_time`, `num_adult`, `num_child`, `adult_price`, `child_price`, `num_meal`, `remark`, `reservation_price`, `reservation_name`, `reservation_tel`, `reservation_email`, `payment_method`, `check_date`) VALUES
+(21, 20210001, 149374664, '0000-00-00', '', 0, 0, 500, 100, 0, '', 0, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -825,7 +832,7 @@ ALTER TABLE `milestone_manager`
 -- 資料表索引 `milestone_user`
 --
 ALTER TABLE `milestone_user`
-  ADD UNIQUE KEY `addEvent` (`event_time`,`memner_number`) USING BTREE;
+  ADD UNIQUE KEY `addEvent` (`event_time`,`member_number`) USING BTREE;
 
 --
 -- 資料表索引 `partner`
@@ -1016,7 +1023,7 @@ ALTER TABLE `simplemealcoupon`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `surprisekitchen_order`
 --
 ALTER TABLE `surprisekitchen_order`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `test`
