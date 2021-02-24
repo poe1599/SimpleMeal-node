@@ -72,7 +72,7 @@ router.get("/getPoint", async (req, res) => {
   );
   //將所有花費過的點數加總
   const totalSpendPoint = await db.query(
-    "select sum(spend_point) Sum from `milestone_user` where memner_number = ? ",
+    "select sum(spend_point) Sum from `milestone_user` where member_number = ? ",
     [req.query.sid]
   );
   res.json({
@@ -102,12 +102,15 @@ router.get("/getPoint", async (req, res) => {
 // 用在購物車取得該會員有什麼優惠券
 router.get("/cartForDiscount", async (req, res) => {
   const member_number = req.session.admin.id;
-  const result = await db.query(
-    "SELECT * FROM `milestone_user` WHERE `member_number` = ? and (`good_type` = 2 or `good_type` = 3) and `used_date` is null ",
+  const [
+    result,
+  ] = await db.query(
+    "SELECT * FROM `milestone_user` WHERE `member_number` = ? and `good_type` in (2, 3) and `used_date` is null ",
     [member_number]
   );
 
-  res.json(result[0]);
+  // console.log(result);
+  res.json(result);
 });
 
 router.use((req, res) => {
