@@ -54,7 +54,7 @@ router.post("/setExchange", upload.none(), async (req, res) => {
   let discount = "null";
   const count = req.body.count;
   const good_ID = req.body.good_ID;
-  const id = req.session.admin.id;
+  const id = req.session.admin==undefined?1:req.session.admin.id;;//沒有session就用1
   //將完成的成就點數加總
   const totalGetPoiont = await db.query(
     "select sum(reward_point) Sum from (select m.milestone_sid, m.stone_name, m.progress_goal, m.reward_point, sum(e.add_progress) AddProgress from milestone_manager m left join event_record e on e.event_time > m.event_startime and (m.event_endtime> e.event_time or m.event_endtime is null) and e.member_number = ? and m.event_trigger = e.event_trigger GROUP by m.milestone_sid) temp where temp.progress_goal <= temp.AddProgress",
