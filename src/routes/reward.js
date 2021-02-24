@@ -44,14 +44,14 @@ router.get("/getExchangeRecord", async (req, res) => {
 
 //http://localhost:4000/reward/setExchange
 router.post("/setExchange", upload.none(), async (req, res) => {
+
   //檢查
-  console.log(" setExchange id:",req.session);
   let success = true;
   let msg = "";
   let totalPotint = 0;
   let cost = 0;
   let good_type = 0;
-  let discount = null;
+  let discount = "null";
   const count = req.body.count;
   const good_ID = req.body.good_ID;
   const id = req.session.admin.id;
@@ -80,7 +80,7 @@ router.post("/setExchange", upload.none(), async (req, res) => {
       success = false;
     }
     else{
-      if(GooDList[0][0].need_point * count < totalPotint)
+      if(GooDList[0][0].need_point * count > totalPotint)
       {
         msg = "剩餘點數不足";
         success = false;
@@ -88,7 +88,8 @@ router.post("/setExchange", upload.none(), async (req, res) => {
       else{
         cost = GooDList[0][0].need_point * count;
         good_type = GooDList[0][0].good_type;
-        discount = GooDList[0][0].good_discount;
+        if(GooDList[0][0].good_discount != NaN)
+          discount = GooDList[0][0].good_discount;
       }
     }
   }
