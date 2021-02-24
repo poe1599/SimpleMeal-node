@@ -66,7 +66,7 @@ router.get("/getMilestoneList", async (req, res) => {
 //動態產生點數沒有存放在特定位置 每次都要計算 總共取得的點數 以及總共花費的點數 相減而成
 router.get("/getPoint", async (req, res) => {
   //將完成的成就點數加總
-  console.log(" getPoint id:",req.session);
+  console.log(" getPoint id:", req.session);
   const totalGetPoiont = await db.query(
     "select sum(reward_point) Sum from (select m.milestone_sid, m.stone_name, m.progress_goal, m.reward_point, sum(e.add_progress) AddProgress from milestone_manager m left join event_record e on e.event_time > m.event_startime and (m.event_endtime> e.event_time or m.event_endtime is null) and e.member_number = ? and m.event_trigger = e.event_trigger GROUP by m.milestone_sid) temp where temp.progress_goal <= temp.AddProgress",
     [req.query.sid]
@@ -104,7 +104,7 @@ router.get("/getPoint", async (req, res) => {
 router.get("/cartForDiscount", async (req, res) => {
   const memner_number = req.session.admin.id;
   const result = await db.query(
-    "SELECT * FROM `milestone_user` WHERE `memner_number` = ? and `good_type` = 2 and `used_date` is null ",
+    "SELECT * FROM `milestone_user` WHERE `memner_number` = ? and (`good_type` = 2 or `good_type` = 3) and `used_date` is null ",
     [memner_number]
   );
 
