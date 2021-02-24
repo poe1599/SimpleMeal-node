@@ -139,7 +139,6 @@ app.use(
   require(__dirname + "/routes/reservationComment")
 );
 
-
 app.get("/getdata", async (req, res) => {
   const [result] = await db.query("SELECT * FROM `test`");
   res.json(result);
@@ -173,6 +172,12 @@ app.post("/login", upload.none(), async (req, res) => {
 app.get("/logout", async (req, res) => {
   delete req.session.admin;
   res.json({ msg: "後端刪除登入SESSION" });
+});
+
+// 重整的時候判斷有沒有曾經登入
+app.get("/isLogin", async (req, res) => {
+  req.session.admin && res.json({ msg: "有登入", success: true });
+  !req.session.admin && res.json({ msg: "沒登入", success: false });
 });
 
 // 取得會員資料給前端做表單填入
