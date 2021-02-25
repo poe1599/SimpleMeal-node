@@ -10,9 +10,9 @@ const db = require(__dirname + "/../modules/db_connect2");
 // 取得baseUrl與url, 將其放在locals
 router.use((req, res, next) => {
   // 沒登入? 出去! 現在!
-  //     if (!req.session.admin) {
-  //     return res.redirect('/');
-  // }
+      if (!req.session.admin) {
+      return res.redirect('/');
+  }
   res.locals.baseUrl = req.baseUrl;
   res.locals.url = req.url;
   next();
