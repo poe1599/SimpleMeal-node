@@ -97,15 +97,14 @@ router.get("/info", async (req, res) => {
 // http://localhost:4000/membercenter/information
 router.post("/information",upload.none(), async (req, res) => {
   const member_sid = req.session.admin.id;
-  const [result,] = await db.query("UPDATE `membercenter` SET name = ?,nickname = ?,birthday= ?,mobile= ? WHERE id =  ?",[
+  const [result,] = await db.query("UPDATE `membercenter` SET name= ?, nickname= ?, birthday= ?, mobile= ? WHERE `membercenter`.`id` = ?",[
     req.body.name,
     req.body.nickname,
     req.body.birthday,
     req.body.mobile,
-    req.body.id,
     member_sid
-
   ]);
+  
   res.json(result);
  return;
 });
@@ -121,19 +120,23 @@ router.post("/addr",upload.none(), async (req, res) => {
 });
 
 // 會員基本個人信用卡修改
-// http://localhost:4000/membercenter/addr
-router.post("/addr",upload.none(), async (req, res) => {
-  const [result,] = await db.query("UPDATE `membercenter` SET credit＿card = ? WHERE `membercenter`.`id` = ?; ",[
-    req.body.credit＿card ,member_sid]);
+// http://localhost:4000/membercenter/creditcard
+router.post("/creditcard",upload.none(), async (req, res) => {
+  const member_sid = req.session.admin.id;
+  const [result,] = await db.query("UPDATE `membercenter` SET `credit＿card` = ? WHERE `membercenter`.`id` = ?; ",
+  [req.body.credit＿card,member_sid]);
   res.json(result);
  return;
 });
 
 // 會員個人密碼修改
-// http://localhost:4000/membercenter/addr
-router.post("/addr",upload.none(), async (req, res) => {
-  const [result,] = await db.query("UPDATE `membercenter` SET password = SHA1(?) WHERE `membercenter`.`id` = ?;",[
-    req.body.password,member_sid
+// http://localhost:4000/membercenter/password
+router.post("/password",upload.none(), async (req, res) => {
+  const member_sid = req.session.admin.id;
+  const [result,] = await db.query("UPDATE `membercenter` SET `password` = SHA1(?),`password1` = ? WHERE `membercenter`.`id` = ?;",[
+    req.body.password,
+    req.body.password1,
+    member_sid
   ]);
   res.json(result);
  return;
