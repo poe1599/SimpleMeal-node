@@ -50,10 +50,7 @@ router.get("/selectMeal", upload.none(), async (req, res) => {
   res.json(result[0]);
 });
 
-
-
-
-router.get("/getmealtodelivery",  async (req, res) => {
+router.get("/getmealtodelivery", async (req, res) => {
   const [mealData] = await db.query("select * from `meal` where `sid` = ?", [
     req.query.sid,
   ]);
@@ -61,15 +58,58 @@ router.get("/getmealtodelivery",  async (req, res) => {
     "select * from `recipe` where `sid` = ?",
     [req.query.sid]
   );
-// const a  = `(${req.query.ingredient_id})`
-console.log(req.query.ingredient_id)
-  const [
-    ingredientsData,
-  ] = await db.query(`SELECT * FROM ingredients WHERE sid in (${req.query.ingredient_id})`);
+  // const a  = `(${req.query.ingredient_id})`
+  console.log(req.query.ingredient_id);
+  const [ingredientsData] = await db.query(
+    `SELECT * FROM ingredients WHERE sid in (${req.query.ingredient_id})`
+  );
 
   res.json({ mealData, recipeData, ingredientsData });
 });
-
+// router.get("/getlove1", async (req, res) => {
+//   const [result] = await db.query(
+//     "SELECT * FROM `membercenter` WHERE `id` = ?",
+//     [req.query.sid]
+//   );
+//   res.json(result);
+// });
+router.get("/getlove", async (req, res) => {
+  const member_sid = req.session.admin.id;
+  // const [meal] = await db.query("SELECT * FROM `meal` WHERE `sid`= ?", [
+  //   req.query.sid,
+  // ]);
+  const [
+    memberData,
+  ] = await db.query("SELECT * FROM `membercenter` WHERE `id`= ?", [
+    member_sid,
+  ]);
+  const thisMealSid = req.query.sid.toString();
+  const thisMemberLoveId = memberData[0].love.split(",");
+  const inLove = thisMemberLoveId.includes(thisMealSid);
+  if (inLove !== true) {
+    const [
+      result,
+    ] = await db.query(
+      "UPDATE `membercenter` SET `love`=? where `id`= ?",
+      [memberData[0].love + "," + thisMealSid, member_sid]
+    );
+    res.json({ result, msg: "增加一筆新的" });
+    return;
+  }
+  if(inLove === true){
+    const [
+      result,
+    ] = await db.query("SELECT * FROM `membercenter` WHERE `id`= ?", [
+      member_sid,
+    ]);
+    res.json({ result, msg: "之前已加過最愛摟" });
+    return;
+  }
+  // console.log( member_sid);
+  // console.log(inLove);
+  // console.log({ memberData, member_sid, });
+  
+});
 // router.get("/selectMealtest",  async (req, res) => {
 //   const a=req.query.ingredient_id
 //   const [result] = await db.query("SELECT * FROM `ingredients` WHERE `sid` IN (?)", [
