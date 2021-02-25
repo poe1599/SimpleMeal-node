@@ -63,7 +63,7 @@ router.get("/getorder", async (req, res) => {
 router.post("/ordercheck", upload.none(), async (req, res) => {
   const member_number = req.session.admin.member_number;
   const order_sid = (+new Date()).toString().slice(4);
-  
+
   // 更新現有的預約資訊並填入結帳日期
   const [
     row,
@@ -84,7 +84,7 @@ router.post("/ordercheck", upload.none(), async (req, res) => {
     const [
       couponData,
     ] = await db.query(
-      "UPDATE `milestone_user` SET `used_date`= now() where `good_type` = 2 and `discount_code` = ? ",
+      "UPDATE `milestone_user` SET `used_date`= now() where `good_type` in (2, 3) and `discount_code` = ? ",
       [req.body.couponString]
     );
   }

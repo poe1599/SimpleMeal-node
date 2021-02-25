@@ -5,6 +5,19 @@ const upload = require(__dirname + "/../modules/upload-imgs");
 const router = express.Router();
 const db = require(__dirname + "/../modules/db_connect2");
 
+//不需要登入也可以看得到
+//沒加[],會包含屬性質都出現
+//如果,之後加命名,則是屬性的名稱
+//round1是()的命名
+//獲取該日期的場次是否有被預約
+// http://localhost:4000/surprisekitchenOrder/getReservationTime?reservation_date=0000-00-00
+router.get("/getReservationTime", async (req, res) => {
+  const [ReservationTime] = await db.query(
+    "SELECT (select true FROM surprisekitchen_order WHERE reservation_date = date(?) and reservation_time = '10:00') 'round1', (select true FROM surprisekitchen_order WHERE reservation_date = date(?) and reservation_time = '14:00') 'round2', (select true FROM surprisekitchen_order WHERE reservation_date = date(?) and reservation_time = '18:00') 'round3'"
+  ,[req.query.reservation_date, req.query.reservation_date, req.query.reservation_date]);
+  res.json(ReservationTime)
+})
+
 // middle well
 // 如果req.session.admin沒有登入的資料, 就跳回首頁
 // 取得baseUrl與url, 將其放在locals
@@ -13,7 +26,6 @@ router.use((req, res, next) => {
       if (!req.session.admin) {
       return res.redirect('/');
   }
-
   res.locals.baseUrl = req.baseUrl;
   res.locals.url = req.url;
   next();
@@ -64,10 +76,10 @@ router.post("/addreservation", upload.none(), async (req, res) => {
 
 //單純拿全部
 // http://localhost:4000/surprisekitchenOrder/getReservationInfo
-router.get("/getReservationInfo", async (req, res) => {
-  const [result] = await db.query("SELECT `reservation_date`, `reservation_time`FROM `surprisekitchen_order` WHERE 1");
-  res.json(result);
-});
+// router.get("/getReservationInfo", async (req, res) => {
+//   const [result] = await db.query("SELECT `reservation_date`, `reservation_time`FROM `surprisekitchen_order` WHERE 1");
+//   res.json(result);
+// });
 
 // // 用query string拿資料
 // // http://localhost:4000/test/getmealbyquery?sid=1

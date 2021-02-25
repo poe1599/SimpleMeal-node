@@ -10,8 +10,8 @@ const db = require(__dirname + "/../modules/db_connect2");
 // 取得baseUrl與url, 將其放在locals
 router.use((req, res, next) => {
   // 沒登入? 出去! 現在!
-      if (!req.session.admin) {
-      return res.redirect('/');
+  if (!req.session.admin) {
+    return res.redirect("/");
   }
 
   res.locals.baseUrl = req.baseUrl;
@@ -21,30 +21,35 @@ router.use((req, res, next) => {
 
 // 增加100元購物金到milestone_user
 // http://localhost:4000/activityCoupon/getlemoncoupon
-router.get("/getlemoncoupon", upload.none(), async (req, res) => {
-    const member_number = req.session.admin.member_number;
-    const discount_code = 123;
+router.get("/getlemoncoupon", async (req, res) => {
+  const member_number = req.session.admin.id;
+  const discount_code = 123;
 
-// 取得優惠券項目資料表
-    // const [exChangeData] = await db.query("select * from `exchange_good` where `good_ID` = 9"); 
-    // res.json(exChangeData);
-    
-// 檢查milestone_user, 該會員是否有sid 9兌換商品編號
-  const [milestoneUserData] = await db.query(
+  // 取得優惠券項目資料表
+  // const [exChangeData] = await db.query("select * from `exchange_good` where `good_ID` = 9");
+  // res.json(exChangeData);
+
+  // 檢查milestone_user, 該會員是否有sid 9兌換商品編號
+  const [
+    milestoneUserData,
+  ] = await db.query(
     "SELECT * FROM `milestone_user` WHERE `member_number`=? and `exchange_sid`= 9",
     [member_number]
   );
 
   if (milestoneUserData.length === 0) {
-    const [result] = await db.query(
-        "INSERT INTO `milestone_user`(`exchange_sid`, `good_type`, `spend_point`, `event_time`, `member_number`, `discount`, `discount_code`, `used_date`) VALUES (9, 3, 0, NOW(), ?, 100, ?, null)",
-        [member_number,
-        discount_code,
-        ]);
-        res.json({ result });
-        return;
-      }
-    });
+    const [
+      result,
+    ] = await db.query(
+      "INSERT INTO `milestone_user`(`exchange_sid`, `good_type`, `spend_point`, `event_time`, `member_number`, `discount`, `discount_code`, `used_date`) VALUES (9, 3, 0, NOW(), ?, 100, ?, null)",
+      [member_number, discount_code]
+    );
+    res.json({ msg: "拿到優惠券", success: true });
+    return;
+  }
+
+  res.json({ msg: "拿過了", success: false });
+});
 
 // 單純拿全部
 // http://localhost:4000/test/getallmeal
