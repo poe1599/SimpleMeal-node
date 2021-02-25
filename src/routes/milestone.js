@@ -81,23 +81,16 @@ router.get("/getPoint", async (req, res) => {
   });
 });
 
-// // 用params拿資料
-// // http://localhost:4000/test/getmealbyparams/1
-// router.get("/getmealbyparams/:sid?", async (req, res) => {
-//   const [result] = await db.query("select * from `meal` where `sid` = ?", [
-//     req.params.sid,
-//   ]);
-//   res.json(result);
-// });
-
-// 用post提供資料庫訊息
-// http://localhost:4000/test/postmealsid (用POSTMAN測試 或 用Live server打開根目錄的testpost.html)
-// router.post("/postmealsid", upload.none(), async (req, res) => {
-//   const result = await db.query("select * from `meal` where `sid` = ?", [
-//     req.body.sid,
-//   ]);
-//   res.json(result);
-// });
+// 用query string拿資料 取得點數
+// http://localhost:4000/milestone/getUserInfo
+//動態產生點數沒有存放在特定位置 每次都要計算 總共取得的點數 以及總共花費的點數 相減而成
+router.get("/getUserInfo", async (req, res) => {
+  const id = req.session.admin==undefined?1:req.session.admin.id;;//沒有session就用1
+  //將完成的成就點數加總
+  const [result,] = await db.query("SELECT * FROM `membercenter` WHERE id= ?",[id]);
+    res.json(result);
+  
+});
 
 // 用在購物車取得該會員有什麼優惠券
 router.get("/cartForDiscount", async (req, res) => {
