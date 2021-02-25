@@ -11,14 +11,14 @@ const db = require(__dirname + "/../modules/db_connect2");
 // 取得baseUrl與url, 將其放在locals
 router.use((req, res, next) => {
   // 沒登入? 出去! 現在!
-  //     if (!req.session.admin) {
-  //     return res.redirect('/');
-  // }
+      if (!req.session.admin) {
+      return res.redirect('/');
+  }
+
   res.locals.baseUrl = req.baseUrl;
   res.locals.url = req.url;
   next();
 });
-
 
 //   購買餐卷歷史紀錄
 // http://localhost:4000/membercenter/cart_simplemealcoupon
@@ -40,12 +40,12 @@ router.get("/history_mealdelivery", async (req, res) => {
   
 
   if(req.query.start === 'null' && req.query.end === 'null'){
-    const [result,] = await db.query("SELECT * FROM `history_mealdelivery` ");
+    const [result,] = await db.query("SELECT * FROM `history_mealdelivery` ORDER BY `history_mealdelivery`.`check_date` ASC");
     res.json(result);
    return;
  }
 
- const[result,] =await db.query("SELECT * FROM `history_mealdelivery` WHERE `check_date` >= ?  AND `check_date` <= DATE_ADD(?, INTERVAL 1 DAY) ",[req.query.start, req.query.end])
+ const[result,] =await db.query("SELECT * FROM `history_mealdelivery` WHERE `check_date` >= ?  AND `check_date` <= DATE_ADD(?, INTERVAL 1 DAY) ORDER BY `history_mealdelivery`.`check_date` ASC ",[req.query.start, req.query.end])
  res.json(result); 
 });
 // 驚喜廚房紀錄
@@ -63,7 +63,7 @@ router.get("/surprisekitchen_order", async (req, res) => {
 
 // 會員註冊
 // http://localhost:4000/membercenter/registered //upload上傳檔關閉 none
-router.post("/registered",upload.none(), async (req, res) => {
+router.post("/registered",upload.none(),async (req, res) => {
   
   const [result] = await db.query("INSERT INTO `membercenter` (`email`, `password`, `password1`, `name`, `mobile`,`addr`) VALUES (? ,? ,? ,? ,? ,? )", [
     req.body.email,
@@ -75,17 +75,90 @@ router.post("/registered",upload.none(), async (req, res) => {
   ]);
   res.json(result);
 });
-// 驚喜廚房紀錄
+
+// 會員資料引入
 // http://localhost:4000/membercenter/info
 router.get("/info", async (req, res) => {
-    const [result,] = await db.query("SELECT * FROM `membercenter` WHERE id=1 ");
+  const member_sid = req.session.admin.id;
+    const [result] = await db.query("SELECT * FROM `membercenter` WHERE id= ?",[member_sid]);
+
+    result.map((v) => {
+      v.birthday = moment(v.birthday).format(
+        "YYYY-MM-DD"
+      );
+     
+    })
     res.json(result);
    return;
- 
- 
 });
 
 
+// 會員基本個人資料修改
+// http://localhost:4000/membercenter/information
+router.post("/information",upload.none(), async (req, res) => {
+  const member_sid = req.session.admin.id;
+  const [result,] = await db.query("UPDATE `membercenter` SET name = ?,nickname = ?,birthday= ?,mobile= ? WHERE id =  ?",[
+    req.body.name,
+    req.body.nickname,
+    req.body.birthday,
+    req.body.mobile,
+    req.body.id,
+    member_sid
+
+  ]);
+  res.json(result);
+ return;
+});
+// 會員基本個人地址修改
+// http://localhost:4000/membercenter/addr
+router.post("/addr",upload.none(), async (req, res) => {
+  const member_sid = req.session.admin.id;
+  const [result,] = await db.query("UPDATE `membercenter` SET addr = ? WHERE `membercenter`.`id` = ?; ",[
+    req.body.addr,member_sid 
+  ]);
+  res.json(result);
+ return;
+});
+
+// 會員基本個人信用卡修改
+// http://localhost:4000/membercenter/addr
+router.post("/addr",upload.none(), async (req, res) => {
+  const [result,] = await db.query("UPDATE `membercenter` SET credit＿card = ? WHERE `membercenter`.`id` = ?; ",[
+    req.body.credit＿card ,member_sid]);
+  res.json(result);
+ return;
+});
+
+// 會員個人密碼修改
+// http://localhost:4000/membercenter/addr
+router.post("/addr",upload.none(), async (req, res) => {
+  const [result,] = await db.query("UPDATE `membercenter` SET password = SHA1(?) WHERE `membercenter`.`id` = ?;",[
+    req.body.password,member_sid
+  ]);
+  res.json(result);
+ return;
+});
+
+
+
+//UPDATE `membercenter` SET `credit＿card` = '' WHERE `membercenter`.`id` = 1; 會員信用卡修改
+//UPDATE `membercenter` SET `password` = SHA1('') WHERE `membercenter`.`id` = 1;會員密碼修改
+// router.post("/try-upload", upload.single("pic"), async (req, res) => {
+//   console.log(req.body.name);
+//   const [
+//     result,
+//   ] = await db.query(
+//     "INSERT INTO `share_recipe`(`name`,`creator`, `cooktime`, `introduction`, `step1`, `step2`, `step3`, `step4`, `step5`,`pic`) VALUES (?,?,?,?,?,?,?,?,?,?)",
+//     [
+//       "http://localhost:4000/img/" + req.file.filename,
+//     ]
+//   );
+//   res.json({
+//     file: req.file,
+//     // 其他欄位放這裡
+//     body: req.body,
+//   });
+// });
 router.use((req, res) => {
   res.type("text/plain");
   res.status(404).send("有問題喔 找不到頁面 你還是多看幾次吧");
