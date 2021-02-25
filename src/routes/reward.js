@@ -62,7 +62,7 @@ router.post("/setExchange", upload.none(), async (req, res) => {
   );
   //將所有花費過的點數加總
   const totalSpendPoint = await db.query(
-    "select sum(spend_point) Sum from `milestone_user` where memner_number = ? ",
+    "select sum(spend_point) Sum from `milestone_user` where member_number = ? ",
     [id]
   );
   totalPotint = totalGetPoiont[0][0].Sum - totalSpendPoint[0][0].Sum;
@@ -103,7 +103,7 @@ router.post("/setExchange", upload.none(), async (req, res) => {
       "`good_type`, "+
       "`spend_point`, "+
       "`event_time`, "+
-      "`memner_number`, "+
+      "`member_number`, "+
       "`discount` ) VALUES ( ?,?,?,now(),?,?)",
       [
         good_ID,
