@@ -562,11 +562,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`session_id`, `expires`, `data`) VALUES
-<<<<<<< HEAD
 ('JEgGCUPLeZHaHBQb2eBtWJdutx00Tky7', 1614236217, '{\"cookie\":{\"originalMaxAge\":18000000,\"expires\":\"2021-02-25T06:56:55.074Z\",\"httpOnly\":true,\"path\":\"/\"},\"admin\":{\"id\":1,\"member_number\":\"20210001\",\"avater\":\"avatar01.jpg\",\"level\":\"VIP會員\",\"email\":\"GoodGoodEat@gmail.com\",\"password\":\"7c4a8d09ca3762af61e59520943dc26494f8941b\",\"name\":\"王曉明\",\"nickname\":\"小明\",\"mobile\":\"0978565545\",\"birthday\":\"1990-10-09T16:00:00.000Z\",\"credit＿card\":\"1234-1234-1234-1234\",\"addr\":\"台北市大安區復興南路一段390號2樓\",\"love\":\"1,2,3\",\"simplemeal_coupon\":0}}');
-=======
-('GA45o0fEdJClLpsGZWYmWI4DSylPswYQ', 1614223822, '{\"cookie\":{\"originalMaxAge\":18000000,\"expires\":\"2021-02-25T02:30:17.706Z\",\"httpOnly\":true,\"path\":\"/\"},\"admin\":{\"id\":1,\"member_number\":\"20210001\",\"avater\":\"avatar01.jpg\",\"level\":\"VIP會員\",\"email\":\"GoodGoodEat@gmail.com\",\"password\":\"7c4a8d09ca3762af61e59520943dc26494f8941b\",\"name\":\"王曉明\",\"nickname\":\"小明\",\"mobile\":\"0978565545\",\"birthday\":\"1990-10-09T16:00:00.000Z\",\"credit＿card\":\"1234-1234-1234-1234\",\"addr\":\"台北市大安區復興南路一段390號2樓\",\"love\":\"1,2,3\",\"simplemeal_coupon\":0}}');
->>>>>>> fa4a6057e3469153f5c2bd36a1098f32103b4b43
 
 -- --------------------------------------------------------
 
