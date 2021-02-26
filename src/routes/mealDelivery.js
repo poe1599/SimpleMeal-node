@@ -256,6 +256,10 @@ router.post("/ordercheck", upload.none(), async (req, res) => {
     ]
   );
 
+  //寫進度到成就系統
+
+  //先確認餐點種類(meal_sid,分隔 陣列處理)
+
   // 會員中心減去消耗的餐券
   const [
     newMemberCenter,

@@ -43,6 +43,9 @@ router.post("/addcheck", upload.none(), async (req, res) => {
     ]
   );
 
+  //新增金額至成就系統記錄中
+  await db.query("INSERT INTO `event_record`(`member_number`, `event_time`, `event_trigger`, `add_progress`) VALUES (?, now(), 1, ?)",[member_sid,req.body.total_price])
+
   // 註銷已使用的優惠券(需先判斷優惠碼, 避免更動到)
   if (req.body.couponString !== null && req.body.couponString !== "") {
     const [
