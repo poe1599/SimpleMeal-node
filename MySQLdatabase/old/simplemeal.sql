@@ -433,7 +433,7 @@ INSERT INTO `milestone_manager` (`milestone_sid`, `stone_name`, `event_startime`
 -- 資料表結構 `coupon_user`
 --
 
-CREATE TABLE `coupon_user` (
+CREATE TABLE `coupon_exchange` (
   `exchange_sid` int(6) NOT NULL COMMENT '兌換商品編號',
   `spend_point` int(6) NOT NULL DEFAULT 0 COMMENT '花費的點數',
   `event_time` datetime NOT NULL COMMENT '兌換的觸發時間',
@@ -444,10 +444,10 @@ CREATE TABLE `coupon_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- 傾印資料表的資料 `coupon_user`
+-- 傾印資料表的資料 `coupon_exchange`
 --
 
-INSERT INTO `coupon_user` (`exchange_sid`, `spend_point`, `event_time`, `memner_number`, `discount`, `discount_code`, `used_date`) VALUES
+INSERT INTO `coupon_exchange` (`exchange_sid`, `spend_point`, `event_time`, `memner_number`, `discount`, `discount_code`, `used_date`) VALUES
 (1, 100, '2020-12-25 01:40:09', 1, NULL, '', NULL),
 (2, 100, '2020-12-25 01:57:48', 1, NULL, '', NULL),
 (5, 100, '2020-12-25 02:18:34', 1, 50, '', NULL),

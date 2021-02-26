@@ -41,7 +41,7 @@ router.get("/getlemoncoupon", async (req, res) => {
     const [
       result,
     ] = await db.query(
-      "INSERT INTO `coupon_user`(`exchange_sid`, `good_type`, `spend_point`, `event_time`, `member_number`, `discount`, `discount_code`, `used_date`) VALUES (9, 3, 0, NOW(), ?, 100, ?, null)",
+      "INSERT INTO `coupon_user`(`exchange_sid`, `good_type`, `event_time`, `member_number`, `discount`, `discount_code`, `used_date`) VALUES (9, 3, NOW(), ?, 100, ?, null)",
       [member_number, discount_code]
     );
     res.json({ msg: "拿到優惠券", success: true });
