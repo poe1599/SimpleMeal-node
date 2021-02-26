@@ -48,7 +48,7 @@ router.get("/cart_simplemealcoupon", async (req, res) => {
 
   res.json(result);
 });
-//   餐卷歷史紀錄
+//   餐卷使用歷史紀錄
 // http://localhost:4000/membercenter/history_mealdelivery
 router.get("/history_mealdelivery", async (req, res) => {
   
@@ -66,12 +66,24 @@ router.get("/history_mealdelivery", async (req, res) => {
 // http://localhost:4000/membercenter/surprisekitchen_order
 router.get("/surprisekitchen_order", async (req, res) => {
 
+  let where_status= ""
+
+  // 2 is all
+  if(req.query.status !== 2 && req.query.status){
+    where_status = `status = ${req.query.status}`
+  }
+
   if(req.query.start === 'null' && req.query.end === 'null'){
-    const [result,] = await db.query("SELECT * FROM `surprisekitchen_order`");
+    const [result,] = await db.query(`SELECT * FROM surprisekitchen_order ${where_status?"WHERE "+where_status:''}`);
     res.json(result);
    return;
  }
- const[result,] =await db.query("SELECT * FROM `surprisekitchen_order` WHERE `check_date` >= ?  AND `check_date` <= DATE_ADD(?, INTERVAL 1 DAY) ",[req.query.start, req.query.end])
+
+ console.log(`SELECT * FROM surprisekitchen_order WHERE reservation_date >= '${req.query.start}'  AND reservation_date <= DATE_ADD('${req.query.end}', INTERVAL 1 DAY) ${where_status ? "AND "+where_status : ''}`);
+
+ const[result,] =await db.query(`SELECT * FROM surprisekitchen_order WHERE reservation_date >= '
+ ${req.query.start}'  AND reservation_date <= DATE_ADD('${req.query.end}', INTERVAL 1 DAY) ${where_status ? "AND "+where_status : ''}`)
+
  res.json(result);
 });
 
