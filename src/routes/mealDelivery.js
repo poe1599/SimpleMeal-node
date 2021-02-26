@@ -50,7 +50,7 @@ router.get("/getmealtodelivery", async (req, res) => {
         mealData[0].introduction,
       ]
     );
-    res.json({ result, msg: "增加一筆新的" });
+    res.json({ result, msg: `增加 ${mealData[0].product_name} 到配送清單` });
     return;
   }
 
@@ -62,7 +62,13 @@ router.get("/getmealtodelivery", async (req, res) => {
       "UPDATE `cart_mealdelivery` SET `quantity`=`quantity`+1 WHERE `member_sid`= ? and `meal_sid`= ?",
       [member_sid, mealData[0].sid]
     );
-    res.json({ result, cartDeliveryData, msg: `現在數量加1` });
+    res.json({
+      result,
+      cartDeliveryData,
+      msg: `配送清單中的 ${mealData[0].product_name} 現在有 ${
+        cartDeliveryData[0].quantity + 1
+      } 份`,
+    });
     return;
   }
 
