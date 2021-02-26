@@ -2,10 +2,10 @@
 -- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- 主機： localhost
--- 產生時間： 2021 年 02 月 24 日 23:35
+-- 主機： 127.0.0.1
+-- 產生時間： 2021-02-26 05:13:53
 -- 伺服器版本： 10.4.17-MariaDB
--- PHP 版本： 7.4.12
+-- PHP 版本： 7.3.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -57,6 +57,13 @@ CREATE TABLE `cart_simplemealcoupon` (
   `check_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- 傾印資料表的資料 `cart_simplemealcoupon`
+--
+
+INSERT INTO `cart_simplemealcoupon` (`order_sid`, `member_sid`, `combination_sid`, `combination_name`, `description`, `quantity`, `total_coupon_num`, `total_price`, `payment_method`, `check_date`) VALUES
+(296642912, 1, 1, '吃飽飽沒煩惱組合', '(包含20張餐卷, 加贈5張免費餐券)', 1, 25, 3500, '信用卡線上刷卡一次付清', '2021-02-26 07:44:02');
+
 -- --------------------------------------------------------
 
 --
@@ -97,6 +104,35 @@ CREATE TABLE `comment_get_good` (
 
 INSERT INTO `comment_get_good` (`good_id`, `comment_id`, `id`) VALUES
 (1, 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `coupon_exchange`
+--
+
+CREATE TABLE `coupon_exchange` (
+  `exchange_sid` int(6) NOT NULL COMMENT '兌換商品編號',
+  `spend_point` int(6) NOT NULL DEFAULT 0 COMMENT '花費的點數',
+  `event_time` datetime NOT NULL COMMENT '兌換的觸發時間',
+  `member_number` int(11) NOT NULL COMMENT '該會員的ID'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `coupon_user`
+--
+
+CREATE TABLE `coupon_user` (
+  `exchange_sid` int(6) NOT NULL COMMENT '兌換商品編號',
+  `good_type` int(2) NOT NULL COMMENT '1=站外2=站內',
+  `event_time` datetime NOT NULL COMMENT '兌換的觸發時間',
+  `member_number` int(11) NOT NULL COMMENT '該會員的ID',
+  `discount` int(11) DEFAULT NULL,
+  `discount_code` varchar(255) NOT NULL,
+  `used_date` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -151,7 +187,8 @@ INSERT INTO `event_record` (`member_number`, `event_time`, `event_trigger`, `add
 (1, '2020-12-24 00:00:00', 1, 10000),
 (1, '2020-12-24 00:00:00', 2, 30),
 (1, '2020-12-24 00:00:00', 1, 10000),
-(1, '2020-12-24 00:00:00', 2, 30);
+(1, '2020-12-24 00:00:00', 2, 30),
+(1, '2021-02-26 07:44:02', 1, 3500);
 
 -- --------------------------------------------------------
 
@@ -203,6 +240,14 @@ CREATE TABLE `history_mealdelivery` (
   `delivery_time` time DEFAULT NULL,
   `check_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- 傾印資料表的資料 `history_mealdelivery`
+--
+
+INSERT INTO `history_mealdelivery` (`sid`, `member_sid`, `meal_sid`, `meal_name`, `quantity`, `member_name`, `mobile`, `address`, `delivery_date`, `delivery_time`, `check_date`) VALUES
+(297075615, 1, '1', '奶香核桃烤蛋糕', '1', '王曉明', '0978565545', '台北市大安區復興南路一段390號2樓', '2021-02-27', '09:50:00', '2021-02-26 07:51:15'),
+(297688450, 1, '5,6,4', '中式脆皮豬肉飯,鮮鱸魚醬油炒麵,香煎嫩皮檸檬雞', '1,1,1', '王曉明', '0978565545', '台北市大安區復興南路一段390號2樓', '2021-03-03', '10:01:00', '2021-02-26 08:01:28');
 
 -- --------------------------------------------------------
 
@@ -367,7 +412,7 @@ CREATE TABLE `membercenter` (
 --
 
 INSERT INTO `membercenter` (`id`, `member_number`, `avater`, `level`, `email`, `password`, `name`, `nickname`, `mobile`, `birthday`, `credit＿card`, `addr`, `love`, `simplemeal_coupon`) VALUES
-(1, '20210001', 'avatar01.jpg', 'VIP會員', 'GoodGoodEat@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '王曉明', '小明', '0978565545', '1990-10-10', '1234-1234-1234-1234', '台北市大安區復興南路一段390號2樓', '1,2,3', 0),
+(1, '20210001', 'avatar01.jpg', 'VIP會員', 'GoodGoodEat@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '王曉明', '小明', '0978565545', '1990-10-10', '1234-1234-1234-1234', '台北市大安區復興南路一段390號2樓', '1,2,3', 21),
 (2, '20210002', 'lemonBasket.png', '一般會員', 'FoodEat@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'Lemon', 'yellow', '0911111111', '2021-02-19', '1234-1234-1234-1234', '台北市信義區仁愛路四段505號', NULL, 0),
 (3, '20210003', 'kirby.jpg', '一般會員', 'tomato@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'Tomato', 'orange', '0912345678', '2021-03-05', '1234-1234-1234-1234', '台北市信義區光復南路133號', NULL, 0),
 (4, '20210004', 'Yoshi.jpg', 'VIP會員', 'bacon@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'Bacon', 'red', '0978965842', '2021-01-01', '1234-1234-1234-1234', '台北市中正區仁愛路二段108號', NULL, 0),
@@ -409,35 +454,6 @@ INSERT INTO `milestone_manager` (`milestone_sid`, `stone_name`, `event_startime`
 (9, '一月吃美式', '2021-01-01 00:00:00', '2021-01-31 23:59:59', 6, 1, 100, '於一月點購任何一道美式食譜', 'ms-009-unfinish.png', 'ms-009-finish.png'),
 (10, '二月吃中式', '2021-02-01 00:00:00', '2021-02-28 23:59:59', 7, 1, 100, '於二月點購任何一道中式食譜', 'ms-010-unfinish.png', 'ms-010-finish.png'),
 (11, '三月吃義式', '2021-03-01 00:00:00', '2021-03-31 23:59:59', 8, 1, 100, '於三月點購任何一道義式食譜', 'ms-011-unfinish.png', 'ms-011-finish.png');
-
--- --------------------------------------------------------
-
---
--- 資料表結構 `milestone_user`
---
-
-CREATE TABLE `milestone_user` (
-  `exchange_sid` int(6) NOT NULL COMMENT '兌換商品編號',
-  `good_type` int(2) NOT NULL COMMENT '1=站外2=站內',
-  `spend_point` int(6) NOT NULL DEFAULT 0 COMMENT '花費的點數',
-  `event_time` datetime NOT NULL COMMENT '兌換的觸發時間',
-  `member_number` int(11) NOT NULL COMMENT '該會員的ID',
-  `discount` int(11) DEFAULT NULL,
-  `discount_code` varchar(255) NOT NULL,
-  `used_date` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- 傾印資料表的資料 `milestone_user`
---
-
-INSERT INTO `milestone_user` (`exchange_sid`, `good_type`, `spend_point`, `event_time`, `member_number`, `discount`, `discount_code`, `used_date`) VALUES
-(1, 1, 100, '2020-12-25 01:40:09', 1, NULL, '', NULL),
-(2, 1, 100, '2020-12-25 01:57:48', 1, NULL, '', NULL),
-(5, 2, 100, '2020-12-25 02:18:34', 1, 50, 'GG3B0', NULL),
-(5, 2, 100, '2021-02-08 10:05:07', 1, 50, 'FF20TO', NULL),
-(9, 3, 0, '2021-02-24 18:53:28', 1, 100, 'HUHSS', NULL),
-(9, 3, 0, '2021-02-24 22:14:49', 4, 100, '123', NULL);
 
 -- --------------------------------------------------------
 
@@ -562,7 +578,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`session_id`, `expires`, `data`) VALUES
-('JEgGCUPLeZHaHBQb2eBtWJdutx00Tky7', 1614236217, '{\"cookie\":{\"originalMaxAge\":18000000,\"expires\":\"2021-02-25T06:56:55.074Z\",\"httpOnly\":true,\"path\":\"/\"},\"admin\":{\"id\":1,\"member_number\":\"20210001\",\"avater\":\"avatar01.jpg\",\"level\":\"VIP會員\",\"email\":\"GoodGoodEat@gmail.com\",\"password\":\"7c4a8d09ca3762af61e59520943dc26494f8941b\",\"name\":\"王曉明\",\"nickname\":\"小明\",\"mobile\":\"0978565545\",\"birthday\":\"1990-10-09T16:00:00.000Z\",\"credit＿card\":\"1234-1234-1234-1234\",\"addr\":\"台北市大安區復興南路一段390號2樓\",\"love\":\"1,2,3\",\"simplemeal_coupon\":0}}');
+('KpWNYlosBxvENacXnXw1aGqBFAG097HD', 1614315765, '{\"cookie\":{\"originalMaxAge\":18000000,\"expires\":\"2021-02-26T04:21:52.242Z\",\"httpOnly\":true,\"path\":\"/\"},\"admin\":{\"id\":1,\"member_number\":\"20210001\",\"avater\":\"avatar01.jpg\",\"level\":\"VIP會員\",\"email\":\"GoodGoodEat@gmail.com\",\"password\":\"7c4a8d09ca3762af61e59520943dc26494f8941b\",\"name\":\"王曉明\",\"nickname\":\"小明\",\"mobile\":\"0978565545\",\"birthday\":\"1990-10-09T16:00:00.000Z\",\"credit＿card\":\"1234-1234-1234-1234\",\"addr\":\"台北市大安區復興南路一段390號2樓\",\"love\":\"1,2,3\",\"simplemeal_coupon\":0}}'),
+('MIUMj_q-KmvDYg1gbtfaFAUMNdEkqzcv', 1614330774, '{\"cookie\":{\"originalMaxAge\":18000000,\"expires\":\"2021-02-26T08:57:58.841Z\",\"httpOnly\":true,\"path\":\"/\"},\"admin\":{\"id\":1,\"member_number\":\"20210001\",\"avater\":\"avatar01.jpg\",\"level\":\"VIP會員\",\"email\":\"GoodGoodEat@gmail.com\",\"password\":\"7c4a8d09ca3762af61e59520943dc26494f8941b\",\"name\":\"王曉明\",\"nickname\":\"小明\",\"mobile\":\"0978565545\",\"birthday\":\"1990-10-09T16:00:00.000Z\",\"credit＿card\":\"1234-1234-1234-1234\",\"addr\":\"台北市大安區復興南路一段390號2樓\",\"love\":\"1,2,3\",\"simplemeal_coupon\":21}}');
 
 -- --------------------------------------------------------
 
@@ -807,6 +824,12 @@ ALTER TABLE `comment_get_good`
   ADD PRIMARY KEY (`good_id`);
 
 --
+-- 資料表索引 `coupon_exchange`
+--
+ALTER TABLE `coupon_exchange`
+  ADD UNIQUE KEY `addEvent` (`event_time`,`member_number`) USING BTREE;
+
+--
 -- 資料表索引 `exchange_good`
 --
 ALTER TABLE `exchange_good`
@@ -841,12 +864,6 @@ ALTER TABLE `membercenter`
 --
 ALTER TABLE `milestone_manager`
   ADD PRIMARY KEY (`milestone_sid`);
-
---
--- 資料表索引 `milestone_user`
---
-ALTER TABLE `milestone_user`
-  ADD UNIQUE KEY `addEvent` (`event_time`,`member_number`) USING BTREE;
 
 --
 -- 資料表索引 `partner`
@@ -935,7 +952,7 @@ ALTER TABLE `trigger_describe`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `cart_mealdelivery`
 --
 ALTER TABLE `cart_mealdelivery`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `cart_simplemealcoupon`
@@ -1049,7 +1066,7 @@ ALTER TABLE `test`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `trigger_describe`
 --
 ALTER TABLE `trigger_describe`
-  MODIFY `trigger_ID` int(11) NOT NULL AUTO_INCREMENT COMMENT '觸發的條件編號', AUTO_INCREMENT=9;
+  MODIFY `trigger_ID` int(11) NOT NULL AUTO_INCREMENT COMMENT '觸發的條件編號', AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

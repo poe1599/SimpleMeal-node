@@ -84,7 +84,7 @@ router.post("/ordercheck", upload.none(), async (req, res) => {
     const [
       couponData,
     ] = await db.query(
-      "UPDATE `milestone_user` SET `used_date`= now() where `good_type` in (2, 3) and `discount_code` = ? ",
+      "UPDATE `coupon_user` SET `used_date`= now() where `good_type` in (2, 3) and `discount_code` = ? ",
       [req.body.couponString]
     );
   }
