@@ -2,10 +2,10 @@
 -- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- 主機： localhost
--- 產生時間： 2021 年 02 月 26 日 02:52
+-- 主機： 127.0.0.1
+-- 產生時間： 2021-02-26 05:13:53
 -- 伺服器版本： 10.4.17-MariaDB
--- PHP 版本： 7.4.12
+-- PHP 版本： 7.3.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -113,26 +113,10 @@ INSERT INTO `comment_get_good` (`good_id`, `comment_id`, `id`) VALUES
 
 CREATE TABLE `coupon_exchange` (
   `exchange_sid` int(6) NOT NULL COMMENT '兌換商品編號',
-  `good_type` int(2) NOT NULL COMMENT '1=站外2=站內',
   `spend_point` int(6) NOT NULL DEFAULT 0 COMMENT '花費的點數',
   `event_time` datetime NOT NULL COMMENT '兌換的觸發時間',
-  `member_number` int(11) NOT NULL COMMENT '該會員的ID',
-  `discount` int(11) DEFAULT NULL,
-  `discount_code` varchar(255) NOT NULL,
-  `used_date` datetime DEFAULT NULL
+  `member_number` int(11) NOT NULL COMMENT '該會員的ID'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- 傾印資料表的資料 `coupon_exchange`
---
-
-INSERT INTO `coupon_exchange` (`exchange_sid`, `good_type`, `spend_point`, `event_time`, `member_number`, `discount`, `discount_code`, `used_date`) VALUES
-(1, 1, 100, '2020-12-25 01:40:09', 1, NULL, '', NULL),
-(2, 1, 100, '2020-12-25 01:57:48', 1, NULL, '', NULL),
-(5, 2, 100, '2020-12-25 02:18:34', 1, 50, 'GG3B0', NULL),
-(5, 2, 100, '2021-02-08 10:05:07', 1, 50, 'FF20TO', NULL),
-(9, 3, 0, '2021-02-24 18:53:28', 1, 100, 'HUHSS', NULL),
-(9, 3, 0, '2021-02-24 22:14:49', 4, 100, '123', NULL);
 
 -- --------------------------------------------------------
 
@@ -149,18 +133,6 @@ CREATE TABLE `coupon_user` (
   `discount_code` varchar(255) NOT NULL,
   `used_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- 傾印資料表的資料 `coupon_user`
---
-
-INSERT INTO `coupon_user` (`exchange_sid`, `good_type`, `event_time`, `member_number`, `discount`, `discount_code`, `used_date`) VALUES
-(1, 1, '2020-12-25 01:40:09', 1, NULL, '', NULL),
-(2, 1, '2020-12-25 01:57:48', 1, NULL, '', NULL),
-(5, 2, '2020-12-25 02:18:34', 1, 50, 'GG3B0', NULL),
-(5, 2, '2021-02-08 10:05:07', 1, 50, 'FF20TO', NULL),
-(9, 3, '2021-02-24 18:53:28', 1, 100, 'HUHSS', NULL),
-(9, 3, '2021-02-24 22:14:49', 4, 100, '123', NULL);
 
 -- --------------------------------------------------------
 
@@ -606,7 +578,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`session_id`, `expires`, `data`) VALUES
-('KpWNYlosBxvENacXnXw1aGqBFAG097HD', 1614315765, '{\"cookie\":{\"originalMaxAge\":18000000,\"expires\":\"2021-02-26T04:21:52.242Z\",\"httpOnly\":true,\"path\":\"/\"},\"admin\":{\"id\":1,\"member_number\":\"20210001\",\"avater\":\"avatar01.jpg\",\"level\":\"VIP會員\",\"email\":\"GoodGoodEat@gmail.com\",\"password\":\"7c4a8d09ca3762af61e59520943dc26494f8941b\",\"name\":\"王曉明\",\"nickname\":\"小明\",\"mobile\":\"0978565545\",\"birthday\":\"1990-10-09T16:00:00.000Z\",\"credit＿card\":\"1234-1234-1234-1234\",\"addr\":\"台北市大安區復興南路一段390號2樓\",\"love\":\"1,2,3\",\"simplemeal_coupon\":0}}');
+('KpWNYlosBxvENacXnXw1aGqBFAG097HD', 1614315765, '{\"cookie\":{\"originalMaxAge\":18000000,\"expires\":\"2021-02-26T04:21:52.242Z\",\"httpOnly\":true,\"path\":\"/\"},\"admin\":{\"id\":1,\"member_number\":\"20210001\",\"avater\":\"avatar01.jpg\",\"level\":\"VIP會員\",\"email\":\"GoodGoodEat@gmail.com\",\"password\":\"7c4a8d09ca3762af61e59520943dc26494f8941b\",\"name\":\"王曉明\",\"nickname\":\"小明\",\"mobile\":\"0978565545\",\"birthday\":\"1990-10-09T16:00:00.000Z\",\"credit＿card\":\"1234-1234-1234-1234\",\"addr\":\"台北市大安區復興南路一段390號2樓\",\"love\":\"1,2,3\",\"simplemeal_coupon\":0}}'),
+('MIUMj_q-KmvDYg1gbtfaFAUMNdEkqzcv', 1614330774, '{\"cookie\":{\"originalMaxAge\":18000000,\"expires\":\"2021-02-26T08:57:58.841Z\",\"httpOnly\":true,\"path\":\"/\"},\"admin\":{\"id\":1,\"member_number\":\"20210001\",\"avater\":\"avatar01.jpg\",\"level\":\"VIP會員\",\"email\":\"GoodGoodEat@gmail.com\",\"password\":\"7c4a8d09ca3762af61e59520943dc26494f8941b\",\"name\":\"王曉明\",\"nickname\":\"小明\",\"mobile\":\"0978565545\",\"birthday\":\"1990-10-09T16:00:00.000Z\",\"credit＿card\":\"1234-1234-1234-1234\",\"addr\":\"台北市大安區復興南路一段390號2樓\",\"love\":\"1,2,3\",\"simplemeal_coupon\":21}}');
 
 -- --------------------------------------------------------
 
@@ -854,12 +827,6 @@ ALTER TABLE `comment_get_good`
 -- 資料表索引 `coupon_exchange`
 --
 ALTER TABLE `coupon_exchange`
-  ADD UNIQUE KEY `addEvent` (`event_time`,`member_number`) USING BTREE;
-
---
--- 資料表索引 `coupon_user`
---
-ALTER TABLE `coupon_user`
   ADD UNIQUE KEY `addEvent` (`event_time`,`member_number`) USING BTREE;
 
 --

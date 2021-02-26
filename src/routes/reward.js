@@ -10,8 +10,8 @@ const db = require(__dirname + "/../modules/db_connect2");
 // 取得baseUrl與url, 將其放在locals
 router.use((req, res, next) => {
   // 沒登入? 出去! 現在!
-      if (!req.session.admin) {
-      return res.redirect('/');
+  if (!req.session.admin) {
+    return res.redirect('/');
   }
   res.locals.baseUrl = req.baseUrl;
   res.locals.url = req.url;
@@ -36,7 +36,7 @@ router.get("/getGooDList", async (req, res) => {
 router.get("/getExchangeRecord", async (req, res) => {
 
   //直接在SQL中處理日期格式以及加一個月的日期
-  const GooDList = await db.query("SELECT m.exchange_sid, m.spend_point, DATE_FORMAT(m.event_time, '%Y/%m/%d') event_time, DATE_FORMAT(DATE_ADD(m.event_time,INTERVAL 1 MONTH ), '%Y/%m/%d') end_date, m.used_date, e.good_name, e.good_pic FROM coupon_exchange m join exchange_good e on m.exchange_sid = e.good_ID and m.member_number = ? ORDER by m.event_time ASC", [
+  const GooDList = await db.query("SELECT m.exchange_sid, m.spend_point, DATE_FORMAT(m.event_time, '%Y/%m/%d') event_time, DATE_FORMAT(DATE_ADD(m.event_time,INTERVAL 1 MONTH ), '%Y/%m/%d') end_date, e.good_name, e.good_pic FROM coupon_exchange m join exchange_good e on m.exchange_sid = e.good_ID and m.member_number = ? ORDER by m.event_time ASC", [
     req.session.admin.id,
   ]);
   res.json(GooDList[0]);
@@ -54,7 +54,7 @@ router.post("/setExchange", upload.none(), async (req, res) => {
   let discount = "null";
   const count = req.body.count;
   const good_ID = req.body.good_ID;
-  const id = req.session.admin==undefined?1:req.session.admin.id;;//沒有session就用1
+  const id = req.session.admin == undefined ? 1 : req.session.admin.id;;//沒有session就用1
   //將完成的成就點數加總
   const totalGetPoiont = await db.query(
     "select sum(reward_point) Sum from (select m.milestone_sid, m.stone_name, m.progress_goal, m.reward_point, sum(e.add_progress) AddProgress from milestone_manager m left join event_record e on e.event_time > m.event_startime and (m.event_endtime> e.event_time or m.event_endtime is null) and e.member_number = ? and m.event_trigger = e.event_trigger GROUP by m.milestone_sid) temp where temp.progress_goal <= temp.AddProgress",
@@ -70,53 +70,56 @@ router.post("/setExchange", upload.none(), async (req, res) => {
     msg = "點數不足";
     success = false;
   }
-  if(success){
+  if (success) {
     const GooDList = await db.query("SELECT * FROM `exchange_good` where good_ID = ? ", [
       good_ID,
     ]);
-    if(GooDList[0].length != 1)
-    {
+    if (GooDList[0].length != 1) {
       msg = "商品資訊錯誤";
       success = false;
     }
-    else{
-      if(GooDList[0][0].need_point * count > totalPotint)
-      {
+    else {
+      if (GooDList[0][0].need_point * count > totalPotint) {
         msg = "剩餘點數不足";
         success = false;
       }
-      else{
+      else {
         cost = GooDList[0][0].need_point * count;
         good_type = GooDList[0][0].good_type;
-        if(GooDList[0][0].good_discount != NaN)
+        if (GooDList[0][0].good_discount != NaN)
           discount = GooDList[0][0].good_discount;
       }
     }
   }
-  if(success)
-  {
-    const [
-      newExchange
-    ] = await db.query(
-      "INSERT INTO `coupon_exchange`"+
-      "(`exchange_sid`, "+
-      "`good_type`, "+
-      "`spend_point`, "+
-      "`event_time`, "+
-      "`member_number`, "+
-      "`discount` ) VALUES ( ?,?,?,now(),?,?)",
+  if (success) {
+    await db.query(
+      "INSERT INTO `coupon_exchange`(`exchange_sid`, `spend_point`, `event_time`, `member_number` ) VALUES ( ?,?,now(),?)",
       [
         good_ID,
-        good_type,
         cost,
-        id,
-        discount,
+        id
       ]
     );
-      msg= "新增";
+    const [coupon_exchange] = await db.query(
+      "SELECT event_time FROM `coupon_exchange` where exchange_sid = ? and spend_point = ? and member_number = ? ORDER by event_time DESC",
+      [
+        good_ID,
+        cost,
+        id
+      ]
+    );
+    const event_time = coupon_exchange[0].event_time;
+
+    for(let i =0;i<count;i++)
+    {
+      await db.query("INSERT INTO `coupon_user`(`exchange_sid`, `good_type`, `event_time`, `member_number`, `discount`, `discount_code`) VALUES (?, ?, ?, ?, ?, ?)",[good_ID,good_type,event_time,id,discount,`code${Math.floor(Math.random()*1000000)}`])
+    }
+
+
+    msg = "新增";
   }
 
-  res.json({ success: success, msg: msg});
+  res.json({ success: success, msg: msg });
 })
 
 
