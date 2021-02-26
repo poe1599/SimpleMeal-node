@@ -142,6 +142,9 @@ app.use(
 //廚房頁面獲取優惠券模組
 app.use("/activityCoupon", require(__dirname + "/routes/activityCoupon"));
 
+//廚房歷史紀錄 / 處理可不可以作評論模組
+app.use("/surpriseKitchenHistory", require(__dirname + "/routes/surpriseKitchenHistory"));
+
 app.get("/getdata", async (req, res) => {
   const [result] = await db.query("SELECT * FROM `test`");
   res.json(result);
