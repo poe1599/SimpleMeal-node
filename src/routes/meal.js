@@ -84,6 +84,9 @@ router.get("/getlove", async (req, res) => {
     member_sid,
   ]);
   const thisMealSid = req.query.sid.toString();
+  if (memberData[0].love === null) {
+    memberData[0].love = ''
+  }
   const thisMemberLoveId = memberData[0].love.split(",");
   const inLove = thisMemberLoveId.includes(thisMealSid);
   if (inLove !== true) {
