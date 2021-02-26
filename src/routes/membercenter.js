@@ -6,6 +6,20 @@ const upload = require(__dirname + "/../modules/upload-imgs");
 const router = express.Router();
 const db = require(__dirname + "/../modules/db_connect2");
 
+// 會員註冊
+// http://localhost:4000/membercenter/registered //upload上傳檔關閉 none
+router.post("/registered",upload.none(),async (req, res) => {
+  
+  const [result] = await db.query("INSERT INTO `membercenter` (`email`, `password`, `password1`, `name`, `mobile`,`addr`) VALUES (? ,SHA1(?) ,? ,? ,? ,? )", [
+    req.body.email,
+    req.body.password,
+    req.body.password1,
+    req.body.name,
+    req.body.mobile,
+    req.body.addr
+  ]);
+  res.json(result);
+});
 // middle well
 // 如果req.session.admin沒有登入的資料, 就跳回首頁
 // 取得baseUrl與url, 將其放在locals
@@ -61,20 +75,7 @@ router.get("/surprisekitchen_order", async (req, res) => {
  res.json(result);
 });
 
-// 會員註冊
-// http://localhost:4000/membercenter/registered //upload上傳檔關閉 none
-router.post("/registered",upload.none(),async (req, res) => {
-  
-  const [result] = await db.query("INSERT INTO `membercenter` (`email`, `password`, `password1`, `name`, `mobile`,`addr`) VALUES (? ,? ,? ,? ,? ,? )", [
-    req.body.email,
-    req.body.password,
-    req.body.password1,
-    req.body.name,
-    req.body.mobile,
-    req.body.addr
-  ]);
-  res.json(result);
-});
+
 
 // 會員資料引入
 // http://localhost:4000/membercenter/info
