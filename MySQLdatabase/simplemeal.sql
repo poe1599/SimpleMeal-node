@@ -413,10 +413,10 @@ INSERT INTO `milestone_manager` (`milestone_sid`, `stone_name`, `event_startime`
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `milestone_user`
+-- 資料表結構 `coupon_user`
 --
 
-CREATE TABLE `milestone_user` (
+CREATE TABLE `coupon_user` (
   `exchange_sid` int(6) NOT NULL COMMENT '兌換商品編號',
   `good_type` int(2) NOT NULL COMMENT '1=站外2=站內',
   `spend_point` int(6) NOT NULL DEFAULT 0 COMMENT '花費的點數',
@@ -428,10 +428,10 @@ CREATE TABLE `milestone_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- 傾印資料表的資料 `milestone_user`
+-- 傾印資料表的資料 `coupon_user`
 --
 
-INSERT INTO `milestone_user` (`exchange_sid`, `good_type`, `spend_point`, `event_time`, `member_number`, `discount`, `discount_code`, `used_date`) VALUES
+INSERT INTO `coupon_user` (`exchange_sid`, `good_type`, `spend_point`, `event_time`, `member_number`, `discount`, `discount_code`, `used_date`) VALUES
 (1, 1, 100, '2020-12-25 01:40:09', 1, NULL, '', NULL),
 (2, 1, 100, '2020-12-25 01:57:48', 1, NULL, '', NULL),
 (5, 2, 100, '2020-12-25 02:18:34', 1, 50, 'GG3B0', NULL),
@@ -843,9 +843,9 @@ ALTER TABLE `milestone_manager`
   ADD PRIMARY KEY (`milestone_sid`);
 
 --
--- 資料表索引 `milestone_user`
+-- 資料表索引 `coupon_user`
 --
-ALTER TABLE `milestone_user`
+ALTER TABLE `coupon_user`
   ADD UNIQUE KEY `addEvent` (`event_time`,`member_number`) USING BTREE;
 
 --

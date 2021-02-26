@@ -36,7 +36,7 @@ router.get("/getGooDList", async (req, res) => {
 router.get("/getExchangeRecord", async (req, res) => {
 
   //直接在SQL中處理日期格式以及加一個月的日期
-  const GooDList = await db.query("SELECT m.exchange_sid, m.spend_point, DATE_FORMAT(m.event_time, '%Y/%m/%d') event_time, DATE_FORMAT(DATE_ADD(m.event_time,INTERVAL 1 MONTH ), '%Y/%m/%d') end_date, m.used_date, e.good_name, e.good_pic FROM milestone_user m join exchange_good e on m.exchange_sid = e.good_ID and m.member_number = ? ORDER by m.event_time ASC", [
+  const GooDList = await db.query("SELECT m.exchange_sid, m.spend_point, DATE_FORMAT(m.event_time, '%Y/%m/%d') event_time, DATE_FORMAT(DATE_ADD(m.event_time,INTERVAL 1 MONTH ), '%Y/%m/%d') end_date, m.used_date, e.good_name, e.good_pic FROM coupon_user m join exchange_good e on m.exchange_sid = e.good_ID and m.member_number = ? ORDER by m.event_time ASC", [
     req.session.admin.id,
   ]);
   res.json(GooDList[0]);
@@ -62,7 +62,7 @@ router.post("/setExchange", upload.none(), async (req, res) => {
   );
   //將所有花費過的點數加總
   const totalSpendPoint = await db.query(
-    "select sum(spend_point) Sum from `milestone_user` where member_number = ? ",
+    "select sum(spend_point) Sum from `coupon_user` where member_number = ? ",
     [id]
   );
   totalPotint = totalGetPoiont[0][0].Sum - totalSpendPoint[0][0].Sum;
@@ -98,7 +98,7 @@ router.post("/setExchange", upload.none(), async (req, res) => {
     const [
       newExchange
     ] = await db.query(
-      "INSERT INTO `milestone_user`"+
+      "INSERT INTO `coupon_user`"+
       "(`exchange_sid`, "+
       "`good_type`, "+
       "`spend_point`, "+

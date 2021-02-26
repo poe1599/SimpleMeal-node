@@ -19,7 +19,7 @@ router.use((req, res, next) => {
   next();
 });
 
-// 增加100元購物金到milestone_user
+// 增加100元購物金到coupon_user
 // http://localhost:4000/activityCoupon/getlemoncoupon
 router.get("/getlemoncoupon", async (req, res) => {
   const member_number = req.session.admin.id;
@@ -29,11 +29,11 @@ router.get("/getlemoncoupon", async (req, res) => {
   // const [exChangeData] = await db.query("select * from `exchange_good` where `good_ID` = 9");
   // res.json(exChangeData);
 
-  // 檢查milestone_user, 該會員是否有sid 9兌換商品編號
+  // 檢查coupon_user, 該會員是否有sid 9兌換商品編號
   const [
     milestoneUserData,
   ] = await db.query(
-    "SELECT * FROM `milestone_user` WHERE `member_number`=? and `exchange_sid`= 9",
+    "SELECT * FROM `coupon_user` WHERE `member_number`=? and `exchange_sid`= 9",
     [member_number]
   );
 
@@ -41,7 +41,7 @@ router.get("/getlemoncoupon", async (req, res) => {
     const [
       result,
     ] = await db.query(
-      "INSERT INTO `milestone_user`(`exchange_sid`, `good_type`, `spend_point`, `event_time`, `member_number`, `discount`, `discount_code`, `used_date`) VALUES (9, 3, 0, NOW(), ?, 100, ?, null)",
+      "INSERT INTO `coupon_user`(`exchange_sid`, `good_type`, `spend_point`, `event_time`, `member_number`, `discount`, `discount_code`, `used_date`) VALUES (9, 3, 0, NOW(), ?, 100, ?, null)",
       [member_number, discount_code]
     );
     res.json({ msg: "拿到優惠券", success: true });
