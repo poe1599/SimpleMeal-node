@@ -36,10 +36,10 @@ router.get("/getMilestoneList", async (req, res) => {
     case "limit":
       filterQuery = " and event_endtime is not null ";
       break;
-    case "finish":
+    case "finished":
       filterQuery = " and AddProgress >= progress_goal ";
       break;
-    case "unfinish":
+    case "unfinished":
       filterQuery = " and AddProgress < progress_goal or AddProgress is null ";
       break;
     default:
