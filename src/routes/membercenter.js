@@ -9,7 +9,10 @@ const db = require(__dirname + "/../modules/db_connect2");
 // 會員註冊
 // http://localhost:4000/membercenter/registered //upload上傳檔關閉 none
 router.post("/registered",upload.none(),async (req, res) => {
-  
+  let [result1] =await db.query("SELECT * FROM `membercenter`  where id = ?",[req.body.id])
+  if(result1.length >0)
+  return ("帳號重複請重新註冊")
+console.log(result1)
   const [result] = await db.query("INSERT INTO `membercenter` (`email`, `password`, `password1`, `name`, `mobile`,`addr`) VALUES (? ,SHA1(?) ,? ,? ,? ,? )", [
     req.body.email,
     req.body.password,
@@ -18,6 +21,7 @@ router.post("/registered",upload.none(),async (req, res) => {
     req.body.mobile,
     req.body.addr
   ]);
+  
   res.json(result);
 });
 // middle well
