@@ -25,7 +25,7 @@ router.post("/getoverlist",upload.none(), async (req, res) => {
 
     const [result,
       ] = await db.query(
-        "INSERT INTO `surprise_comment`(`member_number`, `nickname`, `used_date`, `comment`, `builded_date`) VALUES (?, ?, NOW(), ?, NOW())",
+        "INSERT INTO `surprise_comment`(`member_number`, `nickname`, `used_date`, `comment`, `builded_date`) VALUES (?, ?, ?, ?, NOW())",
         [
           member_number,
           req.body.nickname,
