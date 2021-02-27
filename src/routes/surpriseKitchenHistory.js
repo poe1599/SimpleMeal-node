@@ -20,29 +20,28 @@ router.use((req, res, next) => {
 
 // 送廚房評論
 // http://localhost:4000/surpriseKitchenHistory/getoverlist
-router.post("/getoverlist", async (req, res) => {
-    const member_number = req.session.admin.member_number;
-    const [
-        row,
+router.post("/getoverlist",upload.none(), async (req, res) => {
+  const member_number = req.session.admin.member_number;
+
+    const [result,
       ] = await db.query(
-        "INSERT INTO `surprise_comment`(`sid`, `member_number`, `nickname`, `used_date`, `comment`, `builded_date`) VALUES (null, ?, ?, ?, ?, NOW())",
+        "INSERT INTO `surprise_comment`(`member_number`, `nickname`, `used_date`, `comment`, `builded_date`) VALUES (?, ?, NOW(), ?, NOW())",
         [
           member_number,
           req.body.nickname,
           req.body.used_date,
           req.body.comment,
-          req.body.builded_date,
         ]
       );
-      res.json({ row, msg: "" });
+     res.json(result);
     });
 
 //單純拿驚喜廚房訂單全部
 // http://localhost:4000/surpriseKitchenHistory/getReservationInfo
-router.get("/getReservationInfo", async (req, res) => {
-  const [result] = await db.query("SELECT * FROM `surprisekitchen_order` WHERE 1");
-  res.json(result);
-});
+// router.get("/getReservationInfo", async (req, res) => {
+//   const [result] = await db.query("SELECT * FROM `surprisekitchen_order` WHERE 1");
+//   res.json(result);
+// });
 
 // // 用query string拿資料
 // // http://localhost:4000/test/getmealbyquery?sid=1
