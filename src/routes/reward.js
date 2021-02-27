@@ -25,10 +25,10 @@ router.use((req, res, next) => {
 router.get("/getGooDList", async (req, res) => {
 
   //將完成的成就點數加總
-  const GooDList = await db.query("SELECT * FROM `exchange_good` where good_type = ? ", [
+  const [exchange_good,] = await db.query("SELECT * FROM `exchange_good` where good_type = ? ", [
     req.query.good_type,
   ]);
-  res.json(GooDList[0]);
+  res.json(exchange_good);
 });
 
 // 用query string拿資料 取得兌換紀錄
@@ -36,10 +36,21 @@ router.get("/getGooDList", async (req, res) => {
 router.get("/getExchangeRecord", async (req, res) => {
 
   //直接在SQL中處理日期格式以及加一個月的日期
-  const GooDList = await db.query("SELECT m.exchange_sid, m.spend_point, DATE_FORMAT(m.event_time, '%Y/%m/%d') event_time, DATE_FORMAT(DATE_ADD(m.event_time,INTERVAL 1 MONTH ), '%Y/%m/%d') end_date, e.good_name,e.need_point FROM coupon_exchange m join exchange_good e on m.exchange_sid = e.good_ID and m.member_number = ? ORDER by m.event_time ASC", [
+  const [exchangeRecord,] = await db.query("SELECT m.event_time 'key', m.exchange_sid, m.spend_point, DATE_FORMAT(m.event_time, '%Y/%m/%d') event_time, DATE_FORMAT(DATE_ADD(m.event_time,INTERVAL 1 MONTH ), '%Y/%m/%d') end_date, e.good_name,e.need_point FROM coupon_exchange m join exchange_good e on m.exchange_sid = e.good_ID and m.member_number = ? ORDER by m.event_time ASC", [
     req.session.admin.id,
   ]);
-  res.json(GooDList[0]);
+  res.json(exchangeRecord);
+});
+
+// `http://localhost:4000/reward/getCoupon?key=${couponKey}`
+router.get("/getCoupon", async (req, res) => {
+
+  //直接在SQL中處理日期格式以及加一個月的日期
+  const [coupon,] = await db.query(" SELECT * FROM `coupon_user` WHERE member_number = ? and DATE_SUB(event_time, INTERVAL 8 HOUR) = ? order by used_date ", [
+    req.session.admin.id,
+    req.query.key
+  ]);
+  res.json(coupon);
 });
 
 //http://localhost:4000/reward/setExchange
@@ -71,23 +82,23 @@ router.post("/setExchange", upload.none(), async (req, res) => {
     success = false;
   }
   if (success) {
-    const GooDList = await db.query("SELECT * FROM `exchange_good` where good_ID = ? ", [
+    const [exchange_good,] = await db.query("SELECT * FROM `exchange_good` where good_ID = ? ", [
       good_ID,
     ]);
-    if (GooDList[0].length != 1) {
+    if (exchange_good.length != 1) {
       msg = "商品資訊錯誤";
       success = false;
     }
     else {
-      if (GooDList[0][0].need_point * count > totalPotint) {
+      if (exchange_good[0].need_point * count > totalPotint) {
         msg = "剩餘點數不足";
         success = false;
       }
       else {
-        cost = GooDList[0][0].need_point * count;
-        good_type = GooDList[0][0].good_type;
-        if (GooDList[0][0].good_discount != NaN)
-          discount = GooDList[0][0].good_discount;
+        cost = exchange_good[0].need_point * count;
+        good_type = exchange_good[0].good_type;
+        if (exchange_good[0].good_discount != NaN)
+          discount = exchange_good[0].good_discount;
       }
     }
   }
@@ -110,9 +121,8 @@ router.post("/setExchange", upload.none(), async (req, res) => {
     );
     const event_time = coupon_exchange[0].event_time;
 
-    for(let i =0;i<count;i++)
-    {
-      await db.query("INSERT INTO `coupon_user`(`exchange_sid`, `good_type`, `event_time`, `member_number`, `discount`, `discount_code`) VALUES (?, ?, ?, ?, ?, ?)",[good_ID,good_type,event_time,id,discount,`code${Math.floor(Math.random()*1000000)}`])
+    for (let i = 0; i < count; i++) {
+      await db.query("INSERT INTO `coupon_user`(`exchange_sid`, `good_type`, `event_time`, `member_number`, `discount`, `discount_code`) VALUES (?, ?, ?, ?, ?, ?)", [good_ID, good_type, event_time, id, discount, `code${Math.floor(Math.random() * 10000000)}`])
     }
 
 
