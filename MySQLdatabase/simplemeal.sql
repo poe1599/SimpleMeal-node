@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： localhost
--- 產生時間： 2021 年 02 月 28 日 08:48
+-- 產生時間： 2021 年 02 月 28 日 18:23
 -- 伺服器版本： 10.4.17-MariaDB
 -- PHP 版本： 7.4.12
 
@@ -56,6 +56,13 @@ CREATE TABLE `cart_simplemealcoupon` (
   `payment_method` varchar(255) DEFAULT NULL,
   `check_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- 傾印資料表的資料 `cart_simplemealcoupon`
+--
+
+INSERT INTO `cart_simplemealcoupon` (`order_sid`, `member_sid`, `combination_sid`, `combination_name`, `description`, `quantity`, `total_coupon_num`, `total_price`, `payment_method`, `check_date`) VALUES
+(525558059, 6, 1, '吃飽飽沒煩惱組合', '(包含20張餐卷, 加贈5張免費餐券)', 4, 100, 14000, 'LINE PAY', '2021-02-28 23:19:18');
 
 -- --------------------------------------------------------
 
@@ -111,6 +118,14 @@ CREATE TABLE `coupon_exchange` (
   `member_number` int(11) NOT NULL COMMENT '該會員的ID'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- 傾印資料表的資料 `coupon_exchange`
+--
+
+INSERT INTO `coupon_exchange` (`exchange_sid`, `spend_point`, `event_time`, `member_number`) VALUES
+(1, 100, '2021-03-01 01:04:55', 6),
+(1, 300, '2021-03-01 01:05:08', 6);
+
 -- --------------------------------------------------------
 
 --
@@ -126,6 +141,16 @@ CREATE TABLE `coupon_user` (
   `discount_code` varchar(255) NOT NULL,
   `used_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- 傾印資料表的資料 `coupon_user`
+--
+
+INSERT INTO `coupon_user` (`exchange_sid`, `good_type`, `event_time`, `member_number`, `discount`, `discount_code`, `used_date`) VALUES
+(1, 1, '2021-03-01 01:04:55', 6, NULL, 'code9689330', NULL),
+(1, 1, '2021-03-01 01:05:08', 6, NULL, 'code2696538', NULL),
+(1, 1, '2021-03-01 01:05:08', 6, NULL, 'code8559011', NULL),
+(1, 1, '2021-03-01 01:05:08', 6, NULL, 'code3883079', NULL);
 
 -- --------------------------------------------------------
 
@@ -180,7 +205,8 @@ INSERT INTO `event_record` (`member_number`, `event_time`, `event_trigger`, `add
 (1, '2020-12-24 00:00:00', 1, 10000),
 (1, '2020-12-24 00:00:00', 2, 30),
 (1, '2020-12-24 00:00:00', 1, 10000),
-(1, '2020-12-24 00:00:00', 2, 30);
+(1, '2020-12-24 00:00:00', 2, 30),
+(6, '2021-02-28 23:19:18', 1, 14000);
 
 -- --------------------------------------------------------
 
@@ -203,10 +229,10 @@ CREATE TABLE `exchange_good` (
 --
 
 INSERT INTO `exchange_good` (`good_ID`, `good_type`, `good_name`, `good_subs`, `need_point`, `good_pic`, `good_discount`) VALUES
-(1, 1, '星巴克買一送一', '憑QR CODE可以獲得同口味大小星巴克飲料買一送一', 100, 'rw-001.png', NULL),
-(2, 1, '7-11折價券50元', '憑QR CODE於7-11消費折扣50元', 100, 'rw-002.png', NULL),
-(3, 1, '全家咖啡買一送一', '憑QR CODE可以獲得同口味咖啡買一送一', 50, 'rw-003.png', NULL),
-(4, 1, '7-11折價券100元', '憑QR CODE於7-11消費折扣100元', 200, 'rw-004.png', NULL),
+(1, 1, '星巴克買一送一', '憑QR CODE可以獲得同口味大小星巴克飲料買一送一，效期一個月。', 100, 'rw-001.png', NULL),
+(2, 1, '7-11折價券50元', '憑QR CODE於7-11消費折扣50元，效期一個月。', 100, 'rw-002.png', NULL),
+(3, 1, '全家咖啡買一送一', '憑QR CODE可以獲得同口味咖啡買一送一，效期一個月。', 50, 'rw-003.png', NULL),
+(4, 1, '7-11折價券100元', '憑QR CODE於7-11消費折扣100元，效期一個月。', 200, 'rw-004.png', NULL),
 (5, 2, '站內50元折價', '購買餐卷或是預約廚房時可兌換50元折價', 100, 'rw-005.png', 50),
 (6, 2, '站內100元折價', '購買餐卷或是預約廚房時可兌換100元折價', 100, 'rw-006.png', 100),
 (7, 2, '站內150元折價', '購買餐卷或是預約廚房時可兌換150元折價', 150, 'rw-007.png', 150),
@@ -403,7 +429,7 @@ INSERT INTO `membercenter` (`id`, `member_number`, `avater`, `level`, `email`, `
 (3, '20210003', 'kirby.jpg', '一般會員', 'tomato@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '', 'Tomato', 'orange', '0912345678', '2021-03-05', '1234-1234-1234-1234', '台北市信義區光復南路133號', NULL, 0),
 (4, '20210004', 'yoshi.jpg', 'VIP', 'bacon@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '', 'Bacon', 'red', '0978965842', '2021-01-01', '1234-1234-1234-1234', '台北市中正區仁愛路二段108號', NULL, 0),
 (5, '20210005', 'gremlins.jpg', '一般會員', 'cheese@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '', 'Cheese', 'stench', '0965423685', '2021-01-21', '1234-1234-1234-1234\r\n', '台北市中山區八德路二段306號', NULL, 0),
-(6, '20210006', 'koopa.jjpg', 'VIP', 'pork@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '', 'Pork', 'pig', '0975888426', '2021-01-30', '1234-1234-1234-1234', '台北市中山區松江路199號', NULL, 0),
+(6, '20210006', 'koopa.jjpg', 'VIP', 'pork@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '', 'Pork', 'pig', '0975888426', '2021-01-30', '1234-1234-1234-1234', '台北市中山區松江路199號', NULL, 100),
 (17, '20210007', 'pikachu.jpg', 'VIP', 'pikachu@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', NULL, 'Pikachu', 'pipi', '0945896654', '2020-09-16', '1234-1234-1234-1234', '桃園市楊梅區楊湖路二段327巷9號', NULL, 0),
 (18, '20210008', 'umbreon.jpg', 'VIP', 'umbreon@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', NULL, 'Umbreon', 'uu', '0975554589', '2019-09-26', '1234-1234-1234-1234', '桃園市楊梅區楊湖路一段367巷15-1號', NULL, 0),
 (19, '20210009', 'slowpoke.jpg', 'VIP', 'slowpoke@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', NULL, 'Slowpoke', 'slow', '0988874563', '2019-04-10', '1234-1234-1234-1234', '桃園市中壢區民族路六段508號', NULL, 0);
@@ -441,8 +467,8 @@ INSERT INTO `milestone_manager` (`milestone_sid`, `stone_name`, `event_startime`
 (7, '初學小廚師', '2021-01-01 00:00:00', NULL, 5, 1, 100, '第一次參加驚喜廚房', 'ms-007-unfinish.png', 'ms-007-finish.png'),
 (8, '熟能生巧', '2021-01-01 00:00:00', NULL, 5, 5, 200, '成功預約五次驚喜廚房', 'ms-008-unfinish.png', 'ms-008-finish.png'),
 (9, '一月吃美式', '2021-01-01 00:00:00', '2021-01-31 23:59:59', 6, 1, 100, '於一月點購任何一道美式食譜', 'ms-009-unfinish.png', 'ms-009-finish.png'),
-(10, '二月吃中式', '2021-02-01 00:00:00', '2021-02-28 23:59:59', 7, 1, 100, '於二月點購任何一道中式食譜', 'ms-010-unfinish.png', 'ms-010-finish.png'),
-(11, '三月吃義式', '2021-03-01 00:00:00', '2021-03-31 23:59:59', 8, 1, 100, '於三月點購任何一道義式食譜', 'ms-011-unfinish.png', 'ms-011-finish.png');
+(10, '三月吃中式', '2021-03-01 00:00:00', '2021-03-31 23:59:59', 7, 1, 100, '於二月點購任何一道中式食譜', 'ms-010-unfinish.png', 'ms-010-finish.png'),
+(11, '四月吃義式', '2021-04-01 00:00:00', '2021-04-30 23:59:59', 8, 1, 100, '於三月點購任何一道義式食譜', 'ms-011-unfinish.png', 'ms-011-finish.png');
 
 -- --------------------------------------------------------
 
@@ -561,6 +587,13 @@ CREATE TABLE `sessions` (
   `expires` int(11) UNSIGNED NOT NULL,
   `data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- 傾印資料表的資料 `sessions`
+--
+
+INSERT INTO `sessions` (`session_id`, `expires`, `data`) VALUES
+('FvFfUqb_ESmD23aKB-Wm9RLl-PhnwdWE', 1614550956, '{\"cookie\":{\"originalMaxAge\":18000000,\"expires\":\"2021-02-28T18:54:29.529Z\",\"httpOnly\":true,\"path\":\"/\"},\"admin\":{\"id\":6,\"member_number\":\"20210006\",\"avater\":\"koopa.jjpg\",\"level\":\"VIP\",\"email\":\"pork@gmail.com\",\"password\":\"7c4a8d09ca3762af61e59520943dc26494f8941b\",\"password1\":\"\",\"name\":\"Pork\",\"nickname\":\"pig\",\"mobile\":\"0975888426\",\"birthday\":\"2021-01-29T16:00:00.000Z\",\"credit＿card\":\"1234-1234-1234-1234\",\"addr\":\"台北市中山區松江路199號\",\"love\":null,\"simplemeal_coupon\":0}}');
 
 -- --------------------------------------------------------
 
@@ -767,22 +800,23 @@ INSERT INTO `test` (`id`, `string`) VALUES
 
 CREATE TABLE `trigger_describe` (
   `trigger_ID` int(11) NOT NULL COMMENT '觸發的條件編號',
-  `subs` varchar(255) NOT NULL COMMENT '觸發條件的資訊'
+  `subs` varchar(255) NOT NULL COMMENT '觸發條件的資訊',
+  `unit` varchar(6) NOT NULL COMMENT '單位'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- 傾印資料表的資料 `trigger_describe`
 --
 
-INSERT INTO `trigger_describe` (`trigger_ID`, `subs`) VALUES
-(1, '累積消費金額'),
-(2, '訂餐次數'),
-(3, '餐點評論次數'),
-(4, '抓到咧孟'),
-(5, '預約驚喜廚房次數'),
-(6, '嘗試美式料理'),
-(7, '嘗試中式料理'),
-(8, '嘗試義式料理');
+INSERT INTO `trigger_describe` (`trigger_ID`, `subs`, `unit`) VALUES
+(1, '消費金額', '元'),
+(2, '訂餐次數', '次'),
+(3, '評論次數', '次'),
+(4, '抓到咧孟', '次'),
+(5, '預約驚喜廚房', '次'),
+(6, '嘗試美式料理', '次'),
+(7, '嘗試中式料理', '次'),
+(8, '嘗試義式料理', '次');
 
 --
 -- 已傾印資料表的索引
