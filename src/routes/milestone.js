@@ -60,10 +60,7 @@ router.get("/getMilestoneList", async (req, res) => {
       limit,
     [req.session.admin.id]
   );
-  console.log("select * from (select m.milestone_sid, m.stone_name, m.progress_goal, m.reward_point, m.subs, DATE_FORMAT(m.event_startime, '%Y/%m/%d') event_startime,DATE_FORMAT(m.event_endtime, '%Y/%m/%d') event_endtime, m.unfinished_goal_pic, m.finished_goal_pic, sum(e.add_progress) AddProgress, t.Subs TriggerSubs, t.unit from milestone_manager m join trigger_describe t on t.trigger_ID = m.event_trigger left join event_record e on e.event_time > m.event_startime and (m.event_endtime> e.event_time or m.event_endtime is null) and e.member_number = ? and m.event_trigger = e.event_trigger GROUP by m.Milestone_sid) temp where 1=1 " +
-  filterQuery +
-  limit);
-  res.json(result[0]);
+  
 });
 
 // 用query string拿資料 取得點數
