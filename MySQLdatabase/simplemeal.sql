@@ -2,10 +2,10 @@
 -- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- 主機： 127.0.0.1
--- 產生時間： 2021-02-27 18:14:18
--- 伺服器版本： 10.4.16-MariaDB
--- PHP 版本： 7.3.24
+-- 主機： localhost
+-- 產生時間： 2021 年 02 月 28 日 08:48
+-- 伺服器版本： 10.4.17-MariaDB
+-- PHP 版本： 7.4.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -447,35 +447,6 @@ INSERT INTO `milestone_manager` (`milestone_sid`, `stone_name`, `event_startime`
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `milestone_user`
---
-
-CREATE TABLE `milestone_user` (
-  `exchange_sid` int(6) NOT NULL COMMENT '兌換商品編號',
-  `good_type` int(2) NOT NULL COMMENT '1=站外2=站內',
-  `spend_point` int(6) NOT NULL DEFAULT 0 COMMENT '花費的點數',
-  `event_time` datetime NOT NULL COMMENT '兌換的觸發時間',
-  `member_number` int(11) NOT NULL COMMENT '該會員的ID',
-  `discount` int(11) DEFAULT NULL,
-  `discount_code` varchar(255) NOT NULL,
-  `used_date` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- 傾印資料表的資料 `milestone_user`
---
-
-INSERT INTO `milestone_user` (`exchange_sid`, `good_type`, `spend_point`, `event_time`, `member_number`, `discount`, `discount_code`, `used_date`) VALUES
-(1, 1, 100, '2020-12-25 01:40:09', 1, NULL, '', NULL),
-(2, 1, 100, '2020-12-25 01:57:48', 1, NULL, '', NULL),
-(5, 2, 100, '2020-12-25 02:18:34', 1, 50, 'GG3B0', NULL),
-(5, 2, 100, '2021-02-08 10:05:07', 1, 50, 'FF20TO', NULL),
-(9, 3, 0, '2021-02-24 18:53:28', 1, 100, 'HUHSS', NULL),
-(9, 3, 0, '2021-02-24 22:14:49', 4, 100, '123', NULL);
-
--- --------------------------------------------------------
-
---
 -- 資料表結構 `partner`
 --
 
@@ -590,14 +561,6 @@ CREATE TABLE `sessions` (
   `expires` int(11) UNSIGNED NOT NULL,
   `data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- 傾印資料表的資料 `sessions`
---
-
-INSERT INTO `sessions` (`session_id`, `expires`, `data`) VALUES
-('9Is7HAHUYBDMm_pXxyKUuj4To4241cJc', 1614463952, '{\"cookie\":{\"originalMaxAge\":18000000,\"expires\":\"2021-02-27T20:03:52.418Z\",\"httpOnly\":true,\"path\":\"/\"},\"admin\":{\"id\":1,\"member_number\":\"20210001\",\"avater\":\"avatar01.jpg\",\"level\":\"VIP\",\"email\":\"GoodGoodEat@gmail.com\",\"password\":\"7c4a8d09ca3762af61e59520943dc26494f8941b\",\"password1\":\"\",\"name\":\"王展宇\",\"nickname\":\"12344\",\"mobile\":\"0952376886\",\"birthday\":\"1910-01-18T16:00:00.000Z\",\"credit＿card\":\"1234-1234-1234\",\"addr\":\"台北市信義區仁愛路四段505號\",\"love\":\"1,2,3\",\"simplemeal_coupon\":999}}'),
-('p3xWYFTGmJ4Y15lqAkoApFPYXP9TI-oa', 1614455841, '{\"cookie\":{\"originalMaxAge\":18000000,\"expires\":\"2021-02-27T15:02:31.083Z\",\"httpOnly\":true,\"path\":\"/\"},\"admin\":{\"id\":5,\"member_number\":\"20210005\",\"avater\":\"gremlins.jpg\",\"level\":\"一般會員\",\"email\":\"cheese@gmail.com\",\"password\":\"7c4a8d09ca3762af61e59520943dc26494f8941b\",\"password1\":\"\",\"name\":\"Cheese\",\"nickname\":\"stench\",\"mobile\":\"0965423685\",\"birthday\":\"2021-01-20T16:00:00.000Z\",\"credit＿card\":\"1234-1234-1234-1234\\r\\n\",\"addr\":\"台北市中山區八德路二段306號\",\"love\":null,\"simplemeal_coupon\":0}}');
 
 -- --------------------------------------------------------
 
@@ -890,12 +853,6 @@ ALTER TABLE `membercenter`
 --
 ALTER TABLE `milestone_manager`
   ADD PRIMARY KEY (`milestone_sid`);
-
---
--- 資料表索引 `milestone_user`
---
-ALTER TABLE `milestone_user`
-  ADD UNIQUE KEY `addEvent` (`event_time`,`member_number`) USING BTREE;
 
 --
 -- 資料表索引 `partner`
