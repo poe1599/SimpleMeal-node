@@ -60,7 +60,7 @@ router.get("/getMilestoneList", async (req, res) => {
       limit,
     [req.session.admin.id]
   );
-  
+  res.json(result[0]);
 });
 
 // 用query string拿資料 取得點數
