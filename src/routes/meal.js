@@ -96,7 +96,7 @@ router.get("/getlove", async (req, res) => {
       "UPDATE `membercenter` SET `love`=? where `id`= ?",
       [memberData[0].love + "," + thisMealSid, member_sid]
     );
-    res.json({ result, msg: "增加一筆新的" });
+    res.json({ result, msg: "加入到我的專屬菜單!" });
     return;
   }
   if(inLove === true){
@@ -105,7 +105,7 @@ router.get("/getlove", async (req, res) => {
     ] = await db.query("SELECT * FROM `membercenter` WHERE `id`= ?", [
       member_sid,
     ]);
-    res.json({ result, msg: "之前已加過最愛摟" });
+    res.json({ result, msg: "之前已加過專屬菜單摟!" });
     return;
   }
   // console.log( member_sid);
