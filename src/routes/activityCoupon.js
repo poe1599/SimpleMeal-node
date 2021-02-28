@@ -23,7 +23,6 @@ router.use((req, res, next) => {
 // http://localhost:4000/activityCoupon/getlemoncoupon
 router.get("/getlemoncoupon", async (req, res) => {
   const member_number = req.session.admin.id;
-  const discount_code = 123;
 
   // 取得優惠券項目資料表
   // const [exChangeData] = await db.query("select * from `exchange_good` where `good_ID` = 9");
@@ -40,9 +39,9 @@ router.get("/getlemoncoupon", async (req, res) => {
   if (milestoneUserData.length === 0) {
     const [
       result,
-    ] = await db.query(
+    ] =  await db.query(
       "INSERT INTO `coupon_user`(`exchange_sid`, `good_type`, `event_time`, `member_number`, `discount`, `discount_code`, `used_date`) VALUES (9, 3, NOW(), ?, 100, ?, null)",
-      [member_number, discount_code]
+      [member_number,`code${Math.floor(Math.random() * 10000000)}`]
     );
     res.json({ msg: "拿到優惠券", success: true });
     return;
