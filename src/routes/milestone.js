@@ -10,8 +10,8 @@ const db = require(__dirname + "/../modules/db_connect2");
 // 取得baseUrl與url, 將其放在locals
 router.use((req, res, next) => {
   // 沒登入? 出去! 現在!
-      if (!req.session.admin) {
-      return res.redirect('/');
+  if (!req.session.admin) {
+    return res.redirect('/');
   }
 
   res.locals.baseUrl = req.baseUrl;
@@ -33,7 +33,7 @@ router.get("/getMilestoneList", async (req, res) => {
   let filterQuery = " ";
   let limit = " limit ";
   let showEndedMs = req.query.showEndedMs;
-  if(showEndedMs == 'false'){filterQuery += " and ( temp.event_endtime >= now() or temp.event_endtime is null) " }
+  if (showEndedMs == 'false') { filterQuery += " and ( temp.event_endtime >= now() or temp.event_endtime is null) " }
   switch (filter) {
     case "limit":
       filterQuery += " and event_endtime is not null ";
@@ -56,8 +56,8 @@ router.get("/getMilestoneList", async (req, res) => {
       req.query.perpage * (req.query.page - 1) + "," + req.query.perpage + " ";
   const result = await db.query(
     "select * from (select m.milestone_sid, m.stone_name, m.progress_goal, m.reward_point, m.subs, DATE_FORMAT(m.event_startime, '%Y/%m/%d') event_startime,DATE_FORMAT(m.event_endtime, '%Y/%m/%d') event_endtime, m.unfinished_goal_pic, m.finished_goal_pic, sum(e.add_progress) AddProgress, t.Subs TriggerSubs, t.unit from milestone_manager m join trigger_describe t on t.trigger_ID = m.event_trigger left join event_record e on e.event_time > m.event_startime and (m.event_endtime> e.event_time or m.event_endtime is null) and e.member_number = ? and m.event_trigger = e.event_trigger GROUP by m.Milestone_sid) temp where 1=1 " +
-      filterQuery +
-      limit,
+    filterQuery +
+    limit,
     [req.session.admin.id]
   );
   res.json(result[0]);
@@ -86,15 +86,13 @@ router.get("/getPoint", async (req, res) => {
 // 用query string拿資料 取得點數
 // http://localhost:4000/milestone/getUserInfo
 //動態產生點數沒有存放在特定位置 每次都要計算 總共取得的點數 以及總共花費的點數 相減而成
-
 router.get("/getUserInfo", async (req, res) => {
   const id = req.session.admin.id
   //沒有session就用1
   // const id = req.session.admin==undefined?1:req.session.admin.id;
   //將完成的成就點數加總
-  const [result,] = await db.query("SELECT * FROM `membercenter` WHERE id= ?",[id]);
-    res.json(result);
-  
+  const [result,] = await db.query("SELECT * FROM `membercenter` WHERE id= ?", [id]);
+  res.json(result);
 });
 
 // 用在購物車取得該會員有什麼優惠券
@@ -110,6 +108,18 @@ router.get("/cartForDiscount", async (req, res) => {
   // console.log(result);
   res.json(result);
 });
+
+// 用query string拿資料 取得完成的成就清單
+// http://localhost:4000/milestone/getGoalMilestone
+router.get("/getGoalMilestone", async (req, res) => {
+  const id = req.session.admin.id
+  //沒有session就用1
+  // const id = req.session.admin==undefined?1:req.session.admin.id;
+  //將完成的成就點數加總
+  const [result,] = await db.query(" select * from (select m.milestone_sid, m.stone_name, m.progress_goal, m.finished_goal_pic, sum(e.add_progress) AddProgress from milestone_manager m join trigger_describe t on t.trigger_ID = m.event_trigger left join event_record e on e.event_time > m.event_startime and (m.event_endtime> e.event_time or m.event_endtime is null) and e.member_number = ? and m.event_trigger = e.event_trigger GROUP by m.Milestone_sid) temp where AddProgress >= progress_goal ", [id]);
+  res.json({result:result,id:id});
+});
+
 
 router.use((req, res) => {
   res.type("text/plain");
