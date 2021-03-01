@@ -65,9 +65,8 @@ router.get("/getmealtodelivery", async (req, res) => {
     res.json({
       result,
       cartDeliveryData,
-      msg: `配送清單中的 ${mealData[0].product_name} 現在有 ${
-        cartDeliveryData[0].quantity + 1
-      } 份`,
+      msg: `配送清單中的 ${mealData[0].product_name} 現在有 ${cartDeliveryData[0].quantity + 1
+        } 份`,
     });
     return;
   }
@@ -262,9 +261,31 @@ router.post("/ordercheck", upload.none(), async (req, res) => {
     ]
   );
 
-  //寫進度到成就系統
+  //寫進度到成就系統 餐點配送
+  //先確認餐點種類(meal_sid,分隔 陣列處理) 1美式 2中式 3法式 4義式
 
-  //先確認餐點種類(meal_sid,分隔 陣列處理)
+  //分隔逗號 取得每筆的餐點分類 以及數量 轉入成就系統
+  const mealArray = meal_sid.split(',')//餐點sid
+  const quantityArray = quantity.split(',')//餐點數量
+
+  for (let i = 0; i < mealArray.length; i++) {
+    const [categoryArray] = await db.query('select category_id from meal where sid  = ? ',[mealArray[i]])//取得餐點種類
+    switch(parseInt(categoryArray[0].category_id)){
+      case 1://美式餐點
+        await db.query('INSERT INTO `event_record`(`member_number`, `event_time`, `event_trigger`, `add_progress`) VALUES (? ,now() ,6 ,? )',[member_sid,quantityArray[i]])
+        break;
+      case 2://中式餐點
+      await db.query('INSERT INTO `event_record`(`member_number`, `event_time`, `event_trigger`, `add_progress`) VALUES (? ,now() ,7 ,? )',[member_sid,quantityArray[i]])
+        break;
+      case 3://法式餐點
+      await db.query('INSERT INTO `event_record`(`member_number`, `event_time`, `event_trigger`, `add_progress`) VALUES (? ,now() ,9 ,? )',[member_sid,quantityArray[i]])
+        break;
+      case 4://義式餐點
+      await db.query('INSERT INTO `event_record`(`member_number`, `event_time`, `event_trigger`, `add_progress`) VALUES (? ,now() ,8 ,? )',[member_sid,quantityArray[i]])
+        
+    }
+    
+  }
 
   // 會員中心減去消耗的餐券
   const [
