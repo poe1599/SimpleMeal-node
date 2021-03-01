@@ -222,19 +222,19 @@ router.post("/ordercheck", upload.none(), async (req, res) => {
   let costCoupon = 0;
   row.forEach((v, i) => {
     if (meal_sid == "") {
-      meal_sid = v.meal_sid;
+      meal_sid += v.meal_sid;
     } else {
       meal_sid += `,${v.meal_sid}`;
     }
 
     if (meal_name == "") {
-      meal_name = v.meal_name;
+      meal_name += v.meal_name;
     } else {
       meal_name += `,${v.meal_name}`;
     }
 
     if (quantity == "") {
-      quantity = v.quantity;
+      quantity += v.quantity;
     } else {
       quantity += `,${v.quantity}`;
     }
