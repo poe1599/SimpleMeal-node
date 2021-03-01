@@ -265,8 +265,8 @@ router.post("/ordercheck", upload.none(), async (req, res) => {
   //先確認餐點種類(meal_sid,分隔 陣列處理) 1美式 2中式 3法式 4義式
 
   //分隔逗號 取得每筆的餐點分類 以及數量 轉入成就系統
-  const mealArray = meal_sid.split(',')//餐點sid
-  const quantityArray = quantity.split(',')//餐點數量
+  const mealArray = `${meal_sid}`.split(',')//餐點sid 轉型成字串
+  const quantityArray = `${quantity}`.split(',')//餐點數量 轉型成字串
 
   for (let i = 0; i < mealArray.length; i++) {
     const [categoryArray] = await db.query('select category_id from meal where sid  = ? ',[mealArray[i]])//取得餐點種類
