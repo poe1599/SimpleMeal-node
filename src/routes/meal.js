@@ -66,18 +66,9 @@ router.get("/getmealtodelivery", async (req, res) => {
 
   res.json({ mealData, recipeData, ingredientsData });
 });
-// router.get("/getlove1", async (req, res) => {
-//   const [result] = await db.query(
-//     "SELECT * FROM `membercenter` WHERE `id` = ?",
-//     [req.query.sid]
-//   );
-//   res.json(result);
-// });
+
 router.get("/getlove", async (req, res) => {
   const member_sid = req.session.admin.id;
-  // const [meal] = await db.query("SELECT * FROM `meal` WHERE `sid`= ?", [
-  //   req.query.sid,
-  // ]);
   const [
     memberData,
   ] = await db.query("SELECT * FROM `membercenter` WHERE `id`= ?", [
@@ -85,21 +76,28 @@ router.get("/getlove", async (req, res) => {
   ]);
   const thisMealSid = req.query.sid.toString();
   if (memberData[0].love === null) {
-    memberData[0].love = ''
+    const [
+      result,
+    ] = await db.query("UPDATE `membercenter` SET `love`=? where `id`= ?", [
+      thisMealSid,
+      member_sid,
+    ]);
+    res.json({ result, msg: "加入到我的專屬菜單!" });
+    return;
   }
   const thisMemberLoveId = memberData[0].love.split(",");
   const inLove = thisMemberLoveId.includes(thisMealSid);
   if (inLove !== true) {
     const [
       result,
-    ] = await db.query(
-      "UPDATE `membercenter` SET `love`=? where `id`= ?",
-      [memberData[0].love + "," + thisMealSid, member_sid]
-    );
+    ] = await db.query("UPDATE `membercenter` SET `love`=? where `id`= ?", [
+      memberData[0].love + "," + thisMealSid,
+      member_sid,
+    ]);
     res.json({ result, msg: "加入到我的專屬菜單!" });
     return;
   }
-  if(inLove === true){
+  if (inLove === true) {
     const [
       result,
     ] = await db.query("SELECT * FROM `membercenter` WHERE `id`= ?", [
@@ -111,15 +109,89 @@ router.get("/getlove", async (req, res) => {
   // console.log( member_sid);
   // console.log(inLove);
   // console.log({ memberData, member_sid, });
-  
 });
-// router.get("/selectMealtest",  async (req, res) => {
-//   const a=req.query.ingredient_id
-//   const [result] = await db.query("SELECT * FROM `ingredients` WHERE `sid` IN (?)", [
-//     a,
+
+router.get("/loveall", async (req, res) => {
+  const member_sid = req.session.admin.id;
+  const [
+    memberData,
+  ] = await db.query("SELECT * FROM `membercenter` WHERE `id`= ?", [
+    member_sid,
+  ]);
+  const [result] = await db.query(
+    `SELECT * FROM meal WHERE sid in (${memberData[0].love})`
+  );
+  res.json(result);
+});
+// router.get("/loveTypeA", async (req, res) => {
+//   const member_sid = req.session.admin.id;
+//   const [
+//     memberData,
+//   ] = await db.query("SELECT * FROM `membercenter` WHERE `id`= ?", [
+//     member_sid,
 //   ]);
-//   console.log( a)
-//   res.json(result[0]);
+
+//   const [result] = await db.query(
+//     `SELECT * FROM meal WHERE sid in (${memberData[0].love}) AND vegetarian_food =1`
+//   );
+
+//   res.json(result);
+// });
+// router.get("/loveTypeB", async (req, res) => {
+//   const member_sid = req.session.admin.id;
+//   const [
+//     memberData,
+//   ] = await db.query("SELECT * FROM `membercenter` WHERE `id`= ?", [
+//     member_sid,
+//   ]);
+
+//   const [result] = await db.query(
+//     `SELECT * FROM meal WHERE sid in (${memberData[0].love}) AND category_id =1`
+//   );
+
+//   res.json(result);
+// });
+// router.get("/loveTypeC", async (req, res) => {
+//   const member_sid = req.session.admin.id;
+//   const [
+//     memberData,
+//   ] = await db.query("SELECT * FROM `membercenter` WHERE `id`= ?", [
+//     member_sid,
+//   ]);
+
+//   const [result] = await db.query(
+//     `SELECT * FROM meal WHERE sid in (${memberData[0].love}) AND category_id =2`
+//   );
+
+//   res.json(result);
+// });
+// router.get("/loveTypeD", async (req, res) => {
+//   const member_sid = req.session.admin.id;
+//   const [
+//     memberData,
+//   ] = await db.query("SELECT * FROM `membercenter` WHERE `id`= ?", [
+//     member_sid,
+//   ]);
+
+//   const [result] = await db.query(
+//     `SELECT * FROM meal WHERE sid in (${memberData[0].love}) AND category_id =3`
+//   );
+
+//   res.json(result);
+// });
+// router.get("/loveTypeE", async (req, res) => {
+//   const member_sid = req.session.admin.id;
+//   const [
+//     memberData,
+//   ] = await db.query("SELECT * FROM `membercenter` WHERE `id`= ?", [
+//     member_sid,
+//   ]);
+
+//   const [result] = await db.query(
+//     `SELECT * FROM meal WHERE sid in (${memberData[0].love}) AND category_id =4`
+//   );
+
+//   res.json(result);
 // });
 
 module.exports = router;
