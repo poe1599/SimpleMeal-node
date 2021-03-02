@@ -16,7 +16,7 @@ router.post("/registered",upload.none(),async (req, res, next) => {
   
   if(result1.length === 1){
     console.log('error')
-    
+    massage="重複註冊"
     res.json({
       success: false,
      
