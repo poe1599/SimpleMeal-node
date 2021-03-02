@@ -41,12 +41,14 @@ router.get("/typeC", async (req, res) => {
   );
   res.json(result);
 });
+
 router.get("/typeD", async (req, res) => {
   const [result] = await db.query(
     "SELECT * FROM `meal` WHERE `category_id` LIKE '4' ORDER BY `sid`"
   );
   res.json(result);
 });
+
 router.get("/typeE", async (req, res) => {
   const [result] = await db.query(
     "SELECT * FROM `meal` WHERE `vegetarian_food` LIKE '1' ORDER BY `sid`"
@@ -79,6 +81,11 @@ router.get("/getmealtodelivery", async (req, res) => {
 });
 
 router.get("/getlove", async (req, res) => {
+  // 沒登入? 出去! 現在!
+  if (!req.session.admin) {
+    return res.redirect("/");
+  }
+
   const member_sid = req.session.admin.id;
   const [
     memberData,
@@ -123,6 +130,11 @@ router.get("/getlove", async (req, res) => {
 });
 
 router.get("/loveall", async (req, res) => {
+  // 沒登入? 出去! 現在!
+  if (!req.session.admin) {
+    return res.redirect("/");
+  }
+  
   const member_sid = req.session.admin.id;
   const [
     memberData,
@@ -134,7 +146,13 @@ router.get("/loveall", async (req, res) => {
   );
   res.json(result);
 });
+
 router.get("/loveTypeA", async (req, res) => {
+  // 沒登入? 出去! 現在!
+  if (!req.session.admin) {
+    return res.redirect("/");
+  }
+  
   const member_sid = req.session.admin.id;
   const [
     memberData,
@@ -148,7 +166,13 @@ router.get("/loveTypeA", async (req, res) => {
 
   res.json(result);
 });
+
 router.get("/loveTypeB", async (req, res) => {
+  // 沒登入? 出去! 現在!
+  if (!req.session.admin) {
+    return res.redirect("/");
+  }
+  
   const member_sid = req.session.admin.id;
   const [
     memberData,
@@ -162,7 +186,13 @@ router.get("/loveTypeB", async (req, res) => {
 
   res.json(result);
 });
+
 router.get("/loveTypeC", async (req, res) => {
+  // 沒登入? 出去! 現在!
+  if (!req.session.admin) {
+    return res.redirect("/");
+  }
+  
   const member_sid = req.session.admin.id;
   const [
     memberData,
@@ -176,7 +206,13 @@ router.get("/loveTypeC", async (req, res) => {
 
   res.json(result);
 });
+
 router.get("/loveTypeD", async (req, res) => {
+  // 沒登入? 出去! 現在!
+  if (!req.session.admin) {
+    return res.redirect("/");
+  }
+  
   const member_sid = req.session.admin.id;
   const [
     memberData,
@@ -190,7 +226,13 @@ router.get("/loveTypeD", async (req, res) => {
 
   res.json(result);
 });
+
 router.get("/loveTypeE", async (req, res) => {
+  // 沒登入? 出去! 現在!
+  if (!req.session.admin) {
+    return res.redirect("/");
+  }
+  
   const member_sid = req.session.admin.id;
   const [
     memberData,
