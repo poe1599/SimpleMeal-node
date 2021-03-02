@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2021-03-02 09:41:07
+-- 產生時間： 2021-03-02 13:03:47
 -- 伺服器版本： 10.4.16-MariaDB
 -- PHP 版本： 7.3.24
 
@@ -717,8 +717,6 @@ CREATE TABLE `surprisekitchen_order` (
 --
 
 INSERT INTO `surprisekitchen_order` (`sid`, `member_number`, `order_sid`, `reservation_date`, `reservation_time`, `num_adult`, `num_child`, `adult_price`, `child_price`, `num_meal`, `remark`, `reservation_price`, `reservation_name`, `reservation_tel`, `reservation_email`, `payment_method`, `check_date`, `status`) VALUES
-(23, 20210006, 267533343, '2021-02-27', '18:00', 1, 1, 500, 100, 1, '', 600, '241', '0952376886', 'GoodGoodEat@gmail.com', '信用卡線上刷卡一次付清', '2021-02-25 23:38:53', 0),
-(24, 20210006, 267533343, '2021-02-22', '18:00', 1, 1, 500, 100, 1, '', 600, '241', '0952376886', 'GoodGoodEat@gmail.com', '信用卡線上刷卡一次付清', '2021-02-25 23:38:53', 1),
 (26, 20210003, 418095413, '2021-03-14', '14:00', 2, 1, 500, 100, 1, '素食主義', 1100, 'Tomato', '0912345678', 'tomato@gmail.com', '信用卡線上刷卡一次付清', '2021-02-27 17:28:15', 0),
 (27, 20210003, 418147314, '2021-03-16', '10:00', 2, 1, 500, 100, 3, '沒有', 1100, 'Tomato', '0912345678', 'tomato@gmail.com', '信用卡線上刷卡一次付清', '2021-02-27 17:29:07', 0),
 (28, 20210003, 418183276, '2021-03-15', '14:00', 3, 0, 500, 100, 3, '', 1500, 'Tomato', '0912345678', 'tomato@gmail.com', '銀聯卡', '2021-02-27 17:29:43', 0),
