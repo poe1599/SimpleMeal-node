@@ -72,11 +72,7 @@ router.post("/addreservation", upload.none(), async (req, res) => {
     ]
   );
 
-  //寫進度到成就系統 預約廚房
-  //預約廚房的花費
-  await db.query('INSERT INTO `event_record`(`member_number`, `event_time`, `event_trigger`, `add_progress`) VALUES (? ,now() ,1 ,? )',[req.session.admin.id,req.body.num_adult * 500 + req.body.num_child * 100])
-  //記預約一次
-  await db.query('INSERT INTO `event_record`(`member_number`, `event_time`, `event_trigger`, `add_progress`) VALUES (? ,now() ,5 ,1 )',[req.session.admin.id])
+ 
 
   res.json({ row, order_sid, msg: "" });
 });
