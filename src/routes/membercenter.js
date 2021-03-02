@@ -17,7 +17,10 @@ router.post("/registered",upload.none(),async (req, res, next) => {
   if(result1.length === 1){
     console.log('error')
     massage = "重複註冊"
-    res.json(massage)
+    res.json({
+      success: false,
+      massage
+    })
   } else {
     const [result] = await db.query("INSERT INTO `membercenter` (`email`, `password`, `password1`, `name`, `mobile`,`addr`) VALUES (? ,SHA1(?) ,? ,? ,? ,? )", [
       req.body.email,
@@ -27,7 +30,10 @@ router.post("/registered",upload.none(),async (req, res, next) => {
       req.body.mobile,
       req.body.addr
       ])
-      res.json(result);
+      res.json({
+        success: true,
+        ...result
+      });
   }
 
     // const [result] = await db.query("INSERT INTO `membercenter` (`email`, `password`, `password1`, `name`, `mobile`,`addr`) VALUES (? ,SHA1(?) ,? ,? ,? ,? )", [
