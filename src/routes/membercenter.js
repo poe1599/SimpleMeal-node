@@ -19,7 +19,7 @@ router.post("/registered",upload.none(),async (req, res, next) => {
     
     res.json({
       success: false,
-      massage
+     
     })
   } else {
     const [result] = await db.query("INSERT INTO `membercenter` (`email`, `password`, `password1`, `name`, `mobile`,`addr`) VALUES (? ,SHA1(?) ,? ,? ,? ,? )", [
