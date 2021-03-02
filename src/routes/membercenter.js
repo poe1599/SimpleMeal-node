@@ -8,21 +8,38 @@ const db = require(__dirname + "/../modules/db_connect2");
 
 // 會員註冊
 // http://localhost:4000/membercenter/registered //upload上傳檔關閉 none
-router.post("/registered",upload.none(),async (req, res) => {
-  let [result1] =await db.query("SELECT * FROM `membercenter`  where id = ?",[req.body.id])
-  if(result1.length >0)
-  return ("帳號重複請重新註冊")
-console.log(result1)
-  const [result] = await db.query("INSERT INTO `membercenter` (`email`, `password`, `password1`, `name`, `mobile`,`addr`) VALUES (? ,SHA1(?) ,? ,? ,? ,? )", [
-    req.body.email,
-    req.body.password,
-    req.body.password1,
-    req.body.name,
-    req.body.mobile,
-    req.body.addr
-  ]);
+router.post("/registered",upload.none(),async (req, res, next) => {
+
+  const [result1] =await db.query("SELECT * FROM `membercenter` WHERE `email` = ?", [req.body.email])
+ 
+  console.log(result1);
   
-  res.json(result);
+  if(result1.length === 1){
+    console.log('error')
+    massage = "重複註冊"
+    res.json(massage)
+  } else {
+    const [result] = await db.query("INSERT INTO `membercenter` (`email`, `password`, `password1`, `name`, `mobile`,`addr`) VALUES (? ,SHA1(?) ,? ,? ,? ,? )", [
+      req.body.email,
+      req.body.password,
+      req.body.password1,
+      req.body.name,
+      req.body.mobile,
+      req.body.addr
+      ])
+      res.json(result);
+  }
+
+    // const [result] = await db.query("INSERT INTO `membercenter` (`email`, `password`, `password1`, `name`, `mobile`,`addr`) VALUES (? ,SHA1(?) ,? ,? ,? ,? )", [
+    // req.body.email,
+    // req.body.password,
+    // req.body.password1,
+    // req.body.name,
+    // req.body.mobile,
+    // req.body.addr
+    // ])
+  
+
 });
 // middle well
 // 如果req.session.admin沒有登入的資料, 就跳回首頁
@@ -41,31 +58,34 @@ router.use((req, res, next) => {
 //   購買餐卷歷史紀錄
 // http://localhost:4000/membercenter/cart_simplemealcoupon
 router.get("/cart_simplemealcoupon", async (req, res) => {
-  
+  const member_sid = req.session.admin.id; 
   if(req.query.start === 'null' && req.query.end === 'null'){
-     const [result,] = await db.query("SELECT * FROM `cart_simplemealcoupon` ORDER BY `check_date` ASC");
+     const [result,] = await db.query("SELECT * FROM `cart_simplemealcoupon` WHERE `member_sid`=? ORDER BY `check_date` ASC",[member_sid]);
     
     res.json(result);
     return;
   }
-    const [result] = await db.query("SELECT * FROM `cart_simplemealcoupon` WHERE `check_date` >= ?  AND `check_date` <= DATE_ADD(?, INTERVAL 1 DAY) ORDER BY `cart_simplemealcoupon`.`check_date` ASC",[req.query.start, req.query.end]);
+    const [result] = await db.query("SELECT * FROM `cart_simplemealcoupon` WHERE `check_date` >= ?  AND `check_date` <= DATE_ADD(?, INTERVAL 1 DAY) AND `member_sid`=? ORDER BY `cart_simplemealcoupon`.`check_date` ASC",[req.query.start, req.query.end,member_sid]);
 
   res.json(result);
 });
 //   餐卷使用歷史紀錄
 // http://localhost:4000/membercenter/history_mealdelivery
+
 router.get("/history_mealdelivery", async (req, res) => {
   
-
+  let member_sid = req.session.admin.id; 
   if(req.query.start === 'null' && req.query.end === 'null'){
-    const [result,] = await db.query("SELECT * FROM `history_mealdelivery` ORDER BY `history_mealdelivery`.`check_date` ASC");
+    const [result,] = await db.query("SELECT * FROM `history_mealdelivery` WHERE `member_sid`=? ORDER BY `history_mealdelivery`.`check_date` ASC",[member_sid]);
+
     res.json(result);
    return;
  }
 
- const[result,] =await db.query("SELECT * FROM `history_mealdelivery` WHERE `check_date` >= ?  AND `check_date` <= DATE_ADD(?, INTERVAL 1 DAY) ORDER BY `history_mealdelivery`.`check_date` ASC ",[req.query.start, req.query.end])
+ const[result,] =await db.query("SELECT * FROM `history_mealdelivery` WHERE `check_date` >= ?  AND `check_date` <= DATE_ADD(?, INTERVAL 1 DAY) AND `member_sid`=? ORDER BY `history_mealdelivery`.`check_date` ASC ",[req.query.start, req.query.end,member_sid])
  res.json(result); 
 });
+
 // 驚喜廚房紀錄
 // http://localhost:4000/membercenter/surprisekitchen_order
 router.get("/surprisekitchen_order", async (req, res) => {
@@ -78,7 +98,8 @@ router.get("/surprisekitchen_order", async (req, res) => {
   }
 
   if(req.query.start === 'null' && req.query.end === 'null'){
-    const [result,] = await db.query(`SELECT * FROM surprisekitchen_order ${where_status?"WHERE "+where_status:''}`);
+    const [result,] = await db.query(`SELECT * FROM surprisekitchen_order 
+    ${where_status?"WHERE "+where_status:''}`);
     res.json(result);
    return;
  }
