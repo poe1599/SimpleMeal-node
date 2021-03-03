@@ -95,25 +95,27 @@ router.get("/history_mealdelivery", async (req, res) => {
 // 驚喜廚房紀錄
 // http://localhost:4000/membercenter/surprisekitchen_order
 router.get("/surprisekitchen_order", async (req, res) => {
-
+  const member_number = req.session.admin.member_number;
   let where_status= ""
 
   // 2 is all
   if(req.query.status !== 2 && req.query.status){
-    where_status = `status = ${req.query.status}`
+    where_status = `status = ${req.query.status} `
   }
-
+  
+  
   if(req.query.start === 'null' && req.query.end === 'null'){
-    const [result,] = await db.query(`SELECT * FROM surprisekitchen_order 
-    ${where_status?"WHERE "+where_status:''}`);
+    const [result,] = await db.query(`SELECT * FROM surprisekitchen_order  WHERE member_number = ${member_number}
+    ${where_status?'AND '+ where_status:''}  ` );
     res.json(result);
    return;
+   
  }
-
+//AND member_number = ${member_number}
  console.log(`SELECT * FROM surprisekitchen_order WHERE reservation_date >= '${req.query.start}'  AND reservation_date <= DATE_ADD('${req.query.end}', INTERVAL 1 DAY) ${where_status ? "AND "+where_status : ''}`);
 
  const[result,] =await db.query(`SELECT * FROM surprisekitchen_order WHERE reservation_date >= '
- ${req.query.start}'  AND reservation_date <= DATE_ADD('${req.query.end}', INTERVAL 1 DAY) ${where_status ? "AND "+where_status : ''}`)
+ ${req.query.start}' AND member_number = ${member_number}  AND reservation_date <= DATE_ADD('${req.query.end}', INTERVAL 1 DAY) ${where_status ? "AND "+where_status : ''}`)
 
  res.json(result);
 });
