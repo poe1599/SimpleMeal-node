@@ -78,6 +78,23 @@ router.post("/ordercheck", upload.none(), async (req, res) => {
       member_number,
     ]
   );
+  
+  const [apoitment]=
+  await db.query('SELECT * FROM `surprisekitchen_order` WHERE `order_sid`=?',[order_sid]);
+
+
+
+  //寫進度到成就系統 預約廚房
+  //預約廚房的花費
+  await db.query(
+    "INSERT INTO `event_record`(`member_number`, `event_time`, `event_trigger`, `add_progress`) VALUES (? ,now() ,1 ,? )",
+    [req.session.admin.id,apoitment[0].reservation_price]
+  );
+  //記預約一次
+  await db.query(
+    "INSERT INTO `event_record`(`member_number`, `event_time`, `event_trigger`, `add_progress`) VALUES (? ,now() ,5 ,1 )",
+    [req.session.admin.id]
+  );
 
   // 註銷已使用的優惠券(需先判斷優惠碼, 避免更動到)
   if (req.body.couponString !== null && req.body.couponString !== "") {

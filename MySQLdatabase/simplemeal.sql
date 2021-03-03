@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2021-03-02 09:41:07
+-- 產生時間： 2021-03-03 02:54:48
 -- 伺服器版本： 10.4.16-MariaDB
 -- PHP 版本： 7.3.24
 
@@ -425,7 +425,7 @@ INSERT INTO `membercenter` (`id`, `member_number`, `avater`, `level`, `email`, `
 (3, '20210003', 'kirby.jpg', '一般會員', 'tomato@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '', 'Tomato', 'orange', '0912345678', '2021-03-05', '1234-1234-1234-1234', '台北市信義區光復南路133號', NULL, 250),
 (4, '20210004', 'yoshi.jpg', 'VIP', 'bacon@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '', 'Bacon', 'red', '0978965842', '2021-01-01', '1234-1234-1234-1234', '台北市中正區仁愛路二段108號', NULL, 0),
 (5, '20210005', 'gremlins.jpg', '一般會員', 'cheese@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '', 'Cheese', 'stench', '0965423685', '2021-01-21', '1234-1234-1234-1234\r\n', '台北市中山區八德路二段306號', NULL, 0),
-(6, '20210006', 'koopa.jjpg', 'VIP', 'pork@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '', 'Pork', 'pig', '0975888426', '2021-01-30', '1234-1234-1234-1234', '台北市中山區松江路199號', '1', 3),
+(6, '20210006', 'koopa.jpg', 'VIP', 'pork@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '', 'Pork', 'pig', '0975888426', '2021-01-30', '1234-1234-1234-1234', '台北市中山區松江路199號', '1', 3),
 (17, '20210007', 'pikachu.jpg', 'VIP', 'pikachu@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', NULL, 'Pikachu', 'pipi', '0945896654', '2020-09-16', '1234-1234-1234-1234', '桃園市楊梅區楊湖路二段327巷9號', NULL, 0),
 (18, '20210008', 'umbreon.jpg', 'VIP', 'umbreon@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', NULL, 'Umbreon', 'uu', '0975554589', '2019-09-26', '1234-1234-1234-1234', '桃園市楊梅區楊湖路一段367巷15-1號', NULL, 0),
 (19, '20210009', 'slowpoke.jpg', 'VIP', 'slowpoke@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', NULL, 'Slowpoke', 'slow', '0988874563', '2019-04-10', '1234-1234-1234-1234', '桃園市中壢區民族路六段508號', NULL, 0);
@@ -717,8 +717,6 @@ CREATE TABLE `surprisekitchen_order` (
 --
 
 INSERT INTO `surprisekitchen_order` (`sid`, `member_number`, `order_sid`, `reservation_date`, `reservation_time`, `num_adult`, `num_child`, `adult_price`, `child_price`, `num_meal`, `remark`, `reservation_price`, `reservation_name`, `reservation_tel`, `reservation_email`, `payment_method`, `check_date`, `status`) VALUES
-(23, 20210006, 267533343, '2021-02-27', '18:00', 1, 1, 500, 100, 1, '', 600, '241', '0952376886', 'GoodGoodEat@gmail.com', '信用卡線上刷卡一次付清', '2021-02-25 23:38:53', 0),
-(24, 20210006, 267533343, '2021-02-22', '18:00', 1, 1, 500, 100, 1, '', 600, '241', '0952376886', 'GoodGoodEat@gmail.com', '信用卡線上刷卡一次付清', '2021-02-25 23:38:53', 1),
 (26, 20210003, 418095413, '2021-03-14', '14:00', 2, 1, 500, 100, 1, '素食主義', 1100, 'Tomato', '0912345678', 'tomato@gmail.com', '信用卡線上刷卡一次付清', '2021-02-27 17:28:15', 0),
 (27, 20210003, 418147314, '2021-03-16', '10:00', 2, 1, 500, 100, 3, '沒有', 1100, 'Tomato', '0912345678', 'tomato@gmail.com', '信用卡線上刷卡一次付清', '2021-02-27 17:29:07', 0),
 (28, 20210003, 418183276, '2021-03-15', '14:00', 3, 0, 500, 100, 3, '', 1500, 'Tomato', '0912345678', 'tomato@gmail.com', '銀聯卡', '2021-02-27 17:29:43', 0),
