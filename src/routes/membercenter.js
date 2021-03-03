@@ -79,17 +79,31 @@ router.get("/cart_simplemealcoupon", async (req, res) => {
 // http://localhost:4000/membercenter/history_mealdelivery
 
 router.get("/history_mealdelivery", async (req, res) => {
-  
-  let member_sid = req.session.admin.id; 
-  if(req.query.start === 'null' && req.query.end === 'null'){
-    const [result,] = await db.query("SELECT * FROM `history_mealdelivery` WHERE `member_sid`=? ORDER BY `history_mealdelivery`.`check_date` ASC",[member_sid]);
 
+
+  let member_sid = req.session.admin.id; 
+
+  let where_status= ""
+
+  // 2 is all
+  if(req.query.status !== 2 && req.query.status){
+    where_status = `status = ${req.query.status} `
+  }
+
+  if(req.query.start === 'null' && req.query.end === 'null'){
+   
+  const [result,] = await db.query(`SELECT * FROM history_mealdelivery WHERE member_sid= ${member_sid} ${where_status?'AND '+ where_status:''}  ` );
+    
     res.json(result);
+
    return;
  }
 
- const[result,] =await db.query("SELECT * FROM `history_mealdelivery` WHERE `check_date` >= ?  AND `check_date` <= DATE_ADD(?, INTERVAL 1 DAY) AND `member_sid`=? ORDER BY `history_mealdelivery`.`check_date` ASC ",[req.query.start, req.query.end,member_sid])
+ const[result,] =await db.query(
+  `SELECT * FROM history_mealdelivery WHERE delivery_date >= '
+${req.query.start}' AND member_sid = ${member_sid}  AND delivery_date <= DATE_ADD('${req.query.end}', INTERVAL 1 DAY) ${where_status ? "AND "+where_status : ''}`)
  res.json(result); 
+
 });
 
 // 驚喜廚房紀錄
@@ -111,10 +125,10 @@ router.get("/surprisekitchen_order", async (req, res) => {
    return;
    
  }
-//AND member_number = ${member_number}
- console.log(`SELECT * FROM surprisekitchen_order WHERE reservation_date >= '${req.query.start}'  AND reservation_date <= DATE_ADD('${req.query.end}', INTERVAL 1 DAY) ${where_status ? "AND "+where_status : ''}`);
 
- const[result,] =await db.query(`SELECT * FROM surprisekitchen_order WHERE reservation_date >= '
+
+ const[result,] =await db.query(
+   `SELECT * FROM surprisekitchen_order WHERE reservation_date >= '
  ${req.query.start}' AND member_number = ${member_number}  AND reservation_date <= DATE_ADD('${req.query.end}', INTERVAL 1 DAY) ${where_status ? "AND "+where_status : ''}`)
 
  res.json(result);
