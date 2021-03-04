@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2021-03-03 10:16:39
+-- 產生時間： 2021-03-04 13:23:19
 -- 伺服器版本： 10.4.16-MariaDB
 -- PHP 版本： 7.3.24
 
@@ -138,7 +138,7 @@ CREATE TABLE `coupon_exchange` (
 
 INSERT INTO `coupon_exchange` (`exchange_sid`, `spend_point`, `event_time`, `member_number`) VALUES
 (3, 50, '2021-03-03 15:11:16', 6),
-(3, 50, '2021-03-03 15:11:20', 6);
+(5, 50, '2021-03-04 13:22:48', 6);
 
 -- --------------------------------------------------------
 
@@ -165,11 +165,11 @@ INSERT INTO `coupon_user` (`exchange_sid`, `good_type`, `event_time`, `member_nu
 (1, 1, '2021-03-01 01:05:08', 6, NULL, 'code2696538', NULL),
 (1, 1, '2021-03-01 01:05:08', 6, NULL, 'code8559011', NULL),
 (1, 1, '2021-03-01 01:05:08', 6, NULL, 'code3883079', NULL),
-(5, 2, '2021-03-02 16:03:34', 6, 50, 'code5459757', NULL),
 (3, 1, '2021-03-03 15:10:39', 6, NULL, 'code6462483', NULL),
 (3, 1, '2021-03-03 15:10:39', 6, NULL, 'code7372118', NULL),
 (3, 1, '2021-03-03 15:11:16', 6, NULL, 'code2675518', NULL),
-(3, 1, '2021-03-03 15:11:20', 6, NULL, 'code4599', NULL);
+(3, 1, '2021-03-03 15:11:20', 6, NULL, 'code4599', NULL),
+(5, 2, '2021-03-04 13:22:48', 6, 50, 'code9911541', NULL);
 
 -- --------------------------------------------------------
 
@@ -275,7 +275,7 @@ INSERT INTO `exchange_good` (`good_ID`, `good_type`, `good_name`, `good_subs`, `
 (2, 1, '7-11折價券50元', '憑QR CODE於7-11消費折扣50元，效期一個月。', 100, 'rw-002.png', NULL),
 (3, 1, '全家咖啡買一送一', '憑QR CODE可以獲得同口味咖啡買一送一，效期一個月。', 50, 'rw-003.png', NULL),
 (4, 1, '7-11折價券100元', '憑QR CODE於7-11消費折扣100元，效期一個月。', 200, 'rw-004.png', NULL),
-(5, 2, '站內50元折價', '購買餐卷或是預約廚房時可兌換50元折價', 100, 'rw-005.png', 50),
+(5, 2, '站內50元折價', '購買餐卷或是預約廚房時可兌換50元折價', 50, 'rw-005.png', 50),
 (6, 2, '站內100元折價', '購買餐卷或是預約廚房時可兌換100元折價', 100, 'rw-006.png', 100),
 (7, 2, '站內150元折價', '購買餐卷或是預約廚房時可兌換150元折價', 150, 'rw-007.png', 150),
 (8, 2, '站內200元折價', '購買餐卷或是預約廚房時可兌換200元折價', 200, 'rw-008.png', 200),
@@ -638,6 +638,7 @@ CREATE TABLE `sessions` (
 
 INSERT INTO `sessions` (`session_id`, `expires`, `data`) VALUES
 ('EIgWwhcntQihF9Y5XkYqOZ_oWQK6Wj7a', 1614769083, '{\"cookie\":{\"originalMaxAge\":18000000,\"expires\":\"2021-03-03T10:57:25.947Z\",\"httpOnly\":true,\"path\":\"/\"},\"admin\":{\"id\":5,\"member_number\":\"20210005\",\"avater\":\"gremlins.jpg\",\"level\":\"一般會員\",\"email\":\"cheese@gmail.com\",\"password\":\"7c4a8d09ca3762af61e59520943dc26494f8941b\",\"password1\":\"\",\"name\":\"Cheese\",\"nickname\":\"stench\",\"mobile\":\"0965423685\",\"birthday\":\"2021-01-20T16:00:00.000Z\",\"credit＿card\":\"1234-1234-1234-1234\\r\\n\",\"addr\":\"台北市中山區八德路二段306號\",\"love\":null,\"simplemeal_coupon\":0}}'),
+('uwmogISyrB-lswE710VSLujecMegmhod', 1614853379, '{\"cookie\":{\"originalMaxAge\":18000000,\"expires\":\"2021-03-04T10:22:14.908Z\",\"httpOnly\":true,\"path\":\"/\"},\"admin\":{\"id\":6,\"member_number\":\"20210006\",\"avater\":\"koopa.jpg\",\"level\":\"VIP\",\"email\":\"pork@gmail.com\",\"password\":\"7c4a8d09ca3762af61e59520943dc26494f8941b\",\"password1\":\"\",\"name\":\"Pork\",\"nickname\":\"pig\",\"mobile\":\"0975888426\",\"birthday\":\"2021-01-29T16:00:00.000Z\",\"credit＿card\":\"1234-1234-1234-1234\",\"addr\":\"台北市中山區松江路199號\",\"love\":\"7,8,9\",\"simplemeal_coupon\":2}}'),
 ('vi12RJl1El2JTK0IDaiBEG2Wvi7FJGAa', 1614780912, '{\"cookie\":{\"originalMaxAge\":18000000,\"expires\":\"2021-03-03T12:23:29.578Z\",\"httpOnly\":true,\"path\":\"/\"},\"admin\":{\"id\":1,\"member_number\":\"20210001\",\"avater\":\"avatar01.jpg\",\"level\":\"VIP\",\"email\":\"GoodGoodEat@gmail.com\",\"password\":\"7c4a8d09ca3762af61e59520943dc26494f8941b\",\"password1\":\"\",\"name\":\"王展宇\",\"nickname\":\"12344\",\"mobile\":\"0952376886\",\"birthday\":\"1910-01-18T16:00:00.000Z\",\"credit＿card\":\"1234-1234-1234\",\"addr\":\"台北市信義區仁愛路四段505號\",\"love\":\"1,2,3\",\"simplemeal_coupon\":1058}}');
 
 -- --------------------------------------------------------
