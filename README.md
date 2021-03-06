@@ -2,8 +2,6 @@
 
 ## 極簡主義 餐點食材配送網站
 ## 品牌介紹
-![Lemon.](/public/img/lydia/SimpleMeal_LOGO.png "吉祥物Lemon")
-
 Logo 由「蔬果」、「肉類」、「調味料」
 這三種烹飪食材的元素組合而成。
 咧孟(Lemon)
