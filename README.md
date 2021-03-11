@@ -77,3 +77,4 @@ Logo 由「蔬果」、「肉類」、「調味料」
 
 ### [專案簡報](https://github.com/Liu-Lydia/simple-meal/blob/master/%E5%B1%95%E7%A4%BA/%E6%A5%B5%E7%B0%A1%E7%85%AE%E6%98%93%E7%B0%A1%E5%A0%B1%E6%B1%BA%E5%AE%9A%E7%89%88.pdf).
 
+### 本專案有關吉祥物Lemon相關之插圖請勿擅自挪作他用，如有任何相關情事，將採取必要法律行動。
